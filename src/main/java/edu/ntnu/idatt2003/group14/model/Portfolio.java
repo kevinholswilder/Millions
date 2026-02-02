@@ -7,7 +7,7 @@ import java.util.List;
  * Represents a portfolio of shares.
  *
  * @author Kevin Holswilder
- * @since 1.0.0
+ * @since 0.0.1
  */
 public class Portfolio {
   private List<Share> shares;
