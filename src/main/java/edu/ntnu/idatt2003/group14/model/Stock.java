@@ -7,6 +7,9 @@ import java.util.List;
  * Represents a stock of a company.
  *
  * <p>Holds Symbol, company name and price history.</p>
+ *
+ * @author Elias Haugsbakk
+ * @since 0.0.1
  */
 public class Stock {
   private final String symbol;
