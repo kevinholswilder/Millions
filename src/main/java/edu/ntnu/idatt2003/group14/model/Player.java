@@ -24,6 +24,10 @@ public class Player {
    * @param startingMoney the amount of money the player is starting with
    */
   public Player(String name, BigDecimal startingMoney) {
+    if (startingMoney.compareTo(BigDecimal.ZERO) < 0) {
+      throw new IllegalArgumentException("Cannot start with negative money.");
+    }
+
     this.name = name;
     this.startingMoney = startingMoney;
     this.money = startingMoney;
