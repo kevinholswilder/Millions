@@ -27,6 +27,10 @@ public abstract class Transaction {
    * @param calculator the calculator to use for calculating the transaction cost
    */
   public Transaction(Share share, int week, TransactionCalculator calculator) {
+    if (week > 0) {
+      throw new IllegalArgumentException("Week number cannot be negative");
+    }
+
     this.share = share;
     this.week = week;
     this.calculator = calculator;

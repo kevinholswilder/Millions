@@ -24,6 +24,10 @@ public class Stock {
    * @param prices a list of price history
    */
   public Stock(String symbol, String company, List<BigDecimal> prices) {
+    if (prices.isEmpty()) {
+      throw new IllegalArgumentException("List of prices can not be empty");
+    }
+
     this.symbol = symbol;
     this.company = company;
     this.prices = prices;
