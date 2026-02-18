@@ -21,6 +21,12 @@ public class PlayerTest {
         "Bernt",
         BigDecimal.valueOf(1000.0)
     );
+
+  }
+
+  @Test
+  public void verify_negative_money_throws_exception() {
+    Assertions.assertThrows(IllegalArgumentException.class, () -> new Player("Bernt", BigDecimal.valueOf(-1000.0)));
   }
 
   @Test
