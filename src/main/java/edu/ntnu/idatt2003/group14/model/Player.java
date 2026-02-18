@@ -42,7 +42,7 @@ public class Player {
    *
    * @param amount the amount of money to add
    */
-  public void addMoney(BigDecimal amount) {
+  public void depositMoney(BigDecimal amount) {
     // TODO: Verify positive amount
     this.money = this.money.add(amount);
   }
@@ -52,7 +52,7 @@ public class Player {
    *
    * @param amount the amount of money to withdraw
    */
-  public void withdrawManet(BigDecimal amount) {
+  public void withdrawMoney(BigDecimal amount) {
     // TODO: Verify positive amount
     this.money = this.money.subtract(amount);
   }
