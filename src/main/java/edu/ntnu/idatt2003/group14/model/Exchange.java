@@ -1,7 +1,11 @@
 package edu.ntnu.idatt2003.group14.model;
 
+import edu.ntnu.idatt2003.group14.model.transaction.Purchase;
+import edu.ntnu.idatt2003.group14.model.transaction.Sale;
+import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -15,7 +19,7 @@ import java.util.Random;
 public class Exchange {
   private final String name;
   private int week;
-  private Map<String, Stock> stockMap;
+  private final Map<String, Stock> stockMap;
   private final Random random;
 
   /**
@@ -28,7 +32,7 @@ public class Exchange {
     this.name = name;
     this.week = 0;
     this.random = new Random();
-    this.stockMap = Map.of();
+    this.stockMap = new HashMap<>();
 
     for (Stock stock : stocks) {
       this.stockMap.put(stock.getSymbol(), stock);
@@ -95,25 +99,37 @@ public class Exchange {
     return stockList;
   }
 
-  /*
+  /**
+   * A player purchases a share.
+   *
+   * @param symbol the symbol of the stock to purchase
+   * @param quantity the amount of the stock to purchase
+   * @param player the player who is purchasing
+   * @return the transaction containing the purchase
+   */
   public Transaction buy(String symbol, BigDecimal quantity, Player player) {
     // TODO: Does the stock exist in this exchange?
     // TODO: Does the player have enough funds?
     Stock stock = stockMap.get(symbol);
     BigDecimal purchasePrice = stock.getSalesPrice();
-    return new Sale(share, this.week, new SaleCalculator);
+    Share share = new Share(stock, quantity, purchasePrice);
+    Purchase purchase = new Purchase(share, this.week);
+    purchase.commit(player);
+    return purchase;
   }
 
-
-  public Transaction sell(Share share, Player player) {
-    // TODO: Does stock exist in this exchange?
-    Stock stock = share.getStock();
-    BigDecimal quantity = share.getQuantity();
-    BigDecimal salesPrice = stock.getSalesPrice();
-    return new Purchase(share, this.week, new PurchaseCalculator);
-  }
-
+  /**
+   * A player shells a share.
+   *
+   * @param share the share to sell
+   * @param player the player who is selling
+   * @return the transaction containing the sold share
    */
+  public Transaction sell(Share share, Player player) {
+    Sale sale = new Sale(share, this.week);
+    sale.commit(player);
+    return sale;
+  }
 
   /**
    * Moves the current week one forwards, resulting in new stock prices.
@@ -126,7 +142,6 @@ public class Exchange {
     for (Stock stock : stockMap.values()) {
       BigDecimal price = stock.getSalesPrice();
       /*
-      TODO: add more realistic market movement
       (random * 2 - 1) gives a random double form (-1) to 1.
       Multiplication with volatility ensures the movements are inside a given range.
       Over time, the market will decrease slowly:
