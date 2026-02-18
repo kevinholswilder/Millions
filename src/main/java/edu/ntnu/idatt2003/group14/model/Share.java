@@ -6,6 +6,9 @@ import java.math.BigDecimal;
  * Represents a purchase of stocks.
  *
  * <p>Class holds: one stock, quantity of the stock and the stock price at purchase.</p>
+ *
+ * @author Elias Haugsbakk
+ * @since 0.0.1
  */
 public class Share {
   private final Stock stock;
