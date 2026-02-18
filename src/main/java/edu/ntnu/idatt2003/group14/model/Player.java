@@ -42,7 +42,8 @@ public class Player {
   /**
    * Add money to the user.
    *
-   * @param amount the amount of money to add
+   * @param amount the amount of money to deposit
+   * @throws IllegalArgumentException if the amount to deposit is negative
    */
   public void depositMoney(BigDecimal amount) {
     if (amount.compareTo(BigDecimal.ZERO) <= 0) {
@@ -55,6 +56,8 @@ public class Player {
    * Withdraw money from the user.
    *
    * @param amount the amount of money to withdraw
+   * @throws InsufficientBalanceException if the player does not have enough money to withdraw
+   * @throws IllegalArgumentException if the amount to withdraw is negative
    */
   public void withdrawMoney(BigDecimal amount) throws InsufficientBalanceException {
     if (amount.compareTo(BigDecimal.ZERO) <= 0) {
