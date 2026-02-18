@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.model.transaction;
 
 import edu.ntnu.idatt2003.group14.api.calculator.TransactionCalculator;
+import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.Share;
 import java.math.BigDecimal;
@@ -41,7 +42,13 @@ public final class Purchase extends Transaction {
     // Withdraw money from player
     TransactionCalculator calculator = this.getCalculator();
     BigDecimal totalCosts = calculator.calculateTotal();
-    player.withdrawMoney(totalCosts);
+
+    // TODO: Throw exception once client implementation is done.
+    try {
+      player.withdrawMoney(totalCosts);
+    } catch (InsufficientBalanceException e) {
+      System.err.println("Insufficient funds to purchase stock." + e.getMessage());
+    }
 
     // Add a share to the player's portfolio
     Share share = this.getShare();
