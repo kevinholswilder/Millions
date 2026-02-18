@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.model.transaction;
 
 import edu.ntnu.idatt2003.group14.api.calculator.TransactionCalculator;
+import edu.ntnu.idatt2003.group14.calculator.SaleCalculator;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.Share;
 import java.math.BigDecimal;
@@ -19,7 +20,7 @@ public final class Sale extends Transaction {
    * @param week the week of the transaction
    */
   public Sale(Share share, int week) {
-    super(share, week, null);
+    super(share, week, new SaleCalculator(share));
   }
 
   /**
