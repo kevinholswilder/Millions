@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.model;
 
+import edu.ntnu.idatt2003.group14.model.transaction.TransactionArchive;
 import java.math.BigDecimal;
 
 /**
@@ -13,7 +14,7 @@ public class Player {
   private final BigDecimal startingMoney;
   private BigDecimal money;
   private final Portfolio portfolio;
-  // TODO: private final TransactionArchive transactionArchive;
+  private final TransactionArchive transactionArchive;
 
   /**
    * Instantiates a new player.
@@ -26,7 +27,7 @@ public class Player {
     this.startingMoney = startingMoney;
     this.money = startingMoney;
     this.portfolio = new Portfolio();
-    // TODO: this.transactionArchive = new TransactionArchive();
+    this.transactionArchive = new TransactionArchive();
   }
 
   public String getName() {
@@ -61,10 +62,8 @@ public class Player {
     return this.portfolio;
   }
 
-  /* TODO:
   public TransactionArchive getTransactionArchive() {
     return this.transactionArchive;
   }
-  */
 
 }
