@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.model;
 
+import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
 import edu.ntnu.idatt2003.group14.model.transaction.TransactionArchive;
 import java.math.BigDecimal;
 
@@ -44,7 +45,9 @@ public class Player {
    * @param amount the amount of money to add
    */
   public void depositMoney(BigDecimal amount) {
-    // TODO: Verify positive amount
+    if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+      throw new IllegalArgumentException("Cannot deposit negative money.");
+    }
     this.money = this.money.add(amount);
   }
 
@@ -53,8 +56,15 @@ public class Player {
    *
    * @param amount the amount of money to withdraw
    */
-  public void withdrawMoney(BigDecimal amount) {
-    // TODO: Verify positive amount
+  public void withdrawMoney(BigDecimal amount) throws InsufficientBalanceException {
+    if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+      throw new IllegalArgumentException("Cannot withdraw negative money.");
+    }
+
+    if (this.money.compareTo(amount) < 0) {
+      throw new InsufficientBalanceException("You do not have enough money to withdraw.");
+    }
+
     this.money = this.money.subtract(amount);
   }
 
