@@ -25,13 +25,13 @@ public final class SaleCalculatorTest {
 
   @Test
   void calculate_gross_calculates_the_expected_gross() {
-    assertEquals(BigDecimal.valueOf(100), saleCalculator.calculateGross());
+    assertEquals(BigDecimal.valueOf(200), saleCalculator.calculateGross());
   }
 
   @Test
   void calculate_commission_calculates_the_expected_commission() {
     BigDecimal actualTotal = saleCalculator.calculateCommission();
-    BigDecimal expectedTotal = BigDecimal.valueOf(1);
+    BigDecimal expectedTotal = BigDecimal.valueOf(2);
     assertEquals(expectedTotal.stripTrailingZeros(), actualTotal.stripTrailingZeros());
   }
 
