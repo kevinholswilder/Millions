@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.model;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,6 +40,30 @@ public class Stock {
 
   public BigDecimal getSalesPrice() {
     return this.prices.getLast();
+  }
+
+  public List<BigDecimal> getHistoricalPrices() {
+    return this.prices;
+  }
+
+  public BigDecimal getHighestPrice() {
+    return Collections.max(this.prices);
+  }
+
+  public BigDecimal getLowestPrice() {
+    return Collections.min(this.prices);
+  }
+
+  /**
+   * Returns the difference between the latest price and the second to last price.
+   *
+   * @return 0 if there are less than 2 prices, otherwise the difference
+   */
+  public BigDecimal getLatestPriceChange() {
+    if (this.prices.size() < 2) {
+      return BigDecimal.ZERO;
+    }
+    return this.prices.getLast().subtract(this.prices.get(this.prices.size() - 2));
   }
 
   /**
