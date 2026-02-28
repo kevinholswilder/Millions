@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.model.transaction;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +17,9 @@ public final class TransactionArchive {
   /**
    * Instantiates a new transaction archive.
    */
-  public TransactionArchive() {}
+  public TransactionArchive() {
+    this.transactions = new ArrayList<>();
+  }
 
   /**
    * Adds a {@link Transaction} to the archive.
