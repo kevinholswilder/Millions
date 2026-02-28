@@ -10,8 +10,8 @@ import java.util.Objects;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class TransactionArchive {
-  private List<Transaction> transactions;
+public final class TransactionArchive {
+  private final List<Transaction> transactions;
 
   /**
    * Instantiates a new transaction archive.
