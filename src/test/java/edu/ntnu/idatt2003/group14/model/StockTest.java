@@ -1,8 +1,12 @@
 package edu.ntnu.idatt2003.group14.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,6 +30,19 @@ public class StockTest {
         ))
     );
   }
+
+  @Test
+  public void empty_prices_list_throws_exception() {
+    Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        new Stock("AAPL", "Apple Inc.", List.of());
+    });
+
+    String expectedMessage = "List of prices can not be empty";
+    String actualMessage = exception.getMessage();
+
+    assertEquals(expectedMessage, actualMessage);
+  }
+
   @Test
   public void verify_stock_symbol() {
     Assertions.assertEquals("AAPL", stock.getSymbol());

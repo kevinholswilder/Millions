@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -10,12 +11,13 @@ import java.util.List;
  * @since 0.0.1
  */
 public class Portfolio {
-  private List<Share> shares;
+  private final List<Share> shares;
 
   /**
    * Instantiates a new portfolio.
    */
   public Portfolio() {
+    this.shares = new ArrayList<>();
   }
 
   /**
