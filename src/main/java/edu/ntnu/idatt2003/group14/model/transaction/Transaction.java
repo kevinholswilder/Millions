@@ -17,7 +17,7 @@ public abstract class Transaction {
   private final Share share;
   private final int week;
   private final TransactionCalculator calculator;
-  private boolean commited;
+  protected boolean commited;
 
   /**
    * Instantiates a new transaction.
@@ -26,7 +26,7 @@ public abstract class Transaction {
    * @param week the week of the transaction
    * @param calculator the calculator to use for calculating the transaction cost
    */
-  public Transaction(Share share, int week, TransactionCalculator calculator) {
+  protected Transaction(Share share, int week, TransactionCalculator calculator) {
     if (week > 0) {
       throw new IllegalArgumentException("Week number cannot be negative");
     }
