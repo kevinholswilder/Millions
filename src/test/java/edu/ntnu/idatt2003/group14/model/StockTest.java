@@ -62,4 +62,28 @@ public class StockTest {
     Assertions.assertEquals(BigDecimal.valueOf(103.00), stock.getSalesPrice());
   }
 
+  @Test
+  public void verify_historical_prices() {
+    Assertions.assertEquals(stock.getHistoricalPrices(),
+        new ArrayList<>(Arrays.asList(
+            BigDecimal.valueOf(100.00), BigDecimal.valueOf(101.00), BigDecimal.valueOf(102.00)
+        ))
+    );
+  }
+
+  @Test
+  public void verify_highest_price() {
+    Assertions.assertEquals(BigDecimal.valueOf(102.00), stock.getHighestPrice());
+  }
+
+  @Test
+  public void verify_lowest_price() {
+    Assertions.assertEquals(BigDecimal.valueOf(100.00), stock.getLowestPrice());
+  }
+
+  @Test
+  public void verify_latest_price_change() {
+    Assertions.assertEquals(BigDecimal.valueOf(1.00), stock.getLatestPriceChange());
+  }
+
 }
