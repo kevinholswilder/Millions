@@ -19,8 +19,18 @@ public class ExchangeTest {
 
   @BeforeEach
   public void instantiate_exchange() {
-    appleStock = new Stock("AAPL", "Apple Inc.", List.of(BigDecimal.valueOf(100.00)));
-    microsoftStock = new Stock("MSFT", "Microsoft Corporation", List.of(BigDecimal.valueOf(341.40)));
+    appleStock = new Stock("AAPL", "Apple Inc.", List.of(
+        BigDecimal.valueOf(100.00),
+        BigDecimal.valueOf(150.0),
+        BigDecimal.valueOf(60.0)
+    ));
+
+    microsoftStock = new Stock("MSFT", "Microsoft Corporation", List.of(
+        BigDecimal.valueOf(120.5),
+        BigDecimal.valueOf(53.40),
+        BigDecimal.valueOf(341.40)
+    ));
+
     exchange = new Exchange(
         "New York Stock Exchange (NYSE)",
         List.of(
@@ -57,5 +67,17 @@ public class ExchangeTest {
   @Test
   public void verify_find_stock() {
     Assertions.assertEquals(List.of(appleStock), exchange.findStock("AAPL"));
+  }
+
+  @Test
+  public void get_gainers() {
+    List<Stock> gainers = exchange.getGainers(2);
+    Assertions.assertEquals(2, gainers.size());
+  }
+
+  @Test
+  public void get_losers() {
+    List<Stock> losers = exchange.getLosers(2);
+    Assertions.assertEquals(2, losers.size());
   }
 }

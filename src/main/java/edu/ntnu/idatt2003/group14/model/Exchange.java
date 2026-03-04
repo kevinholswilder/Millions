@@ -5,6 +5,7 @@ import edu.ntnu.idatt2003.group14.model.transaction.Sale;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ import java.util.Random;
 /**
  * Represents an exchange for users to buy and sell stocks.
  *
- * @author Elias Haugsbakk
+ * @author Elias Haugsbakk, Kevin Holswilder
  * @since 0.0.1
  */
 public class Exchange {
@@ -129,6 +130,32 @@ public class Exchange {
     Sale sale = new Sale(share, this.week);
     sale.commit(player);
     return sale;
+  }
+
+  /**
+   * Returns a list of the top gainers in the market.
+   *
+   * @param limit the number of stocks to return
+   * @return a list of the top {@link Stock} gainers
+   */
+  public List<Stock> getGainers(int limit) {
+    return this.stockMap.values().stream()
+        .sorted(Comparator.comparing(Stock::getLatestPriceChange).reversed())
+        .limit(limit)
+        .toList();
+  }
+
+  /**
+   * Returns a list of the top losers in the market.
+   *
+   * @param limit the number of stocks to return
+   * @return a list of the top {@link Stock} losers
+   */
+  public List<Stock> getLosers(int limit) {
+    return this.stockMap.values().stream()
+        .sorted(Comparator.comparing(Stock::getLatestPriceChange))
+        .limit(limit)
+        .toList();
   }
 
   /**
