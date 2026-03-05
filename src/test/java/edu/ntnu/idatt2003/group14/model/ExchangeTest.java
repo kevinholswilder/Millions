@@ -70,14 +70,35 @@ public class ExchangeTest {
   }
 
   @Test
-  public void get_gainers() {
+  public void verify_get_gainers_size() {
     List<Stock> gainers = exchange.getGainers(2);
     Assertions.assertEquals(2, gainers.size());
+
+    gainers = exchange.getGainers(1);
+    Assertions.assertEquals(1, gainers.size());
   }
 
   @Test
-  public void get_losers() {
+  public void verify_get_gainers_order() {
+    List<Stock> gainers = exchange.getGainers(2);
+
+    Assertions.assertEquals(gainers.getFirst(), microsoftStock);
+    Assertions.assertEquals(gainers.getLast(), appleStock);
+  }
+
+  @Test
+  public void verify_get_losers_size() {
     List<Stock> losers = exchange.getLosers(2);
     Assertions.assertEquals(2, losers.size());
+
+    losers = exchange.getLosers(1);
+    Assertions.assertEquals(1, losers.size());
   }
+
+  @Test
+  public void verify_get_losers_order() {
+    List<Stock> losers = exchange.getLosers(2);
+
+    Assertions.assertEquals(losers.getFirst(), appleStock);
+    Assertions.assertEquals(losers.getLast(), microsoftStock);}
 }
