@@ -83,4 +83,7 @@ public class Player {
     return this.transactionArchive;
   }
 
+  public BigDecimal getNetWorth() {
+    return this.portfolio.getNetWorth().add(this.money);
+  }
 }
