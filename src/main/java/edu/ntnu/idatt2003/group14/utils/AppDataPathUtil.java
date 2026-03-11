@@ -63,7 +63,7 @@ public final class AppDataPathUtil {
    *
    * <p>If the data directory does not exist, it will be created.</p>
    */
-  public static void ensureDataDirectoryExists() throws IOException {
+  public static void initializeDataDirectory() throws IOException {
     Files.createDirectories(getDataDirectory());
   }
 
