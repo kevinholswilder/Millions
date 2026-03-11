@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 
 public final class SaleCalculatorTest {
 
-  private final BigDecimal testStockPrice = BigDecimal.valueOf(20);
-  private final BigDecimal purchasePrice = BigDecimal.valueOf(1000);
-  private final BigDecimal quantity = BigDecimal.valueOf(10);
+  private final BigDecimal testStockPrice = BigDecimal.valueOf(150);
+  private final BigDecimal purchasePrice = BigDecimal.valueOf(120);
+  private final BigDecimal quantity = BigDecimal.valueOf(5);
   private SaleCalculator saleCalculator;
 
   @BeforeEach
@@ -25,13 +25,13 @@ public final class SaleCalculatorTest {
 
   @Test
   void calculate_gross_calculates_the_expected_gross() {
-    assertEquals(BigDecimal.valueOf(200), saleCalculator.calculateGross());
+    assertEquals(BigDecimal.valueOf(750), saleCalculator.calculateGross());
   }
 
   @Test
   void calculate_commission_calculates_the_expected_commission() {
     BigDecimal actualTotal = saleCalculator.calculateCommission();
-    BigDecimal expectedTotal = BigDecimal.valueOf(2);
+    BigDecimal expectedTotal = BigDecimal.valueOf(7.5);
     assertEquals(expectedTotal.stripTrailingZeros(), actualTotal.stripTrailingZeros());
   }
 
