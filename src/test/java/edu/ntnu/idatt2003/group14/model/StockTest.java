@@ -33,9 +33,7 @@ public class StockTest {
 
   @Test
   public void empty_prices_list_throws_exception() {
-    Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-        new Stock("AAPL", "Apple Inc.", List.of());
-    });
+    Exception exception = assertThrows(IllegalArgumentException.class, () -> new Stock("AAPL", "Apple Inc.", List.of()));
 
     String expectedMessage = "List of prices can not be empty";
     String actualMessage = exception.getMessage();

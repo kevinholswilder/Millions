@@ -61,6 +61,11 @@ public final class SaleCalculator implements TransactionCalculator {
     BigDecimal profit = this.calculateGross()
         .subtract(this.calculateCommission())
         .subtract(this.purchasePrice.multiply(this.quantity));
+
+    if (profit.compareTo(BigDecimal.ZERO) <= 0) {
+      return BigDecimal.ZERO;
+    }
+
     return profit.multiply(this.taxRate);
   }
 
