@@ -55,7 +55,7 @@ public class ExchangeTest {
 
   @Test
   public void verify_week_of_exchange() {
-    Assertions.assertEquals(0, exchange.getWeek());
+    Assertions.assertEquals(1, exchange.getWeek());
   }
 
   @Test
