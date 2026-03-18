@@ -31,7 +31,7 @@ public class Exchange {
    */
   public Exchange(String name, List<Stock> stocks) {
     this.name = name;
-    this.week = 0;
+    this.week = 1;
     this.random = new Random();
     this.stockMap = new HashMap<>();
 

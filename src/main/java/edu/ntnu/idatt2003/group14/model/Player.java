@@ -86,4 +86,28 @@ public class Player {
   public BigDecimal getNetWorth() {
     return this.portfolio.getNetWorth().add(this.money);
   }
+
+  /**
+   * Returns the player status based on their profit and their amount of
+   * time in the market.
+   * The status is returned as the enumerator: {@link PlayerStatus}.
+   *
+   * @return the player status
+   */
+  public PlayerStatus getStatus() {
+    // converting to double for faster calculation
+    // the small imprecision is insignificant
+    double netWorth = getNetWorth().doubleValue();
+    double start = startingMoney.doubleValue();
+    double profitPercentage = ((netWorth - start) / start) * 100;
+    int weeksTraded = transactionArchive.countDistinctWeeks();
+
+    if (weeksTraded >= 20 && profitPercentage >= 100) {
+      return PlayerStatus.SPECULATOR;
+    } else if (weeksTraded >= 10 && profitPercentage >= 20) {
+      return PlayerStatus.INVESTOR;
+    } else {
+      return PlayerStatus.NOVICE;
+    }
+  }
 }

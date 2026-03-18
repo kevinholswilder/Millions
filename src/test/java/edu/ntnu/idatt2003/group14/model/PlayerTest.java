@@ -90,4 +90,40 @@ public class PlayerTest {
 
     assertEquals(0, actual.compareTo(expected));
   }
+
+  @Test
+  void getPlayerStatus_returns_the_expected_player_status() {
+    List<BigDecimal> stockValues = new ArrayList<>();
+    stockValues.add(new BigDecimal("1"));
+    Stock testStock = new Stock("tst", "Test Inc.", stockValues);
+    Exchange exchange = new Exchange("test exchange", List.of(testStock));
+
+    assertEquals(PlayerStatus.NOVICE, player.getStatus());
+
+    // Advance to week 10 with purchases every week.
+    for (int i = 0; i < 10; i++) {
+      exchange.buy("tst", new BigDecimal("1"), player);
+      exchange.advance();
+    }
+
+    assertEquals(PlayerStatus.NOVICE, player.getStatus());
+
+    // Deposit 400 money to increase player profit to above 20%.
+    player.depositMoney(BigDecimal.valueOf(313.0));
+
+    assertEquals(PlayerStatus.INVESTOR, player.getStatus());
+
+    // Advance to week 20.
+    for (int i = 0; i < 10; i++) {
+      exchange.buy("tst", new BigDecimal("1"), player);
+      exchange.advance();
+    }
+
+    assertEquals(PlayerStatus.INVESTOR, player.getStatus());
+
+    // Deposit 1000 money to increase player profit to above 100%.
+    player.depositMoney(BigDecimal.valueOf(1000.0));
+
+    assertEquals(PlayerStatus.SPECULATOR, player.getStatus());
+  }
 }
