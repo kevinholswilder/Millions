@@ -1,0 +1,42 @@
+/* ----- MAIN MENU ------ */
+
+.main-menu-root-container {
+    -fx-background-image: url("/images/background.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.main-menu-title {
+    -fx-text-fill: black;
+    -fx-font-size: 100;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-padding: 0 0 40 0;
+}
+
+.main-menu-button {
+    -fx-background-color: #848484dd;
+    -fx-text-fill: black;
+    -fx-font-size: 40;
+    -fx-pref-width: 400;
+    -fx-alignment: center;
+    -fx-padding: 15 30 15 30;
+
+    -fx-border-color: #000000;
+    -fx-border-width: 8px;
+    -fx-border-style: solid;
+}
+
+.main-menu-button:hover {
+    -fx-background-color: #959595;
+    -fx-border-color: #ffffff;
+}
+
+.main-menu-info {
+    -fx-text-fill: black;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
