@@ -19,7 +19,7 @@ public class TransactionFactory {
    * @return a new instance of the specified transaction type
    */
   public static Transaction get(TransactionType type, Share share, int week) {
-    return switch(type) {
+    return switch (type) {
       case TransactionType.PURCHASE -> new Purchase(share, week);
       case TransactionType.SALE -> new Sale(share, week);
     };
@@ -41,7 +41,7 @@ public class TransactionFactory {
     if (transactionType == null) {
       throw new UnknownTransactionException("Invalid transaction type:" + type);
     }
-    return switch(transactionType) {
+    return switch (transactionType) {
       case TransactionType.PURCHASE -> new Purchase(share, week);
       case TransactionType.SALE -> new Sale(share, week);
     };
