@@ -1,7 +1,11 @@
 package edu.ntnu.idatt2003.group14.ui;
 
+import edu.ntnu.idatt2003.group14.ui.mainmenu.MainMenuView;
+import java.util.Objects;
 import javafx.application.Application;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 /**
@@ -20,6 +24,11 @@ import javafx.stage.Stage;
  * @version 0.0.1
  */
 public final class App extends Application {
+  // 16:9 720p HD: scales nicely to all 16:9 or 16:10 displays
+  private static final int DEFAULT_WIDTH = 1280;
+  private static final int DEFAULT_HEIGHT = 720;
+
+  private Stage stage;
 
   /**
    * Initializes the primary stage.
@@ -28,7 +37,38 @@ public final class App extends Application {
    */
   @Override
   public void start(Stage stage) {
+    this.stage = stage;
     stage.setTitle("Millions");
+    showMainMenuView();
     stage.show();
+  }
+
+  private void navigateTo(Parent root) {
+    if (stage.getScene() == null) {
+      // First time setup
+      Scene scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+      String css = Objects.requireNonNull(getClass()
+          .getResource("/css/style.css")).toExternalForm();
+      scene.getStylesheets().add(css);
+      stage.setScene(scene);
+    } else {
+      stage.getScene().setRoot(root);
+    }
+  }
+
+  /**
+   * Switches the stage to the Main Menu view.
+   */
+  public void showMainMenuView() {
+    navigateTo(new MainMenuView(this).getRoot());
+  }
+
+  /**
+   * Toggles fullscreen on and off.
+   */
+  public void toggleFullScreen() {
+    stage.setFullScreenExitHint("");
+    stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+    stage.setFullScreen(!stage.isFullScreen());
   }
 }
