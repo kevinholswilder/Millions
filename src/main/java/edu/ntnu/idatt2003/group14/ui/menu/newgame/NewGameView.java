@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.menu.newgame;
 
 import edu.ntnu.idatt2003.group14.ui.App;
+import edu.ntnu.idatt2003.group14.ui.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.menu.ButtonFactory;
 import java.io.File;
 import java.math.BigDecimal;
@@ -26,6 +27,8 @@ import javafx.stage.FileChooser;
 public class NewGameView {
   private final BorderPane root;
   private final NewGameController controller;
+  private final AudioManager audioManager;
+  private final ButtonFactory buttonFactory;
   private TextField usernameField;
   private TextField startingMoneyField;
   private Button fileChooserBtn;
@@ -37,8 +40,10 @@ public class NewGameView {
    *
    * @param app the main application controller used for navigation
    */
-  public NewGameView(App app) {
+  public NewGameView(App app, AudioManager audioManager) {
     this.controller = new NewGameController(app);
+    this.audioManager = audioManager;
+    this.buttonFactory = new ButtonFactory(audioManager);
     this.root = new BorderPane();
     this.root.getStyleClass().add("main-menu-root-container");
     this.root.setCenter(centerMenu(app));
@@ -80,15 +85,15 @@ public class NewGameView {
     this.startingMoneyField.setPromptText("Insert Starting money");
     this.startingMoneyField.getStyleClass().add("menu-text-field");
 
-    this.fileChooserBtn = ButtonFactory.createMenuButton(
+    this.fileChooserBtn = buttonFactory.createMenuButton(
         "Pick CSV stock data file",
         () -> pickFile(app)
     );
-    Button startNewGame = ButtonFactory.createMenuButton(
+    Button startNewGame = buttonFactory.createMenuButton(
         "Start New Game",
         () -> startGame(getUsername(), getStartingMoney())
     );
-    Button mainMenu = ButtonFactory.createMenuButton(
+    Button mainMenu = buttonFactory.createMenuButton(
         "Main Menu", controller::handleMainMenu);
 
     centerMenu.getChildren().addAll(
@@ -187,6 +192,7 @@ public class NewGameView {
   }
 
   private void showError(String errorMessage, Control... controls) {
+    audioManager.playErrorSound();
     this.errorLabel.setText(errorMessage);
 
     this.usernameField.getStyleClass().remove("menu-text-field-error");
