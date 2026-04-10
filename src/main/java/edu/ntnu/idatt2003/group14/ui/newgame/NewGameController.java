@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.newgame;
 
 import edu.ntnu.idatt2003.group14.ui.App;
+import java.io.File;
 import java.math.BigDecimal;
 
 /**
@@ -26,10 +27,12 @@ public class NewGameController {
    *
    * @param username the users username
    * @param startingMoney the amount of starting money
+   * @param stockData the CSV file containing stock data
    */
-  public void handleStartGame(String username, BigDecimal startingMoney) {
+  public void handleStartGame(String username, BigDecimal startingMoney, File stockData) {
     IO.println("Username: " + username);
     IO.println("Starting Money: " + startingMoney);
+    IO.println("Stock data file: " + stockData.getName());
   }
 
   /**

@@ -79,4 +79,8 @@ public final class App extends Application {
     stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
     stage.setFullScreen(!stage.isFullScreen());
   }
+
+  public Stage getStage() {
+    return this.stage;
+  }
 }
