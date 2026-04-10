@@ -1,7 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui;
 
-import edu.ntnu.idatt2003.group14.ui.mainmenu.MainMenuView;
-import edu.ntnu.idatt2003.group14.ui.newgame.NewGameView;
+import edu.ntnu.idatt2003.group14.ui.menu.mainmenu.MainMenuView;
+import edu.ntnu.idatt2003.group14.ui.menu.newgame.NewGameView;
 import java.util.Objects;
 import javafx.application.Application;
 import javafx.scene.Parent;

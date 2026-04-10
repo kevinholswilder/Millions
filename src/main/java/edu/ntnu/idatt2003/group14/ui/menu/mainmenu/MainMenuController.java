@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2003.group14.ui.mainmenu;
+package edu.ntnu.idatt2003.group14.ui.menu.mainmenu;
 
 import edu.ntnu.idatt2003.group14.ui.App;
 

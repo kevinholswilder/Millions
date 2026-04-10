@@ -1,6 +1,7 @@
-package edu.ntnu.idatt2003.group14.ui.newgame;
+package edu.ntnu.idatt2003.group14.ui.menu.newgame;
 
 import edu.ntnu.idatt2003.group14.ui.App;
+import edu.ntnu.idatt2003.group14.ui.menu.ButtonFactory;
 import java.io.File;
 import java.math.BigDecimal;
 import javafx.geometry.Pos;
@@ -25,11 +26,11 @@ import javafx.stage.FileChooser;
 public class NewGameView {
   private final BorderPane root;
   private final NewGameController controller;
-  private final TextField usernameField;
-  private final TextField startingMoneyField;
-  private final Button fileChooserBtn;
+  private TextField usernameField;
+  private TextField startingMoneyField;
+  private Button fileChooserBtn;
   private File stockDataFile;
-  private final Label errorLabel;
+  private Label errorLabel;
 
   /**
    * Initializes a new NewGameView.
@@ -40,42 +41,7 @@ public class NewGameView {
     this.controller = new NewGameController(app);
     this.root = new BorderPane();
     this.root.getStyleClass().add("main-menu-root-container");
-
-    // Center menu
-    VBox centerMenu = new VBox(30);
-    centerMenu.setAlignment(Pos.CENTER);
-
-    this.errorLabel = new Label();
-    this.errorLabel.getStyleClass().add("error-message");
-
-    // Username text field
-    this.usernameField = new TextField("Username");
-    this.usernameField.getStyleClass().add("menu-text-field");
-
-    // Staring money text field
-    this.startingMoneyField = new TextField();
-    this.startingMoneyField.setPromptText("Insert Starting money");
-    this.startingMoneyField.getStyleClass().add("menu-text-field");
-
-    // Pick file of stocks button
-    this.fileChooserBtn = new Button("Pick CSV stock data file");
-    this.fileChooserBtn.getStyleClass().add("menu-button");
-    this.fileChooserBtn.setOnAction(e -> pickFile(app));
-
-    // Start new game
-    Button startNewGame = new Button("Start New Game");
-    startNewGame.getStyleClass().add("menu-button");
-    startNewGame.setOnAction(e -> startGame(getUsername(), getStartingMoney()));
-
-    // Exit to main menu
-    Button mainMenu = new Button("Main Menu");
-    mainMenu.getStyleClass().add("menu-button");
-    mainMenu.setOnAction(e -> controller.handleMainMenu());
-
-    centerMenu.getChildren().addAll(errorLabel,
-        this.usernameField, this.startingMoneyField, fileChooserBtn, startNewGame, mainMenu);
-
-    root.setCenter(centerMenu);
+    this.root.setCenter(centerMenu(app));
   }
 
   /**
@@ -100,47 +66,89 @@ public class NewGameView {
     return root;
   }
 
+  private VBox centerMenu(App app) {
+    VBox centerMenu = new VBox(30);
+    centerMenu.setAlignment(Pos.CENTER);
+
+    this.errorLabel = new Label();
+    this.errorLabel.getStyleClass().add("error-message");
+
+    this.usernameField = new TextField("Username");
+    this.usernameField.getStyleClass().add("menu-text-field");
+
+    this.startingMoneyField = new TextField();
+    this.startingMoneyField.setPromptText("Insert Starting money");
+    this.startingMoneyField.getStyleClass().add("menu-text-field");
+
+    this.fileChooserBtn = ButtonFactory.createMenuButton(
+        "Pick CSV stock data file",
+        () -> pickFile(app)
+    );
+    Button startNewGame = ButtonFactory.createMenuButton(
+        "Start New Game",
+        () -> startGame(getUsername(), getStartingMoney())
+    );
+    Button mainMenu = ButtonFactory.createMenuButton(
+        "Main Menu", controller::handleMainMenu);
+
+    centerMenu.getChildren().addAll(
+        errorLabel,
+        this.usernameField,
+        this.startingMoneyField,
+        fileChooserBtn,
+        startNewGame,
+        mainMenu
+    );
+
+    return centerMenu;
+  }
+
   private void pickFile(App app) {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open CSV-file with stock data");
     fileChooser.getExtensionFilters().addAll(
         new FileChooser.ExtensionFilter("CSV files", "*.csv"));
 
-    stockDataFile = fileChooser.showOpenDialog(app.getStage());
-    this.fileChooserBtn.setText(stockDataFile.getName());
+
+
+    this.stockDataFile = fileChooser.showOpenDialog(app.getStage());
+
+    if (this.stockDataFile != null) {
+      this.fileChooserBtn.setText(this.stockDataFile.getName());
+    }
   }
 
   enum IsValid {
-    valid,
-    negativeAmount,
-    notANumber,
-    emptyUsername,
-    noFileChosen
+    VALID,
+    NEGATIVE_AMOUNT,
+    NOT_A_NUMBER,
+    EMPTY_USERNAME,
+    NO_FILE_CHOSEN
   }
 
   private record ValidationResult(IsValid state, String username, BigDecimal value) {}
 
   private ValidationResult areValuesValid(String username, String stringAmount) {
     IsValid usernameValid = validateUsername(username);
-    if (usernameValid != IsValid.valid) {
+    if (usernameValid != IsValid.VALID) {
       return new ValidationResult(usernameValid, null, null);
     }
 
     IsValid amountValid = validateAmount(stringAmount);
-    if (amountValid != IsValid.valid) {
+    if (amountValid != IsValid.VALID) {
       return new ValidationResult(amountValid, null, null);
     }
 
     IsValid fileValid = validateFileChosen();
-    if (fileValid != IsValid.valid) {
+    if (fileValid != IsValid.VALID) {
       return new ValidationResult(fileValid, null, null);
     }
 
-    return new ValidationResult(IsValid.valid, username, new BigDecimal(stringAmount));
+    return new ValidationResult(IsValid.VALID, username, new BigDecimal(stringAmount));
   }
 
   private IsValid validateUsername(String username) {
-    return username.isBlank() ? IsValid.emptyUsername : IsValid.valid;
+    return username.isBlank() ? IsValid.EMPTY_USERNAME : IsValid.VALID;
   }
 
   private IsValid validateAmount(String amount) {
@@ -148,31 +156,31 @@ public class NewGameView {
     try {
       bigDecimalAmount = new BigDecimal(amount);
       if (bigDecimalAmount.longValue() <= 0) {
-        return IsValid.negativeAmount;
+        return IsValid.NEGATIVE_AMOUNT;
       } else {
-        return IsValid.valid;
+        return IsValid.VALID;
       }
     } catch (NumberFormatException e) {
-      return IsValid.notANumber;
+      return IsValid.NOT_A_NUMBER;
     }
   }
 
   private IsValid validateFileChosen() {
-    return this.stockDataFile == null ? IsValid.noFileChosen : IsValid.valid;
+    return this.stockDataFile == null ? IsValid.NO_FILE_CHOSEN : IsValid.VALID;
   }
 
   private void startGame(String username, String amount) {
     ValidationResult result = areValuesValid(username, amount);
 
     switch (result.state) {
-      case valid -> controller.handleStartGame(result.username, result.value, this.stockDataFile);
-      case negativeAmount -> showError(
+      case VALID -> controller.handleStartGame(result.username, result.value, this.stockDataFile);
+      case NEGATIVE_AMOUNT -> showError(
           "Starting Money must be positive", this.startingMoneyField);
-      case notANumber -> showError(
+      case NOT_A_NUMBER -> showError(
           "Starting Money must be a number", this.startingMoneyField);
-      case emptyUsername -> showError(
+      case EMPTY_USERNAME -> showError(
           "Username cannot be empty", this.usernameField);
-      case noFileChosen -> showError(
+      case NO_FILE_CHOSEN -> showError(
           "No stock data file has been selected", this.fileChooserBtn);
       default -> throw new IllegalStateException("Unexpected value: " + result.state);
     }

@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2003.group14.ui.newgame;
+package edu.ntnu.idatt2003.group14.ui.menu.newgame;
 
 import edu.ntnu.idatt2003.group14.ui.App;
 import java.io.File;
