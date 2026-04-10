@@ -39,24 +39,24 @@ public class MainMenuView {
     centerMenu.setPadding(new Insets(100, 0, 0, 0));
 
     Label title = new Label("Millions");
-    title.getStyleClass().add("main-menu-title");
+    title.getStyleClass().add("menu-title");
 
     VBox btnBox = new VBox(15);
     btnBox.setAlignment(Pos.CENTER);
 
     // New Game button
     Button startBtn = new Button("New Game");
-    startBtn.getStyleClass().add("main-menu-button");
+    startBtn.getStyleClass().add("menu-button");
     startBtn.setOnAction(e -> controller.handleNewGame());
 
     // Fullscreen game
     Button fullScreenBtn = new Button("Full Screen");
-    fullScreenBtn.getStyleClass().add("main-menu-button");
+    fullScreenBtn.getStyleClass().add("menu-button");
     fullScreenBtn.setOnAction(e -> controller.handleFullScreen());
 
     // Exit Game button
     Button exitBtn = new Button("Exit");
-    exitBtn.getStyleClass().add("main-menu-button");
+    exitBtn.getStyleClass().add("menu-button");
     exitBtn.setOnAction(e -> controller.handleExitGame());
 
     btnBox.getChildren().addAll(startBtn, fullScreenBtn, exitBtn);
@@ -67,10 +67,10 @@ public class MainMenuView {
     bottomBar.setPadding(new Insets(20));
 
     Label leftLabel = new Label("version " + GameConfig.VERSION);
-    leftLabel.getStyleClass().add("main-menu-info");
+    leftLabel.getStyleClass().add("menu-text");
 
     Label rightLabel = new Label("Developed by " + GameConfig.AUTHOR);
-    rightLabel.getStyleClass().add("main-menu-info");
+    rightLabel.getStyleClass().add("menu-text");
 
     Region spacer = new Region();
     HBox.setHgrow(spacer, Priority.ALWAYS);

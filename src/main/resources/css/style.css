@@ -1,3 +1,14 @@
+/* ----- ALL ----- */
+
+.error-message {
+    -fx-text-fill: #ff6b6b;
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-padding: 10 0 10 0;
+    -fx-background-color: transparent;
+}
+
 /* ----- MAIN MENU ------ */
 
 .main-menu-root-container {
@@ -7,7 +18,9 @@
     -fx-background-position: center center;
 }
 
-.main-menu-title {
+/* ----- MENU ------ */
+
+.menu-title {
     -fx-text-fill: black;
     -fx-font-size: 100;
     -fx-font-weight: bold;
@@ -15,25 +28,44 @@
     -fx-padding: 0 0 40 0;
 }
 
-.main-menu-button {
-    -fx-background-color: #848484dd;
+.menu-text-field {
+    -fx-background-color: #424242;
+    -fx-text-fill: white;
+    -fx-font-size: 30;
+    -fx-max-width: 600;
+    -fx-alignment: center;
+    -fx-padding: 15 30 15 30;
+
+    -fx-border-color: white;
+    -fx-border-width: 6;
+    -fx-border-style: solid;
+}
+
+.menu-text-field-error {
+    -fx-border-color: #ff6b6b;  /* Red border */
+    -fx-border-width: 6;
+    -fx-background-color: #3a2a2a;  /* Slightly reddish bg */
+}
+
+.menu-button {
+    -fx-background-color: #848484;
     -fx-text-fill: black;
     -fx-font-size: 40;
-    -fx-pref-width: 400;
+    -fx-pref-width: 600;
     -fx-alignment: center;
     -fx-padding: 15 30 15 30;
 
     -fx-border-color: #000000;
-    -fx-border-width: 8px;
+    -fx-border-width: 6;
     -fx-border-style: solid;
 }
 
-.main-menu-button:hover {
+.menu-button:hover {
     -fx-background-color: #959595;
     -fx-border-color: #ffffff;
 }
 
-.main-menu-info {
+.menu-text {
     -fx-text-fill: black;
     -fx-font-size: 20;
     -fx-font-weight: bold;

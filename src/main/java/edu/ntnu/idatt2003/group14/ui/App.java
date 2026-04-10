@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui;
 
 import edu.ntnu.idatt2003.group14.ui.mainmenu.MainMenuView;
+import edu.ntnu.idatt2003.group14.ui.newgame.NewGameView;
 import java.util.Objects;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -61,6 +62,13 @@ public final class App extends Application {
    */
   public void showMainMenuView() {
     navigateTo(new MainMenuView(this).getRoot());
+  }
+
+  /**
+   * Switches the stage to the New Game view.
+   */
+  public void showNewGameView() {
+    navigateTo(new NewGameView(this).getRoot());
   }
 
   /**
