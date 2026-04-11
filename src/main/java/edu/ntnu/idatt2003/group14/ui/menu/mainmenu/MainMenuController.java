@@ -1,9 +1,12 @@
-package edu.ntnu.idatt2003.group14.ui.mainmenu;
+package edu.ntnu.idatt2003.group14.ui.menu.mainmenu;
 
 import edu.ntnu.idatt2003.group14.ui.App;
 
 /**
  * Controller class for handling user input from the Main Menu.
+ *
+ * @author Elias Haugsbakk
+ * @since 0.0.1
  */
 public class MainMenuController {
   private final App app;
@@ -19,12 +22,9 @@ public class MainMenuController {
 
   /**
    * User requests new game.
-   *
-   * @author Elias Haugsbakk
-   * @since 0.0.1
    */
   public void handleNewGame() {
-    IO.println("New Game hit");
+    app.showNewGameView();
   }
 
   /**

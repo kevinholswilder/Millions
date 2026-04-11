@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui;
 
-import edu.ntnu.idatt2003.group14.ui.mainmenu.MainMenuView;
+import edu.ntnu.idatt2003.group14.ui.menu.mainmenu.MainMenuView;
+import edu.ntnu.idatt2003.group14.ui.menu.newgame.NewGameView;
 import java.util.Objects;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -64,11 +65,22 @@ public final class App extends Application {
   }
 
   /**
+   * Switches the stage to the New Game view.
+   */
+  public void showNewGameView() {
+    navigateTo(new NewGameView(this).getRoot());
+  }
+
+  /**
    * Toggles fullscreen on and off.
    */
   public void toggleFullScreen() {
     stage.setFullScreenExitHint("");
     stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
     stage.setFullScreen(!stage.isFullScreen());
+  }
+
+  public Stage getStage() {
+    return this.stage;
   }
 }

@@ -1,7 +1,8 @@
-package edu.ntnu.idatt2003.group14.ui.mainmenu;
+package edu.ntnu.idatt2003.group14.ui.menu.mainmenu;
 
 import edu.ntnu.idatt2003.group14.GameConfig;
 import edu.ntnu.idatt2003.group14.ui.App;
+import edu.ntnu.idatt2003.group14.ui.menu.ButtonFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -32,56 +33,60 @@ public class MainMenuView {
     this.controller = new MainMenuController(app);
     this.root = new BorderPane();
     this.root.getStyleClass().add("main-menu-root-container");
+    this.root.setCenter(centerMenu());
+    this.root.setBottom(bottomBar());
+  }
 
-    // Game title and buttons
+  public Parent getRoot() {
+    return root;
+  }
+
+  private VBox centerMenu() {
+
     VBox centerMenu = new VBox(50);
     centerMenu.setAlignment(Pos.CENTER);
     centerMenu.setPadding(new Insets(100, 0, 0, 0));
 
     Label title = new Label("Millions");
-    title.getStyleClass().add("main-menu-title");
+    title.getStyleClass().add("menu-title");
 
     VBox btnBox = new VBox(15);
     btnBox.setAlignment(Pos.CENTER);
 
-    // New Game button
-    Button startBtn = new Button("New Game");
-    startBtn.getStyleClass().add("main-menu-button");
-    startBtn.setOnAction(e -> controller.handleNewGame());
-
-    // Fullscreen game
-    Button fullScreenBtn = new Button("Full Screen");
-    fullScreenBtn.getStyleClass().add("main-menu-button");
-    fullScreenBtn.setOnAction(e -> controller.handleFullScreen());
-
-    // Exit Game button
-    Button exitBtn = new Button("Exit");
-    exitBtn.getStyleClass().add("main-menu-button");
-    exitBtn.setOnAction(e -> controller.handleExitGame());
+    Button startBtn = ButtonFactory.createMenuButton("New Game", controller::handleNewGame);
+    Button fullScreenBtn = ButtonFactory
+        .createMenuButton("Full Screen", controller::handleFullScreen);
+    Button exitBtn = ButtonFactory.createMenuButton("Exit", controller::handleExitGame);
 
     btnBox.getChildren().addAll(startBtn, fullScreenBtn, exitBtn);
-    centerMenu.getChildren().addAll(title, btnBox);
+    centerMenu.getChildren().addAll(
+        title,
+        btnBox
+    );
 
-    // Game version and author
+    return centerMenu;
+  }
+
+  private HBox bottomBar() {
+
     HBox bottomBar = new HBox();
     bottomBar.setPadding(new Insets(20));
 
     Label leftLabel = new Label("version " + GameConfig.VERSION);
-    leftLabel.getStyleClass().add("main-menu-info");
+    leftLabel.getStyleClass().add("menu-text");
 
     Label rightLabel = new Label("Developed by " + GameConfig.AUTHOR);
-    rightLabel.getStyleClass().add("main-menu-info");
+    rightLabel.getStyleClass().add("menu-text");
 
     Region spacer = new Region();
     HBox.setHgrow(spacer, Priority.ALWAYS);
 
-    bottomBar.getChildren().addAll(leftLabel, spacer, rightLabel);
+    bottomBar.getChildren().addAll(
+        leftLabel,
+        spacer,
+        rightLabel
+    );
 
-    root.setCenter(centerMenu);
-    root.setBottom(bottomBar);
-  }
-
-  public Parent getRoot() {
-    return root;
+    return bottomBar;
   }
 }
