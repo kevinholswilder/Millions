@@ -1,6 +1,7 @@
-package edu.ntnu.idatt2003.group14.model;
+package edu.ntnu.idatt2003.group14.model.portfolio;
 
 import edu.ntnu.idatt2003.group14.calculator.SaleCalculator;
+import edu.ntnu.idatt2003.group14.model.Share;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Kevin Holswilder, Elias Haugsbakk
  * @since 0.0.1
  */
-public class Portfolio {
+public class Portfolio extends ObservablePortfolio {
   private final List<Share> shares;
 
   /**
