@@ -84,3 +84,23 @@
     -fx-alignment: center;
 }
 
+/* ----- Stock Movers Component ------ */
+.movers-component {
+    -fx-background-color: #2e2e3e;
+}
+
+.green-movers-arrow {
+    -fx-text-fill: #00c853;
+    -fx-font-size: 14px;
+}
+
+.red-movers-arrow {
+    -fx-text-fill: #c80000;
+    -fx-font-size: 14px;
+}
+
+.movers-symbol, .movers-percent {
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
