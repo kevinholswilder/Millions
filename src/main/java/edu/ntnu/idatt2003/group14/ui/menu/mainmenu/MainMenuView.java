@@ -2,6 +2,7 @@ package edu.ntnu.idatt2003.group14.ui.menu.mainmenu;
 
 import edu.ntnu.idatt2003.group14.GameConfig;
 import edu.ntnu.idatt2003.group14.ui.App;
+import edu.ntnu.idatt2003.group14.ui.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.menu.ButtonFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,14 +24,16 @@ import javafx.scene.layout.VBox;
 public class MainMenuView {
   private final BorderPane root;
   private final MainMenuController controller;
+  private final ButtonFactory buttonFactory;
 
   /**
    * Initializes a new MainMenuView.
    *
    * @param app the main application controller used for navigation
    */
-  public MainMenuView(App app) {
+  public MainMenuView(App app, AudioManager audioManager) {
     this.controller = new MainMenuController(app);
+    this.buttonFactory = new ButtonFactory(audioManager);
     this.root = new BorderPane();
     this.root.getStyleClass().add("main-menu-root-container");
     this.root.setCenter(centerMenu());
@@ -53,10 +56,10 @@ public class MainMenuView {
     VBox btnBox = new VBox(15);
     btnBox.setAlignment(Pos.CENTER);
 
-    Button startBtn = ButtonFactory.createMenuButton("New Game", controller::handleNewGame);
-    Button fullScreenBtn = ButtonFactory
+    Button startBtn = buttonFactory.createMenuButton("New Game", controller::handleNewGame);
+    Button fullScreenBtn = buttonFactory
         .createMenuButton("Full Screen", controller::handleFullScreen);
-    Button exitBtn = ButtonFactory.createMenuButton("Exit", controller::handleExitGame);
+    Button exitBtn = buttonFactory.createMenuButton("Exit", controller::handleExitGame);
 
     btnBox.getChildren().addAll(startBtn, fullScreenBtn, exitBtn);
     centerMenu.getChildren().addAll(

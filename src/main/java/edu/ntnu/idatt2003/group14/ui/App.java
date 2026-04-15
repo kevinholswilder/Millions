@@ -30,6 +30,7 @@ public final class App extends Application {
   private static final int DEFAULT_HEIGHT = 720;
 
   private Stage stage;
+  private AudioManager audioManager;
 
   /**
    * Initializes the primary stage.
@@ -40,6 +41,8 @@ public final class App extends Application {
   public void start(Stage stage) {
     this.stage = stage;
     stage.setTitle("Millions");
+    this.audioManager = new AudioManager();
+    this.audioManager.playOfficeNoice();
     showMainMenuView();
     stage.show();
   }
@@ -61,14 +64,14 @@ public final class App extends Application {
    * Switches the stage to the Main Menu view.
    */
   public void showMainMenuView() {
-    navigateTo(new MainMenuView(this).getRoot());
+    navigateTo(new MainMenuView(this, audioManager).getRoot());
   }
 
   /**
    * Switches the stage to the New Game view.
    */
   public void showNewGameView() {
-    navigateTo(new NewGameView(this).getRoot());
+    navigateTo(new NewGameView(this, audioManager).getRoot());
   }
 
   /**
