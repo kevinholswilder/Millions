@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.model;
 
 import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
+import edu.ntnu.idatt2003.group14.model.portfolio.Portfolio;
 import edu.ntnu.idatt2003.group14.model.transaction.TransactionArchive;
 import java.math.BigDecimal;
 
