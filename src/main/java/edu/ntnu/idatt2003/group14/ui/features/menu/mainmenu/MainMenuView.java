@@ -1,9 +1,8 @@
-package edu.ntnu.idatt2003.group14.ui.menu.mainmenu;
+package edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu;
 
 import edu.ntnu.idatt2003.group14.GameConfig;
-import edu.ntnu.idatt2003.group14.ui.App;
-import edu.ntnu.idatt2003.group14.ui.AudioManager;
-import edu.ntnu.idatt2003.group14.ui.menu.ButtonFactory;
+import edu.ntnu.idatt2003.group14.service.AudioManager;
+import edu.ntnu.idatt2003.group14.ui.features.menu.MenuButtonFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -24,16 +23,17 @@ import javafx.scene.layout.VBox;
 public class MainMenuView {
   private final BorderPane root;
   private final MainMenuController controller;
-  private final ButtonFactory buttonFactory;
+  private final MenuButtonFactory buttonFactory;
 
   /**
    * Initializes a new MainMenuView.
    *
-   * @param app the main application controller used for navigation
+   * @param controller the controller for this view
+   * @param audioManager the audio manager
    */
-  public MainMenuView(App app, AudioManager audioManager) {
-    this.controller = new MainMenuController(app);
-    this.buttonFactory = new ButtonFactory(audioManager);
+  public MainMenuView(MainMenuController controller, AudioManager audioManager) {
+    this.controller = controller;
+    this.buttonFactory = new MenuButtonFactory(audioManager);
     this.root = new BorderPane();
     this.root.getStyleClass().add("main-menu-root-container");
     this.root.setCenter(centerMenu());

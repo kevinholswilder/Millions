@@ -1,6 +1,6 @@
-package edu.ntnu.idatt2003.group14.ui.menu.newgame;
+package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
-import edu.ntnu.idatt2003.group14.ui.App;
+import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
 import java.io.File;
 import java.math.BigDecimal;
 
@@ -11,15 +11,15 @@ import java.math.BigDecimal;
  * @since 0.0.1
  */
 public class NewGameController {
-  private final App app;
+  private final AppNavigator appNavigator;
 
   /**
    * Initializes a new NewGameController.
    *
-   * @param app the main application controller used for navigation
+   * @param appNavigator the main application controller used for navigation
    * */
-  public NewGameController(App app) {
-    this.app = app;
+  public NewGameController(AppNavigator appNavigator) {
+    this.appNavigator = appNavigator;
   }
 
   /**
@@ -39,6 +39,6 @@ public class NewGameController {
    * Shows the main menu.
    */
   public void handleMainMenu() {
-    app.showMainMenuView();
+    appNavigator.showMainMenuView();
   }
 }

@@ -1,12 +1,12 @@
 package edu.ntnu.idatt2003.group14.ui;
 
-import edu.ntnu.idatt2003.group14.ui.menu.mainmenu.MainMenuView;
-import edu.ntnu.idatt2003.group14.ui.menu.newgame.NewGameView;
-import java.util.Objects;
+import edu.ntnu.idatt2003.group14.service.AudioManager;
+import edu.ntnu.idatt2003.group14.ui.app.AppController;
+import edu.ntnu.idatt2003.group14.ui.app.AppControllerImpl;
+import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
+import edu.ntnu.idatt2003.group14.ui.app.AppNavigatorImpl;
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 /**
@@ -25,12 +25,6 @@ import javafx.stage.Stage;
  * @version 0.0.1
  */
 public final class App extends Application {
-  // 16:9 720p HD: scales nicely to all 16:9 or 16:10 displays
-  private static final int DEFAULT_WIDTH = 1280;
-  private static final int DEFAULT_HEIGHT = 720;
-
-  private Stage stage;
-  private AudioManager audioManager;
 
   /**
    * Initializes the primary stage.
@@ -39,51 +33,15 @@ public final class App extends Application {
    */
   @Override
   public void start(Stage stage) {
-    this.stage = stage;
     stage.setTitle("Millions");
-    this.audioManager = new AudioManager();
-    this.audioManager.playOfficeNoice();
-    showMainMenuView();
+
+    AudioManager audioManager = new AudioManager();
+    audioManager.playOfficeNoice();
+
+    AppController appController = new AppControllerImpl(stage);
+    AppNavigator appNavigator = new AppNavigatorImpl(stage, appController, audioManager);
+    appNavigator.showMainMenuView();
+
     stage.show();
-  }
-
-  private void navigateTo(Parent root) {
-    if (stage.getScene() == null) {
-      // First time setup
-      Scene scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-      String css = Objects.requireNonNull(getClass()
-          .getResource("/css/style.css")).toExternalForm();
-      scene.getStylesheets().add(css);
-      stage.setScene(scene);
-    } else {
-      stage.getScene().setRoot(root);
-    }
-  }
-
-  /**
-   * Switches the stage to the Main Menu view.
-   */
-  public void showMainMenuView() {
-    navigateTo(new MainMenuView(this, audioManager).getRoot());
-  }
-
-  /**
-   * Switches the stage to the New Game view.
-   */
-  public void showNewGameView() {
-    navigateTo(new NewGameView(this, audioManager).getRoot());
-  }
-
-  /**
-   * Toggles fullscreen on and off.
-   */
-  public void toggleFullScreen() {
-    stage.setFullScreenExitHint("");
-    stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-    stage.setFullScreen(!stage.isFullScreen());
-  }
-
-  public Stage getStage() {
-    return this.stage;
   }
 }

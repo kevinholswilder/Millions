@@ -1,8 +1,8 @@
-package edu.ntnu.idatt2003.group14.ui.menu.newgame;
+package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
-import edu.ntnu.idatt2003.group14.ui.App;
-import edu.ntnu.idatt2003.group14.ui.AudioManager;
-import edu.ntnu.idatt2003.group14.ui.menu.ButtonFactory;
+import edu.ntnu.idatt2003.group14.service.AudioManager;
+import edu.ntnu.idatt2003.group14.ui.app.AppController;
+import edu.ntnu.idatt2003.group14.ui.features.menu.MenuButtonFactory;
 import java.io.File;
 import java.math.BigDecimal;
 import javafx.geometry.Pos;
@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 
 /**
  * JavaFX scene for the New Game scene of the application.
@@ -25,10 +24,11 @@ import javafx.stage.FileChooser;
  * @since 0.0.1
  */
 public class NewGameView {
+  private final AppController appController;
   private final BorderPane root;
   private final NewGameController controller;
   private final AudioManager audioManager;
-  private final ButtonFactory buttonFactory;
+  private final MenuButtonFactory buttonFactory;
   private TextField usernameField;
   private TextField startingMoneyField;
   private Button fileChooserBtn;
@@ -38,15 +38,21 @@ public class NewGameView {
   /**
    * Initializes a new NewGameView.
    *
-   * @param app the main application controller used for navigation
+   * @param controller the controller for this view
+   * @param appController the application controller
+   * @param audioManager the audio manager
    */
-  public NewGameView(App app, AudioManager audioManager) {
-    this.controller = new NewGameController(app);
+  public NewGameView(
+      NewGameController controller,
+      AppController appController,
+      AudioManager audioManager) {
+    this.controller = controller;
+    this.appController = appController;
     this.audioManager = audioManager;
-    this.buttonFactory = new ButtonFactory(audioManager);
+    this.buttonFactory = new MenuButtonFactory(audioManager);
     this.root = new BorderPane();
     this.root.getStyleClass().add("main-menu-root-container");
-    this.root.setCenter(centerMenu(app));
+    this.root.setCenter(centerMenu());
   }
 
   /**
@@ -71,7 +77,7 @@ public class NewGameView {
     return root;
   }
 
-  private VBox centerMenu(App app) {
+  private VBox centerMenu() {
     VBox centerMenu = new VBox(30);
     centerMenu.setAlignment(Pos.CENTER);
 
@@ -87,7 +93,7 @@ public class NewGameView {
 
     this.fileChooserBtn = buttonFactory.createMenuButton(
         "Pick CSV stock data file",
-        () -> pickFile(app)
+        () -> pickFile()
     );
     Button startNewGame = buttonFactory.createMenuButton(
         "Start New Game",
@@ -108,15 +114,8 @@ public class NewGameView {
     return centerMenu;
   }
 
-  private void pickFile(App app) {
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Open CSV-file with stock data");
-    fileChooser.getExtensionFilters().addAll(
-        new FileChooser.ExtensionFilter("CSV files", "*.csv"));
-
-
-
-    this.stockDataFile = fileChooser.showOpenDialog(app.getStage());
+  private void pickFile() {
+    this.stockDataFile = this.appController.openStockFileDialog();
 
     if (this.stockDataFile != null) {
       this.fileChooserBtn.setText(this.stockDataFile.getName());
