@@ -17,22 +17,10 @@ public class NewGameController {
    * Initializes a new NewGameController.
    *
    * @param appNavigator the main application controller used for navigation
-   * */
+   *
+   */
   public NewGameController(AppNavigator appNavigator) {
     this.appNavigator = appNavigator;
-  }
-
-  /**
-   * Starts the game.
-   *
-   * @param username the users username
-   * @param startingMoney the amount of starting money
-   * @param stockData the CSV file containing stock data
-   */
-  public void handleStartGame(String username, BigDecimal startingMoney, File stockData) {
-    IO.println("Username: " + username);
-    IO.println("Starting Money: " + startingMoney);
-    IO.println("Stock data file: " + stockData.getName());
   }
 
   /**
@@ -40,5 +28,65 @@ public class NewGameController {
    */
   public void handleMainMenu() {
     appNavigator.showMainMenuView();
+  }
+
+  /**
+   * Validates the user inputted values.
+   *
+   * @param username      the username
+   * @param amount        the amount of starting money
+   * @param stockDataFile the stock data {@link File}
+   * @return the {@link NewGameValidationState} containing information
+   *        on if the inputted information is valid
+   */
+  public NewGameValidationState validateNewGameInput(String username, String amount,
+                                                     File stockDataFile) {
+    NewGameValidationState usernameValid = validateUsername(username);
+    if (usernameValid != NewGameValidationState.VALID) {
+      return usernameValid;
+    }
+    NewGameValidationState amountValid = validateAmount(amount);
+    if (amountValid != NewGameValidationState.VALID) {
+      return amountValid;
+    }
+
+    return validateFileChosen(stockDataFile);
+  }
+
+  /**
+   * Starts the game and passes on the inputted information.
+   *
+   * @param username      the users username
+   * @param startingMoney the users starting money
+   * @param stockDataFile the file containing stock data
+   */
+  public void handleStartGame(String username, BigDecimal startingMoney, File stockDataFile) {
+    IO.println("Username: " + username);
+    IO.println("Starting Money: " + startingMoney);
+    IO.println("Stock data file: " + stockDataFile.getName());
+  }
+
+  private NewGameValidationState validateUsername(String username) {
+    return username.isBlank() ? NewGameValidationState.EMPTY_USERNAME :
+        NewGameValidationState.VALID;
+  }
+
+  private NewGameValidationState validateAmount(String amount) {
+    BigDecimal bigDecimalAmount;
+    try {
+      bigDecimalAmount = new BigDecimal(amount);
+      if (bigDecimalAmount.longValue() <= 0) {
+        return NewGameValidationState.NEGATIVE_AMOUNT;
+      } else {
+        return NewGameValidationState.VALID;
+      }
+    } catch (NumberFormatException e) {
+      return NewGameValidationState.NOT_A_NUMBER;
+    }
+  }
+
+  private NewGameValidationState validateFileChosen(File stockDataFile) {
+    return stockDataFile == null ? NewGameValidationState.NO_FILE_CHOSEN :
+        NewGameValidationState.VALID;
   }
 }

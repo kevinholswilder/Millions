@@ -38,9 +38,9 @@ public class NewGameView {
   /**
    * Initializes a new NewGameView.
    *
-   * @param controller the controller for this view
+   * @param controller    the controller for this view
    * @param appController the application controller
-   * @param audioManager the audio manager
+   * @param audioManager  the audio manager
    */
   public NewGameView(
       NewGameController controller,
@@ -93,11 +93,11 @@ public class NewGameView {
 
     this.fileChooserBtn = buttonFactory.createMenuButton(
         "Pick CSV stock data file",
-        () -> pickFile()
+        this::pickFile
     );
     Button startNewGame = buttonFactory.createMenuButton(
         "Start New Game",
-        () -> startGame(getUsername(), getStartingMoney())
+        this::startGame
     );
     Button mainMenu = buttonFactory.createMenuButton(
         "Main Menu", controller::handleMainMenu);
@@ -122,71 +122,36 @@ public class NewGameView {
     }
   }
 
-  enum IsValid {
-    VALID,
-    NEGATIVE_AMOUNT,
-    NOT_A_NUMBER,
-    EMPTY_USERNAME,
-    NO_FILE_CHOSEN
-  }
+  private void startGame() {
+    String username = getUsername();
+    String amount = getStartingMoney();
 
-  private record ValidationResult(IsValid state, String username, BigDecimal value) {}
+    NewGameValidationState result =
+        controller.validateNewGameInput(username, amount, stockDataFile);
 
-  private ValidationResult areValuesValid(String username, String stringAmount) {
-    IsValid usernameValid = validateUsername(username);
-    if (usernameValid != IsValid.VALID) {
-      return new ValidationResult(usernameValid, null, null);
-    }
-
-    IsValid amountValid = validateAmount(stringAmount);
-    if (amountValid != IsValid.VALID) {
-      return new ValidationResult(amountValid, null, null);
-    }
-
-    IsValid fileValid = validateFileChosen();
-    if (fileValid != IsValid.VALID) {
-      return new ValidationResult(fileValid, null, null);
-    }
-
-    return new ValidationResult(IsValid.VALID, username, new BigDecimal(stringAmount));
-  }
-
-  private IsValid validateUsername(String username) {
-    return username.isBlank() ? IsValid.EMPTY_USERNAME : IsValid.VALID;
-  }
-
-  private IsValid validateAmount(String amount) {
-    BigDecimal bigDecimalAmount;
-    try {
-      bigDecimalAmount = new BigDecimal(amount);
-      if (bigDecimalAmount.longValue() <= 0) {
-        return IsValid.NEGATIVE_AMOUNT;
-      } else {
-        return IsValid.VALID;
-      }
-    } catch (NumberFormatException e) {
-      return IsValid.NOT_A_NUMBER;
-    }
-  }
-
-  private IsValid validateFileChosen() {
-    return this.stockDataFile == null ? IsValid.NO_FILE_CHOSEN : IsValid.VALID;
-  }
-
-  private void startGame(String username, String amount) {
-    ValidationResult result = areValuesValid(username, amount);
-
-    switch (result.state) {
-      case VALID -> controller.handleStartGame(result.username, result.value, this.stockDataFile);
+    switch (result) {
+      case VALID -> controller.handleStartGame(
+          username,
+          new BigDecimal(amount),
+          this.stockDataFile
+      );
       case NEGATIVE_AMOUNT -> showError(
-          "Starting Money must be positive", this.startingMoneyField);
+          "Starting Money must be positive",
+          startingMoneyField
+      );
       case NOT_A_NUMBER -> showError(
-          "Starting Money must be a number", this.startingMoneyField);
+          "Starting Money must be a number",
+          startingMoneyField
+      );
       case EMPTY_USERNAME -> showError(
-          "Username cannot be empty", this.usernameField);
+          "Username cannot be empty",
+          usernameField
+      );
       case NO_FILE_CHOSEN -> showError(
-          "No stock data file has been selected", this.fileChooserBtn);
-      default -> throw new IllegalStateException("Unexpected value: " + result.state);
+          "No stock data file has been selected",
+          fileChooserBtn
+      );
+      default -> throw new IllegalStateException("Unexpected startingMoney: " + result);
     }
   }
 
