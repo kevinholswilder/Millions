@@ -1,10 +1,14 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
+import edu.ntnu.idatt2003.group14.model.portfolio.Portfolio;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
+import edu.ntnu.idatt2003.group14.service.PortfolioService;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameView;
+import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioController;
+import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioView;
 import java.util.Objects;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,9 +33,9 @@ public class AppNavigatorImpl implements AppNavigator {
   /**
    * Initializes a new AppNavigatorImpl.
    *
-   * @param stage the primary stage
+   * @param stage         the primary stage
    * @param appController the application controller
-   * @param audioManager the audio manager
+   * @param audioManager  the audio manager
    */
   public AppNavigatorImpl(Stage stage, AppController appController, AudioManager audioManager) {
     this.stage = stage;
@@ -51,12 +55,22 @@ public class AppNavigatorImpl implements AppNavigator {
     navigateTo(new NewGameView(controller, appController, audioManager).getRoot());
   }
 
+  @Override
+  public void showPortfolioView() {
+    // TODO: Service and portfolio should not be created here.
+    //  Service should probably be provided by a ServiceRegistry
+    //  class which holds the services in memory.
+    PortfolioService service = new PortfolioService(new Portfolio());
+    PortfolioController controller = new PortfolioController(service);
+    navigateTo(new PortfolioView(controller, audioManager).getRoot());
+  }
+
   private void navigateTo(Parent root) {
     if (stage.getScene() == null) {
       // First time setup
       Scene scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-      String css = Objects.requireNonNull(getClass()
-          .getResource("/css/style.css")).toExternalForm();
+      String css =
+          Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm();
       scene.getStylesheets().add(css);
       stage.setScene(scene);
     } else {
