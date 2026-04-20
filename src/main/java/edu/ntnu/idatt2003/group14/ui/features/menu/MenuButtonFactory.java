@@ -1,6 +1,6 @@
-package edu.ntnu.idatt2003.group14.ui.menu;
+package edu.ntnu.idatt2003.group14.ui.features.menu;
 
-import edu.ntnu.idatt2003.group14.ui.AudioManager;
+import edu.ntnu.idatt2003.group14.service.AudioManager;
 import javafx.scene.control.Button;
 
 /**
@@ -8,15 +8,15 @@ import javafx.scene.control.Button;
  *
  * <p>Menu buttons get consistent styling and functionality</p>
  */
-public class ButtonFactory {
+public class MenuButtonFactory {
   private final AudioManager audioManager;
 
   /**
-   * Initializes a new ButtonFactory.
+   * Initializes a new MenuButtonFactory.
    *
    * @param audioManager for plating button sound effects
    */
-  public ButtonFactory(AudioManager audioManager) {
+  public MenuButtonFactory(AudioManager audioManager) {
     this.audioManager = audioManager;
   }
 
