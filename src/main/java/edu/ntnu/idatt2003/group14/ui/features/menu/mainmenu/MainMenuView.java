@@ -3,6 +3,7 @@ package edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu;
 import edu.ntnu.idatt2003.group14.GameConfig;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.features.menu.MenuButtonFactory;
+import java.util.Objects;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -28,20 +29,23 @@ public class MainMenuView {
   /**
    * Initializes a new MainMenuView.
    *
-   * @param controller the controller for this view
+   * @param controller   the controller for this view
    * @param audioManager the audio manager
    */
   public MainMenuView(MainMenuController controller, AudioManager audioManager) {
     this.controller = controller;
     this.buttonFactory = new MenuButtonFactory(audioManager);
     this.root = new BorderPane();
+    this.root.getStylesheets().add(
+        Objects.requireNonNull(getClass().getResource("/css/menu.css")).toExternalForm()
+    );
     this.root.getStyleClass().add("main-menu-root-container");
     this.root.setCenter(centerMenu());
     this.root.setBottom(bottomBar());
   }
 
   public Parent getRoot() {
-    return root;
+    return this.root;
   }
 
   private VBox centerMenu() {

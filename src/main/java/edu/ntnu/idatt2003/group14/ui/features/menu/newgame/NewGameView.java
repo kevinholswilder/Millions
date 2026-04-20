@@ -5,6 +5,7 @@ import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.MenuButtonFactory;
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.Objects;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -51,6 +52,9 @@ public class NewGameView {
     this.audioManager = audioManager;
     this.buttonFactory = new MenuButtonFactory(audioManager);
     this.root = new BorderPane();
+    this.root.getStylesheets().add(
+        Objects.requireNonNull(getClass().getResource("/css/menu.css")).toExternalForm()
+    );
     this.root.getStyleClass().add("main-menu-root-container");
     this.root.setCenter(centerMenu());
   }
@@ -74,7 +78,7 @@ public class NewGameView {
   }
 
   public Parent getRoot() {
-    return root;
+    return this.root;
   }
 
   private VBox centerMenu() {

@@ -64,6 +64,7 @@ public class NewGameController {
     IO.println("Username: " + username);
     IO.println("Starting Money: " + startingMoney);
     IO.println("Stock data file: " + stockDataFile.getName());
+    appNavigator.showPortfolioView();
   }
 
   private NewGameValidationState validateUsername(String username) {

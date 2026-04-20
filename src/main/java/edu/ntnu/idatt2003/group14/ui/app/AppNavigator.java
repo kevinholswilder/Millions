@@ -13,5 +13,10 @@ public interface AppNavigator {
    * Switch the view to show the new game screen.
    */
   void showNewGameView();
+
+  /**
+   * Switch the view to show the users' portfolio.
+   */
+  void showPortfolioView();
 }
 
