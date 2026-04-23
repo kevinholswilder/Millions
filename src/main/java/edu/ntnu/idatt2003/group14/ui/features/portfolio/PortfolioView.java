@@ -2,6 +2,7 @@ package edu.ntnu.idatt2003.group14.ui.features.portfolio;
 
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.components.PortfolioGraph;
+import edu.ntnu.idatt2003.group14.ui.components.SideBar;
 import edu.ntnu.idatt2003.group14.ui.components.StockMoversComponent;
 import java.util.Objects;
 import javafx.scene.Parent;
@@ -29,7 +30,7 @@ public class PortfolioView {
   private final VBox stockMoversPane;
 
   // contains the navigation bar
-  private final VBox navigation;
+  private final SideBar navigation;
 
   /**
    * Initializes a new PortfolioView.
@@ -55,7 +56,7 @@ public class PortfolioView {
     mainPane.getChildren().addAll(portfolioPane, stockMoversPane);
     this.root.setCenter(mainPane);
 
-    navigation = new VBox();
+    navigation = new SideBar();
     this.root.setLeft(navigation);
 
     populate();
