@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2003.group14.ui.components;
+package edu.ntnu.idatt2003.group14.ui.components.sidebar;
 
 import javafx.scene.control.Button;
 
