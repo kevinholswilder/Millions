@@ -5,7 +5,6 @@ import edu.ntnu.idatt2003.group14.model.transaction.TransactionArchive;
 
 import java.util.List;
 
-import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
@@ -23,9 +22,9 @@ public class TransactionArchiveView {
     /**
      *
      */
-    public TransactionArchiveView(TransactionArchiveController controller, AppController appController) {
+    public TransactionArchiveView() {
         this.root = new StackPane();
-        this.controller = controller;
+        this.controller = new TransactionArchiveController();
 
         root.setPadding(new Insets(20));
 

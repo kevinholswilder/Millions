@@ -6,6 +6,8 @@ import edu.ntnu.idatt2003.group14.ui.app.AppControllerImpl;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigatorImpl;
 import java.util.List;
+
+import edu.ntnu.idatt2003.group14.ui.app.ViewManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -39,6 +41,8 @@ public final class App extends Application {
 
     AppController appController = new AppControllerImpl(stage);
     AppNavigator appNavigator = new AppNavigatorImpl(stage, appController, audioManager);
+
+    ViewManager viewManager = new ViewManager(stage);
 
     if (skipMenu) {
       skipMenu(appNavigator);

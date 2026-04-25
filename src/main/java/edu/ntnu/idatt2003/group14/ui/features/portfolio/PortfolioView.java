@@ -2,7 +2,7 @@ package edu.ntnu.idatt2003.group14.ui.features.portfolio;
 
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.components.PortfolioGraph;
-import edu.ntnu.idatt2003.group14.ui.components.SideBar;
+import edu.ntnu.idatt2003.group14.ui.components.sidebar.SideBar;
 import edu.ntnu.idatt2003.group14.ui.components.StockMoversComponent;
 import java.util.Objects;
 import javafx.scene.Parent;
