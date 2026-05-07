@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
+import edu.ntnu.idatt2003.group14.testutils.ExchangeFactory;
+import edu.ntnu.idatt2003.group14.testutils.PlayerFactory;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Class responsible for testing the {@link Player} class.
  *
- * @author Kevin Holswilder
+ * @author Kevin Holswilder, Elias Haugsbakk
  * @since 0.0.1
  */
 public class PlayerTest {
@@ -21,11 +23,7 @@ public class PlayerTest {
 
   @BeforeEach
   public void instantiate_player() {
-    player = new Player(
-        "Bernt",
-        BigDecimal.valueOf(1000.0)
-    );
-
+    player = PlayerFactory.createPlayer();
   }
 
   @Test
@@ -64,6 +62,7 @@ public class PlayerTest {
     assertEquals(BigDecimal.valueOf(800.0), player.getMoney());
   }
 
+  // TODO: Should the player net worth be calculated using the market value or the liquidation value (sales fees included).
   @Test
   void getNetWorth_returns_the_total_net_worth() {
     assertEquals(BigDecimal.valueOf(1000.0), player.getNetWorth());
@@ -93,16 +92,13 @@ public class PlayerTest {
 
   @Test
   void getPlayerStatus_returns_the_expected_player_status() {
-    List<BigDecimal> stockValues = new ArrayList<>();
-    stockValues.add(new BigDecimal("1"));
-    Stock testStock = new Stock("tst", "Test Inc.", stockValues);
-    Exchange exchange = new Exchange("test exchange", List.of(testStock));
+    var exchange = ExchangeFactory.createExchange();
 
     assertEquals(PlayerStatus.NOVICE, player.getStatus());
 
     // Advance to week 10 with purchases every week.
     for (int i = 0; i < 10; i++) {
-      exchange.buy("tst", new BigDecimal("1"), player);
+      exchange.buy("AMCH", new BigDecimal("1"), player);
       exchange.advance();
     }
 
@@ -115,7 +111,7 @@ public class PlayerTest {
 
     // Advance to week 20.
     for (int i = 0; i < 10; i++) {
-      exchange.buy("tst", new BigDecimal("1"), player);
+      exchange.buy("AMCH", new BigDecimal("1"), player);
       exchange.advance();
     }
 

@@ -3,9 +3,8 @@ package edu.ntnu.idatt2003.group14.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import edu.ntnu.idatt2003.group14.testutils.StockFactory;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,13 +21,7 @@ public class StockTest {
 
   @BeforeEach
   public void instantiate_stock() {
-    stock = new Stock(
-        "AAPL",
-        "Apple Inc.",
-        new ArrayList<>(Arrays.asList(
-            BigDecimal.valueOf(100.00), BigDecimal.valueOf(101.00), BigDecimal.valueOf(102.00)
-        ))
-    );
+    stock = StockFactory.createStock();
   }
 
   @Test
@@ -43,45 +36,50 @@ public class StockTest {
 
   @Test
   public void verify_stock_symbol() {
-    Assertions.assertEquals("AAPL", stock.getSymbol());
+    Assertions.assertEquals("AMCH", stock.getSymbol());
   }
 
   @Test
   public void verify_stock_company() {
-    Assertions.assertEquals("Apple Inc.", stock.getCompany());
+    Assertions.assertEquals("Amazing Chairs", stock.getCompany());
   }
 
   @Test
   public void verify_stock_sales_price() {
-    Assertions.assertEquals(BigDecimal.valueOf(102.00), stock.getSalesPrice());
+    Assertions.assertEquals(BigDecimal.valueOf(5), stock.getSalesPrice());
 
     // Add new price.
-    stock.addNewSalesPrice(BigDecimal.valueOf(103.00));
-    Assertions.assertEquals(BigDecimal.valueOf(103.00), stock.getSalesPrice());
+    stock.addNewSalesPrice(BigDecimal.valueOf(6));
+    Assertions.assertEquals(BigDecimal.valueOf(6), stock.getSalesPrice());
   }
 
   @Test
   public void verify_historical_prices() {
     Assertions.assertEquals(stock.getHistoricalPrices(),
-        new ArrayList<>(Arrays.asList(
-            BigDecimal.valueOf(100.00), BigDecimal.valueOf(101.00), BigDecimal.valueOf(102.00)
-        ))
+        List.of(
+            new BigDecimal("1"),
+            new BigDecimal("2"),
+            new BigDecimal("3"),
+            new BigDecimal("4"),
+            new BigDecimal("5")
+        )
     );
   }
 
   @Test
   public void verify_highest_price() {
-    Assertions.assertEquals(BigDecimal.valueOf(102.00), stock.getHighestPrice());
+    Assertions.assertEquals(BigDecimal.valueOf(5), stock.getHighestPrice());
   }
 
   @Test
   public void verify_lowest_price() {
-    Assertions.assertEquals(BigDecimal.valueOf(100.00), stock.getLowestPrice());
+    Assertions.assertEquals(BigDecimal.valueOf(1), stock.getLowestPrice());
   }
 
   @Test
   public void verify_latest_price_change() {
-    Assertions.assertEquals(BigDecimal.valueOf(1.00), stock.getLatestPriceChange());
+    Assertions.assertEquals(BigDecimal.valueOf(1), stock.getLatestPriceChange());
+    stock.addNewSalesPrice(new BigDecimal("10"));
+    Assertions.assertEquals(BigDecimal.valueOf(5), stock.getLatestPriceChange());
   }
-
 }

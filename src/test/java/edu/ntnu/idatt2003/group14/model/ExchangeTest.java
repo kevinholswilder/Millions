@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2003.group14.model;
 
-import java.math.BigDecimal;
+import edu.ntnu.idatt2003.group14.testutils.ExchangeFactory;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,35 +9,19 @@ import org.junit.jupiter.api.Test;
 /**
  * Class responsible for testing the {@link Exchange} class.
  *
- * @author Kevin Holswilder
+ * @author Kevin Holswilder, Elias Haugsbakk
  * @since 0.0.1
  */
 public class ExchangeTest {
   private Exchange exchange;
-  private Stock appleStock;
-  private Stock microsoftStock;
+  private Stock nordicChairsStock;
+  private Stock luxuriousHomes;
 
   @BeforeEach
   public void instantiate_exchange() {
-    appleStock = new Stock("AAPL", "Apple Inc.", List.of(
-        BigDecimal.valueOf(100.00),
-        BigDecimal.valueOf(150.0),
-        BigDecimal.valueOf(60.0)
-    ));
-
-    microsoftStock = new Stock("MSFT", "Microsoft Corporation", List.of(
-        BigDecimal.valueOf(120.5),
-        BigDecimal.valueOf(53.40),
-        BigDecimal.valueOf(341.40)
-    ));
-
-    exchange = new Exchange(
-        "New York Stock Exchange (NYSE)",
-        List.of(
-            appleStock,
-            microsoftStock
-        )
-    );
+    exchange = ExchangeFactory.createExchange();
+    nordicChairsStock = exchange.getStock("NOCH");
+    luxuriousHomes = exchange.getStock("LUHO");
   }
 
   @Test
@@ -47,8 +31,8 @@ public class ExchangeTest {
 
   @Test
   public void verify_exchange_stocks() {
-    Assertions.assertTrue(exchange.hasStock("AAPL"));
-    Assertions.assertTrue(exchange.hasStock("MSFT"));
+    Assertions.assertTrue(exchange.hasStock("NOCH"));
+    Assertions.assertTrue(exchange.hasStock("LUHO"));
     Assertions.assertFalse(exchange.hasStock("GOOG"));
     Assertions.assertFalse(exchange.hasStock(""));
   }
@@ -60,13 +44,13 @@ public class ExchangeTest {
 
   @Test
   public void verify_search_stock() {
-    Assertions.assertEquals(microsoftStock, exchange.getStock("MSFT"));
+    Assertions.assertEquals(luxuriousHomes, exchange.getStock("LUHO"));
     Assertions.assertNull(exchange.getStock(""));
   }
 
   @Test
   public void verify_find_stock() {
-    Assertions.assertEquals(List.of(appleStock), exchange.findStock("AAPL"));
+    Assertions.assertEquals(List.of(nordicChairsStock), exchange.findStock("NOCH"));
   }
 
   @Test
@@ -82,8 +66,8 @@ public class ExchangeTest {
   public void verify_get_gainers_order() {
     List<Stock> gainers = exchange.getGainers(2);
 
-    Assertions.assertEquals(gainers.getFirst(), microsoftStock);
-    Assertions.assertEquals(gainers.getLast(), appleStock);
+    Assertions.assertEquals(gainers.getFirst(), nordicChairsStock);
+    Assertions.assertEquals(gainers.getLast(), luxuriousHomes);
   }
 
   @Test
@@ -99,6 +83,6 @@ public class ExchangeTest {
   public void verify_get_losers_order() {
     List<Stock> losers = exchange.getLosers(2);
 
-    Assertions.assertEquals(losers.getFirst(), appleStock);
-    Assertions.assertEquals(losers.getLast(), microsoftStock);}
+    Assertions.assertEquals(losers.getFirst(), nordicChairsStock);
+    Assertions.assertEquals(losers.getLast(), luxuriousHomes);}
 }
