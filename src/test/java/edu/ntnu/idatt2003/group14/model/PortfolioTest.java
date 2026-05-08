@@ -39,12 +39,15 @@ public class PortfolioTest {
   @Test
   void getShares_returns_the_shares() {
     var shares = ShareFactory.createShares(4);
+    shares.removeFirst();
 
     for (Share s : shares) {
       portfolio.addShare(s);
     }
 
-    assertEquals(5, portfolio.getShares().size());
+    assertEquals(4, portfolio.getShares().size());
+
+    assertEquals(1, portfolio.getShares("AMCH").size());
   }
 
   @Test
