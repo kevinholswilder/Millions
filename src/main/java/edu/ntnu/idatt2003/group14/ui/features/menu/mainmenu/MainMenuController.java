@@ -17,7 +17,7 @@ public class MainMenuController {
    * Initializes a new MainMenuController.
    *
    * @param appController the application controller
-   * @param appNavigator the application navigator
+   * @param appNavigator  the application navigator
    */
   public MainMenuController(AppController appController, AppNavigator appNavigator) {
     this.appController = appController;
@@ -32,16 +32,16 @@ public class MainMenuController {
   }
 
   /**
+   * User requests to show the options view.
+   */
+  public void showOptions() {
+    appNavigator.showOptionsView();
+  }
+
+  /**
    * User requests to exit game.
    */
   public void handleExitGame() {
     appController.exitGame();
-  }
-
-  /**
-   * User requests to toggle fullscreen.
-   */
-  public void handleFullScreen() {
-    appController.toggleFullScreen();
   }
 }

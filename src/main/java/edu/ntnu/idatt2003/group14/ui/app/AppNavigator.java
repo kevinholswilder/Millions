@@ -10,6 +10,11 @@ public interface AppNavigator {
   void showMainMenuView();
 
   /**
+   * Switch the view to show the options' menu.
+   */
+  void showOptionsView();
+
+  /**
    * Switch the view to show the new game screen.
    */
   void showNewGameView();
@@ -18,5 +23,10 @@ public interface AppNavigator {
    * Switch the view to show the users' portfolio.
    */
   void showPortfolioView();
+
+  /**
+   * Switch the view to display the user's transaction history.
+   */
+  void showTransactionArchiveView();
 }
 
