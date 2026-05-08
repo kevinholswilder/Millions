@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import edu.ntnu.idatt2003.group14.testutils.StockFactory;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -81,5 +82,14 @@ public class StockTest {
     Assertions.assertEquals(BigDecimal.valueOf(1), stock.getLatestPriceChange());
     stock.addNewSalesPrice(new BigDecimal("10"));
     Assertions.assertEquals(BigDecimal.valueOf(5), stock.getLatestPriceChange());
+
+    Stock stockNoHistory = new Stock(
+        "APPL",
+        "Apple inc.",
+        new ArrayList<>(
+            List.of(new BigDecimal("10"))
+        )
+    );
+    Assertions.assertEquals(new BigDecimal("0"), stockNoHistory.getLatestPriceChange());
   }
 }
