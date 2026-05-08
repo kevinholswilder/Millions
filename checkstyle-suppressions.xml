@@ -10,4 +10,7 @@
     <!-- suppress abbreviation warnings: CSVreader will not trigger mvn checkstyle -->
     <suppress checks="AbbreviationAsWordInName"
               files=".java"/>
+    <!-- suppress naming warnings: Underscore lambda variables will not trigger mvn checkstyle -->
+    <suppress checks="LambdaParameterName"
+              files=".java"/>
 </suppressions>
