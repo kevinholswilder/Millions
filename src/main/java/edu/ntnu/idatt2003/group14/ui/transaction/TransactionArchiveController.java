@@ -12,17 +12,17 @@ import javafx.scene.layout.HBox;
  */
 public class TransactionArchiveController {
 
-    /**
-     * Creates a row for a transaction.
-     *
-     * @param transaction
-     * @return
-     */
-    public HBox createTransactionRow(Transaction transaction) {
-        Share share = transaction.getShare();
-        Stock stock = share.getStock();
+  /**
+   * Creates a row for a transaction.
+   *
+   * @param transaction
+   * @return
+   */
+  public HBox createTransactionRow(Transaction transaction) {
+    Share share = transaction.getShare();
+    Stock stock = share.getStock();
 
-        return new HBox(16);
-    }
+    return new HBox(16);
+  }
 
 }

@@ -18,5 +18,10 @@ public interface AppNavigator {
    * Switch the view to show the users' portfolio.
    */
   void showPortfolioView();
+
+  /**
+   * Switch the view to display the user's transaction history.
+   */
+  void showTransactionArchiveView();
 }
 
