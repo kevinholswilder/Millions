@@ -1,8 +1,14 @@
 package edu.ntnu.idatt2003.group14.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import edu.ntnu.idatt2003.group14.testutils.ExchangeFactory;
+import edu.ntnu.idatt2003.group14.testutils.PlayerFactory;
+import java.math.BigDecimal;
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,63 +32,107 @@ public class ExchangeTest {
 
   @Test
   public void verify_exchange_name() {
-    Assertions.assertEquals("New York Stock Exchange (NYSE)", exchange.getName());
+    assertEquals("New York Stock Exchange (NYSE)", exchange.getName());
   }
 
   @Test
   public void verify_exchange_stocks() {
-    Assertions.assertTrue(exchange.hasStock("NOCH"));
-    Assertions.assertTrue(exchange.hasStock("LUHO"));
-    Assertions.assertFalse(exchange.hasStock("GOOG"));
-    Assertions.assertFalse(exchange.hasStock(""));
+    assertTrue(exchange.hasStock("NOCH"));
+    assertTrue(exchange.hasStock("LUHO"));
+    assertFalse(exchange.hasStock("GOOG"));
+    assertFalse(exchange.hasStock(""));
   }
 
   @Test
   public void verify_week_of_exchange() {
-    Assertions.assertEquals(1, exchange.getWeek());
+    assertEquals(1, exchange.getWeek());
   }
 
   @Test
   public void verify_search_stock() {
-    Assertions.assertEquals(luxuriousHomes, exchange.getStock("LUHO"));
-    Assertions.assertNull(exchange.getStock(""));
+    assertEquals(luxuriousHomes, exchange.getStock("LUHO"));
+    assertNull(exchange.getStock(""));
   }
 
   @Test
   public void verify_find_stock() {
-    Assertions.assertEquals(List.of(nordicChairsStock), exchange.findStock("NOCH"));
+    assertEquals(List.of(nordicChairsStock), exchange.findStock("NOCH"));
   }
 
   @Test
   public void verify_get_gainers_size() {
     List<Stock> gainers = exchange.getGainers(2);
-    Assertions.assertEquals(2, gainers.size());
+    assertEquals(2, gainers.size());
 
     gainers = exchange.getGainers(1);
-    Assertions.assertEquals(1, gainers.size());
+    assertEquals(1, gainers.size());
   }
 
   @Test
   public void verify_get_gainers_order() {
     List<Stock> gainers = exchange.getGainers(2);
 
-    Assertions.assertEquals(gainers.getFirst(), nordicChairsStock);
-    Assertions.assertEquals(gainers.getLast(), luxuriousHomes);
+    assertEquals(gainers.getFirst(), nordicChairsStock);
+    assertEquals(gainers.getLast(), luxuriousHomes);
   }
 
   @Test
   public void verify_get_losers_size() {
     List<Stock> losers = exchange.getLosers(2);
-    Assertions.assertEquals(2, losers.size());
+    assertEquals(2, losers.size());
 
     losers = exchange.getLosers(1);
-    Assertions.assertEquals(1, losers.size());
+    assertEquals(1, losers.size());
   }
 
   @Test
   public void verify_get_losers_order() {
     List<Stock> losers = exchange.getLosers(2);
 
-    Assertions.assertEquals(losers.getFirst(), nordicChairsStock);
-    Assertions.assertEquals(losers.getLast(), luxuriousHomes);}
+    assertEquals(losers.getFirst(), nordicChairsStock);
+    assertEquals(losers.getLast(), luxuriousHomes);
+  }
+
+  @Test
+  void verify_purchasing_of_shares() {
+    Player player = PlayerFactory.createPlayer();
+    assertEquals(new BigDecimal("1000.0"), player.getMoney());
+    assertTrue(player.getPortfolio().getShares().isEmpty());
+
+    exchange.buy("NOCH", new BigDecimal("10"), player);
+
+    assertFalse(player.getPortfolio().getShares().isEmpty());
+    // cost of 50 + fees of 2.5 (0.5%)
+    assertEquals(new BigDecimal("947.50"), player.getMoney());
+  }
+
+  @Test
+  void verify_selling_of_shares() {
+    Player player = PlayerFactory.createPlayer();
+    assertEquals(new BigDecimal("1000.0"), player.getMoney());
+    assertTrue(player.getPortfolio().getShares().isEmpty());
+
+    exchange.buy("NOCH", new BigDecimal("10"), player);
+
+    assertFalse(player.getPortfolio().getShares().isEmpty());
+    // cost of 50 + fees of 2.5 (0.5%)
+    assertEquals(new BigDecimal("947.50"), player.getMoney());
+
+    exchange.sell(player.getPortfolio().getShares().getFirst(), player);
+
+    assertTrue(player.getPortfolio().getShares().isEmpty());
+    // 947.5 + 50 + 1% commission rate
+    assertEquals(new BigDecimal("997.00"), player.getMoney());
+  }
+
+  @Test
+  void varify_proceed_to_next_week() {
+    assertEquals(1, exchange.getWeek());
+    assertEquals(5, exchange.getStock("NOCH").getHistoricalPrices().size());
+
+    exchange.advance();
+
+    assertEquals(2, exchange.getWeek());
+    assertEquals(6, exchange.getStock("NOCH").getHistoricalPrices().size());
+  }
 }
