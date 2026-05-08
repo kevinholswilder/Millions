@@ -27,6 +27,10 @@ public enum TransactionType {
    * @return the transaction type
    */
   public static TransactionType fromString(String type) {
-    return TransactionType.valueOf(type.toUpperCase());
+    try {
+      return TransactionType.valueOf(type.toUpperCase());
+    } catch (IllegalArgumentException e) {
+      return null;
+    }
   }
 }

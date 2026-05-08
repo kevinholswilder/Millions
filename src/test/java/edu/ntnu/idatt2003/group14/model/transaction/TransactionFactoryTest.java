@@ -53,7 +53,7 @@ public class TransactionFactoryTest {
 
   @Test
   void verify_throws_on_unknown_string() {
-    assertThrows(IllegalArgumentException.class, () -> TransactionFactory.get(
+    assertThrows(UnknownTransactionException.class, () -> TransactionFactory.get(
         "UNKNOWN TYPE",
         share,
         3
