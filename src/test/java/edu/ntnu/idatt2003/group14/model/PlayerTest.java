@@ -91,7 +91,7 @@ public class PlayerTest {
   }
 
   @Test
-  void getPlayerStatus_returns_the_expected_player_status() {
+  void getPlayerStatus_returns_the_expected_player_status() throws InsufficientBalanceException {
     var exchange = ExchangeFactory.createExchange();
 
     assertEquals(PlayerStatus.NOVICE, player.getStatus());

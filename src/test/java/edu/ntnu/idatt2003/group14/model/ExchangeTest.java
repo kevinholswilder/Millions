@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
 import edu.ntnu.idatt2003.group14.testutils.ExchangeFactory;
 import edu.ntnu.idatt2003.group14.testutils.PlayerFactory;
 import java.math.BigDecimal;
@@ -94,7 +95,7 @@ public class ExchangeTest {
   }
 
   @Test
-  void verify_purchasing_of_shares() {
+  void verify_purchasing_of_shares() throws InsufficientBalanceException {
     Player player = PlayerFactory.createPlayer();
     assertEquals(new BigDecimal("1000.0"), player.getMoney());
     assertTrue(player.getPortfolio().getShares().isEmpty());
@@ -107,7 +108,7 @@ public class ExchangeTest {
   }
 
   @Test
-  void verify_selling_of_shares() {
+  void verify_selling_of_shares() throws InsufficientBalanceException {
     Player player = PlayerFactory.createPlayer();
     assertEquals(new BigDecimal("1000.0"), player.getMoney());
     assertTrue(player.getPortfolio().getShares().isEmpty());
