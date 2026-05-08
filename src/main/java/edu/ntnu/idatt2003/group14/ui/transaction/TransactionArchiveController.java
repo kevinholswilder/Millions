@@ -6,6 +6,7 @@ import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
 import javafx.scene.layout.HBox;
 
 /**
+ * Controller for transaction archive UI.
  *
  * @author Kevin Holswilder
  * @since 0.0.1
@@ -13,10 +14,10 @@ import javafx.scene.layout.HBox;
 public class TransactionArchiveController {
 
   /**
-   * Creates a row for a transaction.
+   * Creates a row representing a transaction.
    *
-   * @param transaction
-   * @return
+   * @param transaction the transaction to display
+   * @return a row containing transaction information
    */
   public HBox createTransactionRow(Transaction transaction) {
     Share share = transaction.getShare();
@@ -24,5 +25,4 @@ public class TransactionArchiveController {
 
     return new HBox(16);
   }
-
 }
