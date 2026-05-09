@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.GaussianBlur;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -42,11 +41,7 @@ public class OptionsView {
         Objects.requireNonNull(getClass().getResource("/css/menu.css")).toExternalForm()
     );
 
-    BorderPane forGround = new BorderPane();
-
-    forGround.setCenter(centerMenu());
-
-    this.root.getChildren().addAll(backgroundView(), forGround);
+    this.root.getChildren().addAll(backgroundView(), centerMenu());
   }
 
   public Parent getRoot() {
@@ -56,7 +51,6 @@ public class OptionsView {
   private Region backgroundView() {
     Region bg = new Region();
     bg.getStyleClass().add("main-menu-root-container");
-    bg.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     bg.setEffect(new GaussianBlur(10));
     return bg;
   }
