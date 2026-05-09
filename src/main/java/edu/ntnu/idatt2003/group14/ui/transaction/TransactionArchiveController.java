@@ -5,6 +5,7 @@ import edu.ntnu.idatt2003.group14.model.Stock;
 import edu.ntnu.idatt2003.group14.model.transaction.Purchase;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
 import java.math.BigDecimal;
+import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -20,6 +21,11 @@ import javafx.scene.layout.VBox;
  * @since 0.0.1
  */
 public class TransactionArchiveController {
+  private String currentSort = "Week";
+  private boolean ascending = true;
+  private String currentSearch = "";
+  private List<Transaction> transactions = List.of();
+  private String currentTypeFilter = "All";
 
   /**
    * Creates a row displaying transaction information.
@@ -108,6 +114,58 @@ public class TransactionArchiveController {
     box.getChildren().addAll(titleLabel, valueLabel);
 
     return box;
+  }
+
+  /**
+   * Sets the transactions managed by the controller.
+   *
+   * @param transactions the transactions to manage and display
+   */
+  public void setTransactions(List<Transaction> transactions) {
+    this.transactions = transactions;
+  }
+
+  /**
+   * Sets the current search query used to filter transactions.
+   *
+   * @param currentSearch the search query
+   */
+  public void setCurrentSearch(String currentSearch) {
+    this.currentSearch = currentSearch;
+  }
+
+  /**
+   * Sets the current sorting criterion for displayed transactions.
+   *
+   * @param currentSort the sort criterion
+   */
+  public void setCurrentSort(String currentSort) {
+    this.currentSort = currentSort;
+  }
+
+  /**
+   * Toggles the sorting direction between ascending and descending order.
+   */
+  public void toggleAscending() {
+    this.ascending = !this.ascending;
+  }
+
+  /**
+   * Returns whether transactions are currently sorted in ascending order.
+   *
+   * @return {@code true} if sorting is ascending, otherwise {@code false}
+   */
+  public boolean isAscending() {
+    return ascending;
+  }
+
+  /**
+   * Sets the current transaction type filter.
+   *
+   * @param currentTypeFilter the transaction type filter
+   */
+  public void setCurrentTypeFilter(String currentTypeFilter) {
+    this.currentTypeFilter = currentTypeFilter;
   }
 
 }
