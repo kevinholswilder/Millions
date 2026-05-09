@@ -4,34 +4,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.model.Stock;
+import edu.ntnu.idatt2003.group14.testutils.StockFactory;
 import java.math.BigDecimal;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public final class SaleCalculatorTest {
 
-  private final BigDecimal testStockPrice = BigDecimal.valueOf(150);
-  private final BigDecimal purchasePrice = BigDecimal.valueOf(120);
-  private final BigDecimal quantity = BigDecimal.valueOf(5);
+  private final BigDecimal purchasePrice = new BigDecimal("3");
+  private final BigDecimal quantity = new BigDecimal("3");
   private SaleCalculator saleCalculator;
 
   @BeforeEach
   void set_up_tests() {
-    Stock testStock = new Stock("tst", "test", List.of(testStockPrice));
+    Stock testStock = StockFactory.createStock();
     Share testShare = new Share(testStock, quantity, purchasePrice);
     saleCalculator = new SaleCalculator(testShare);
   }
 
   @Test
   void calculate_gross_calculates_the_expected_gross() {
-    assertEquals(BigDecimal.valueOf(750), saleCalculator.calculateGross());
+    assertEquals(BigDecimal.valueOf(15), saleCalculator.calculateGross());
   }
 
   @Test
   void calculate_commission_calculates_the_expected_commission() {
     BigDecimal actualTotal = saleCalculator.calculateCommission();
-    BigDecimal expectedTotal = BigDecimal.valueOf(7.5);
+    BigDecimal expectedTotal = BigDecimal.valueOf(0.15);
     assertEquals(expectedTotal.stripTrailingZeros(), actualTotal.stripTrailingZeros());
   }
 
