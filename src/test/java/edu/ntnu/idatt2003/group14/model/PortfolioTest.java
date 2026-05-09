@@ -4,9 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import edu.ntnu.idatt2003.group14.model.portfolio.Portfolio;
+import edu.ntnu.idatt2003.group14.testutils.ExchangeFactory;
 import edu.ntnu.idatt2003.group14.testutils.ShareFactory;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -80,5 +81,41 @@ public class PortfolioTest {
     BigDecimal actual = portfolio.getNetWorth();
 
     assertEquals(0, expected.compareTo(actual));
+  }
+
+  @Test
+  void verify_getValueForWeek() {
+    var shares = ShareFactory.createShares(5);
+    for (Share share : shares) {
+      portfolio.addShare(share);
+    }
+    assertEquals(new BigDecimal("6"), portfolio.getValueForWeek(0));
+    assertEquals(new BigDecimal("24"), portfolio.getValueForWeek(3));
+  }
+
+  @Test
+  void verify_onWeekChange() {
+    Exchange exchange = ExchangeFactory.createExchangeNonUniformPrices();
+    Portfolio portfolio = new Portfolio();
+    Share share = new Share(
+        exchange.getStock("stk2"),
+        new BigDecimal("10"),
+        BigDecimal.ONE
+        );
+    portfolio.addShare(share);
+    exchange.addWeekAdvanceListener(portfolio);
+
+    var captured = new ArrayList<BigDecimal>();
+    portfolio.addListener(captured::add);
+
+    exchange.advance();
+
+    assertEquals(new BigDecimal("4"), captured.getFirst());
+  }
+
+  @Test
+  void verify_getWeeks() {
+    assertEquals(5, portfolio.getWeek());
+    assertEquals(0, new Portfolio().getWeek());
   }
 }

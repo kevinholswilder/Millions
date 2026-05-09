@@ -136,4 +136,12 @@ public class ExchangeTest {
     assertEquals(2, exchange.getWeek());
     assertEquals(6, exchange.getStock("NOCH").getHistoricalPrices().size());
   }
+
+  @Test
+  void verify_getValueForWeek() {
+    exchange = ExchangeFactory.createExchangeNonUniformPrices();
+    assertEquals(new BigDecimal("1000.0000"), exchange.getValueForWeek(0));
+    assertEquals(new BigDecimal("1500.0000"), exchange.getValueForWeek(1));
+    assertEquals(new BigDecimal("2000.0000"), exchange.getValueForWeek(2));
+  }
 }
