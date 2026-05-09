@@ -1,8 +1,15 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
+import edu.ntnu.idatt2003.group14.Launcher;
+import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
+import edu.ntnu.idatt2003.group14.model.Exchange;
+import edu.ntnu.idatt2003.group14.model.GameSession;
+import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.logging.Level;
 
 /**
  * Controller class for handling user input from the New Game scene.
@@ -64,12 +71,28 @@ public class NewGameController {
     IO.println("Username: " + username);
     IO.println("Starting Money: " + startingMoney);
     IO.println("Stock data file: " + stockDataFile.getName());
-    appNavigator.showPortfolioView();
+
+    try {
+      // Initialize player
+      GameSession.setPlayer(
+              new Player(username, startingMoney)
+      );
+
+      // Initialize exchange
+      StockReader reader = new StockReader();
+      GameSession.setExchange(
+              new Exchange("Temporary placeholder", reader.read(stockDataFile.getName()))
+      );
+      appNavigator.showPortfolioView();
+    } catch (IOException e) {
+      // TODO: Give the user proper feedback by using a pop up dialog.
+      Launcher.LOGGER.log(Level.SEVERE, "The selected file is invalid and/or cannot be read.", e.getMessage());
+    }
   }
 
   private NewGameValidationState validateUsername(String username) {
     return username.isBlank() ? NewGameValidationState.EMPTY_USERNAME :
-        NewGameValidationState.VALID;
+            NewGameValidationState.VALID;
   }
 
   private NewGameValidationState validateAmount(String amount) {
@@ -88,6 +111,6 @@ public class NewGameController {
 
   private NewGameValidationState validateFileChosen(File stockDataFile) {
     return stockDataFile == null ? NewGameValidationState.NO_FILE_CHOSEN :
-        NewGameValidationState.VALID;
+            NewGameValidationState.VALID;
   }
 }
