@@ -3,6 +3,7 @@ package edu.ntnu.idatt2003.group14.ui.transaction;
 import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.model.Stock;
 import edu.ntnu.idatt2003.group14.model.transaction.Purchase;
+import edu.ntnu.idatt2003.group14.model.transaction.Sale;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
 import java.math.BigDecimal;
 import java.util.List;
@@ -166,6 +167,69 @@ public class TransactionArchiveController {
    */
   public void setCurrentTypeFilter(String currentTypeFilter) {
     this.currentTypeFilter = currentTypeFilter;
+  }
+
+  /**
+   * Determines whether a transaction matches the current search
+   * query and type filter based on either the {@link Stock}'s name or symbol.
+   *
+   * @param transaction the transaction that is evaluated
+   * @return {@code true} if the transaction matches the active filters, otherwise {@code false}
+   */
+  private boolean matches(Transaction transaction) {
+    String query = currentSearch.toLowerCase();
+
+    Share share = transaction.getShare();
+    Stock stock = share.getStock();
+
+    boolean matchesText = stock.getSymbol().toLowerCase().contains(query) || stock.getCompany().toLowerCase().contains(query);
+
+    boolean matchesType = switch (currentTypeFilter) {
+      case "Purchases" -> transaction instanceof Purchase;
+      case "Sales" -> transaction instanceof Sale;
+      default -> true;
+    };
+
+    return matchesText && matchesType;
+  }
+
+  /**
+   * Compares two transactions accordingly to the selected sorting type.
+   *
+   * @param a the first transaction
+   * @param b the second transaction
+   * @return a negative integer, zero, or a positive integer as the
+   *         first transaction is less than, equal to, or greater than
+   *         the second transaction
+   */
+  private int compare(Transaction a, Transaction b) {
+    int result = switch (currentSort) {
+      case "Price" -> a.getShare().getPurchasePrice()
+              .compareTo(b.getShare().getPurchasePrice());
+
+      case "Quantity" -> a.getShare().getQuantity()
+              .compareTo(b.getShare().getQuantity());
+
+      case "Total" -> a.getShare().getTotal()
+              .compareTo(b.getShare().getTotal());
+
+      default -> Integer.compare(a.getWeek(), b.getWeek());
+    };
+
+    return ascending ? result : -result;
+  }
+
+  /**
+   * Returns a list of transaction objects according
+   * to the currently selected type and filter.
+   *
+   * @return a filtered and sorted list of visible transactions
+   */
+  public List<Transaction> getProcessedTransactions() {
+    return transactions.stream()
+            .filter(this::matches)
+            .sorted(this::compare)
+            .toList();
   }
 
 }
