@@ -10,18 +10,24 @@ import java.util.Optional;
  *
  * <p>The player and exchange are returned as {@link Optional} to enforce explicit null handling
  * in the UI layer.
+ *
+ * @author Elias Haugsbakk, Kevin Holswilder
+ * @since 0.0.1
  */
 public class GameSession {
-  private Player player = null;
-  private Exchange exchange = null;
+  private static Player player = null;
+  private static Exchange exchange = null;
+
+  // Prevent instantiation
+  private GameSession() {}
 
   /**
    * Sets the current player. If null is passed, player is cleared.
    *
    * @param player the player to set, or null to clear
    */
-  public void setPlayer(Player player) {
-    this.player = player;
+  public static void setPlayer(Player player) {
+    GameSession.player = player;
   }
 
   /**
@@ -29,22 +35,22 @@ public class GameSession {
    *
    * @param exchange the exchange to set, or null to clear
    */
-  public void setExchange(Exchange exchange) {
-    this.exchange = exchange;
+  public static void setExchange(Exchange exchange) {
+    GameSession.exchange = exchange;
   }
 
   /**
    * Clears the current player.
    */
-  public void clearPlayer() {
-    this.player = null;
+  public static void clearPlayer() {
+    GameSession.player = null;
   }
 
   /**
    * Clears the current exchange.
    */
-  public void clearExchange() {
-    this.exchange = null;
+  public static void clearExchange() {
+    GameSession.exchange = null;
   }
 
   /**
@@ -52,8 +58,8 @@ public class GameSession {
    *
    * @return an {@link Optional} containing the player, or empty if none is set
    */
-  public Optional<Player> getPlayer() {
-    return Optional.ofNullable(this.player);
+  public static Optional<Player> getPlayer() {
+    return Optional.ofNullable(GameSession.player);
   }
 
   /**
@@ -61,7 +67,7 @@ public class GameSession {
    *
    * @return an {@link Optional} containing the exchange, or empty if none is set
    */
-  public Optional<Exchange> getExchange() {
-    return Optional.ofNullable(this.exchange);
+  public static Optional<Exchange> getExchange() {
+    return Optional.ofNullable(GameSession.exchange);
   }
 }
