@@ -1,0 +1,45 @@
+.transaction-row {
+  -fx-background-radius: 12;
+  -fx-border-radius: 12;
+  -fx-padding: 16;
+  -fx-background-color: #ffffff;
+  -fx-border-color: #e5e7eb;
+  -fx-border-width: 1;
+}
+
+.transaction-row-even {
+  -fx-background-color: #ffffff;
+}
+
+.transaction-row-odd {
+  -fx-background-color: #f8fafc;
+}
+
+.transaction-row:hover {
+  -fx-background-color: #eef2f7;
+}
+
+.transaction-info-box {
+  -fx-min-width: 120;
+}
+
+.transaction-title {
+  -fx-text-fill: #6b7280;
+  -fx-font-size: 11px;
+  -fx-font-weight: 600;
+  -fx-text-transform: uppercase;
+}
+
+.transaction-value {
+  -fx-text-fill: #111827;
+  -fx-font-size: 16px;
+  -fx-font-weight: 700;
+}
+
+.purchase-label {
+  -fx-text-fill: #16a34a;
+}
+
+.sale-label {
+  -fx-text-fill: #dc2626;
+}
