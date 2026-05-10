@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
+import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
 import java.io.File;
 import java.math.BigDecimal;
@@ -61,9 +62,9 @@ public class NewGameController {
    * @param stockDataFile the file containing stock data
    */
   public void handleStartGame(String username, BigDecimal startingMoney, File stockDataFile) {
-    IO.println("Username: " + username);
-    IO.println("Starting Money: " + startingMoney);
-    IO.println("Stock data file: " + stockDataFile.getName());
+    AppLogger.fine("Username: " + username);
+    AppLogger.fine("Starting Money: " + startingMoney);
+    AppLogger.fine("Stock data file: " + stockDataFile.getName());
     appNavigator.showPortfolioView();
   }
 
