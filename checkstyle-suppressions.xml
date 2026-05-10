@@ -13,4 +13,7 @@
     <!-- suppress naming warnings: Underscore lambda variables will not trigger mvn checkstyle -->
     <suppress checks="LambdaParameterName"
               files=".java"/>
+    <!-- suppress variable declaration usage distance:  -->
+    <suppress checks="VariableDeclarationUsageDistance"
+              files=".java"/>
 </suppressions>
