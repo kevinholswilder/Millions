@@ -44,8 +44,12 @@ public class TransactionArchiveView {
     this.root.setTop(topBar);
 
     this.root.getStylesheets().addAll(
-            Objects.requireNonNull(getClass().getResource("/css/transaction_archive/transaction-row.css")).toExternalForm(),
-            Objects.requireNonNull(getClass().getResource("/css/transaction_archive/topbar.css")).toExternalForm()
+            Objects.requireNonNull(
+                getClass().getResource("/css/transaction_archive/transaction-row.css")
+            ).toExternalForm(),
+            Objects.requireNonNull(
+                getClass().getResource("/css/transaction_archive/topbar.css")
+            ).toExternalForm()
     );
 
     // TODO: Retrieve the transactions from a Player object.

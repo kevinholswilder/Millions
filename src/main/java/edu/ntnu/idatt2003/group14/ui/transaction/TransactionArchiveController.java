@@ -182,7 +182,8 @@ public class TransactionArchiveController {
     Share share = transaction.getShare();
     Stock stock = share.getStock();
 
-    boolean matchesText = stock.getSymbol().toLowerCase().contains(query) || stock.getCompany().toLowerCase().contains(query);
+    boolean matchesText = stock.getSymbol().toLowerCase().contains(query)
+        || stock.getCompany().toLowerCase().contains(query);
 
     boolean matchesType = switch (currentTypeFilter) {
       case "Purchases" -> transaction instanceof Purchase;
