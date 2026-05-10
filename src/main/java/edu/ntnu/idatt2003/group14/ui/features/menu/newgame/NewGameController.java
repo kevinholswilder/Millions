@@ -65,7 +65,11 @@ public class NewGameController {
    * @param startingMoney the users starting money
    * @param stockDataFile the file containing stock data
    */
-  public void handleStartGame(String username, BigDecimal startingMoney, File stockDataFile) throws IOException {
+  public void handleStartGame(
+          String username,
+          BigDecimal startingMoney,
+          File stockDataFile
+  ) throws IOException {
     IO.println("Username: " + username);
     IO.println("Starting Money: " + startingMoney);
     IO.println("Stock data file: " + stockDataFile.getName());
