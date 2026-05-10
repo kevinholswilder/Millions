@@ -1,6 +1,5 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
-import edu.ntnu.idatt2003.group14.Launcher;
 import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
 import edu.ntnu.idatt2003.group14.model.Exchange;
 import edu.ntnu.idatt2003.group14.model.GameSession;
@@ -9,12 +8,11 @@ import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.logging.Level;
 
 /**
  * Controller class for handling user input from the New Game scene.
  *
- * @author Elias Haugsbakk
+ * @author Elias Haugsbakk, Kevin Holswilder
  * @since 0.0.1
  */
 public class NewGameController {
@@ -67,27 +65,22 @@ public class NewGameController {
    * @param startingMoney the users starting money
    * @param stockDataFile the file containing stock data
    */
-  public void handleStartGame(String username, BigDecimal startingMoney, File stockDataFile) {
+  public void handleStartGame(String username, BigDecimal startingMoney, File stockDataFile) throws IOException {
     IO.println("Username: " + username);
     IO.println("Starting Money: " + startingMoney);
     IO.println("Stock data file: " + stockDataFile.getName());
 
-    try {
-      // Initialize player
-      GameSession.setPlayer(
-              new Player(username, startingMoney)
-      );
+    // Initialize player
+    GameSession.setPlayer(
+            new Player(username, startingMoney)
+    );
 
-      // Initialize exchange
-      StockReader reader = new StockReader();
-      GameSession.setExchange(
-              new Exchange("Temporary placeholder", reader.read(stockDataFile.getName()))
-      );
-      appNavigator.showPortfolioView();
-    } catch (IOException e) {
-      // TODO: Give the user proper feedback by using a pop up dialog.
-      Launcher.LOGGER.log(Level.SEVERE, "The selected file is invalid and/or cannot be read.", e.getMessage());
-    }
+    // Initialize exchange
+    StockReader reader = new StockReader();
+    GameSession.setExchange(
+            new Exchange("Temporary placeholder", reader.read(stockDataFile.toPath().toString()))
+    );
+    appNavigator.showPortfolioView();
   }
 
   private NewGameValidationState validateUsername(String username) {

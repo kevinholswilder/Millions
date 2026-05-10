@@ -1,11 +1,14 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
+import edu.ntnu.idatt2003.group14.Launcher;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.MenuButtonFactory;
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.logging.Level;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -134,11 +137,26 @@ public class NewGameView {
         controller.validateNewGameInput(username, amount, stockDataFile);
 
     switch (result) {
-      case VALID -> controller.handleStartGame(
-          username,
-          new BigDecimal(amount),
-          this.stockDataFile
-      );
+      case VALID -> {
+        try {
+          controller.handleStartGame(
+                  username,
+                  new BigDecimal(amount),
+                  this.stockDataFile
+          );
+        } catch (IOException e) {
+          Launcher.LOGGER.log(
+                  Level.SEVERE,
+                  "The selected file is invalid and/or cannot be read.",
+                  e
+          );
+
+          showError(
+                  "The selected stock data file is invalid and/or cannot be read.",
+                  fileChooserBtn
+          );
+        }
+      }
       case NEGATIVE_AMOUNT -> showError(
           "Starting Money must be positive",
           startingMoneyField
