@@ -21,11 +21,8 @@ public class Footer extends Button {
     this.setPrefHeight(100.0);
 
     this.setOnAction(_ -> {
-      if (GameSession.getExchange().isPresent()) {
-        Exchange exchange = GameSession.getExchange().get();
-        exchange.advance();
-      }
+      Exchange exchange = GameSession.getExchange();
+      exchange.advance();
     });
   }
-
 }

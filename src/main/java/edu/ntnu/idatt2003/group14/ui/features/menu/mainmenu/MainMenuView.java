@@ -2,6 +2,7 @@ package edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu;
 
 import edu.ntnu.idatt2003.group14.GameConfig;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
+import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.features.menu.MenuButtonFactory;
 import java.util.Objects;
 import javafx.geometry.Insets;
@@ -21,7 +22,7 @@ import javafx.scene.layout.VBox;
  * @author Elias Haugsbakk
  * @since 0.0.1
  */
-public class MainMenuView {
+public class MainMenuView implements View {
   private final BorderPane root;
   private final MainMenuController controller;
   private final MenuButtonFactory buttonFactory;
@@ -44,6 +45,7 @@ public class MainMenuView {
     this.root.setBottom(bottomBar());
   }
 
+  @Override
   public Parent getRoot() {
     return this.root;
   }

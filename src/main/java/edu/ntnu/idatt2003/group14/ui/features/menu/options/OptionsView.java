@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.options;
 
 import edu.ntnu.idatt2003.group14.service.AudioManager;
+import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.features.menu.MenuButtonFactory;
 import java.util.Objects;
 import javafx.geometry.Insets;
@@ -20,7 +21,7 @@ import javafx.scene.layout.VBox;
  * @author Elias Haugsbakk
  * @since 0.0.1
  */
-public class OptionsView {
+public class OptionsView implements View {
   private final StackPane root;
   private final OptionsController controller;
   private final MenuButtonFactory buttonFactory;
@@ -44,6 +45,7 @@ public class OptionsView {
     this.root.getChildren().addAll(backgroundView(), centerMenu());
   }
 
+  @Override
   public Parent getRoot() {
     return this.root;
   }

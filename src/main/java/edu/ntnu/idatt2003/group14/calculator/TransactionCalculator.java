@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2003.group14.api.calculator;
+package edu.ntnu.idatt2003.group14.calculator;
 
 import java.math.BigDecimal;
 

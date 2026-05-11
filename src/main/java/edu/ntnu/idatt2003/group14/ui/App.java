@@ -1,13 +1,19 @@
 package edu.ntnu.idatt2003.group14.ui;
 
+import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
+import edu.ntnu.idatt2003.group14.model.Exchange;
+import edu.ntnu.idatt2003.group14.model.GameSession;
+import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.app.AppControllerImpl;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigatorImpl;
+import edu.ntnu.idatt2003.group14.ui.app.ViewRegistry;
 import edu.ntnu.idatt2003.group14.utils.AppDataPathUtil;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -34,7 +40,7 @@ public final class App extends Application {
 
     if (skipMenu) {
       AppLogger.fine("Skipping menu screen");
-      AppLogger.fine("User: \"TestUser\"");
+      AppLogger.fine("User: \"TestPlayer\"");
       AppLogger.fine("Stocks file: \"/resources/sp500.csv\"");
     }
   }
@@ -48,7 +54,8 @@ public final class App extends Application {
     audioManager.playOfficeNoice();
 
     AppController appController = new AppControllerImpl(stage);
-    AppNavigator appNavigator = new AppNavigatorImpl(stage, appController, audioManager);
+    ViewRegistry viewRegistry = new ViewRegistry(appController, audioManager);
+    AppNavigator appNavigator = new AppNavigatorImpl(stage, viewRegistry);
 
     if (skipMenu) {
       skipMenu(appNavigator);
@@ -62,6 +69,17 @@ public final class App extends Application {
     // enable by running with:
     // javafx:run -Djavafx.args=--skipMenu
     // java -Djavafx.args="--skipMenu" -jar Millions.jar
+    try {
+      GameSession.setPlayer(new Player("TestPlayer", new BigDecimal("100000")));
+      Exchange exchange = new Exchange(
+          "sp500",
+          new StockReader().read("sp500.csv")
+      );
+      GameSession.setExchange(exchange);
+    } catch (IOException e) {
+      AppLogger.error("Could not load /resources/sp500.csv", e);
+      throw new RuntimeException(e);
+    }
     appNavigator.showPortfolioView();
   }
 }

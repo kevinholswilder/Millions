@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.portfolio;
 
+import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.PlottableGraph;
 import edu.ntnu.idatt2003.group14.ui.components.StockMoversComponent;
 import javafx.scene.Parent;
@@ -12,7 +13,7 @@ import javafx.scene.layout.VBox;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class PortfolioView {
+public class PortfolioView implements View {
   private final HBox root;
   private final PortfolioController controller;
 
@@ -61,6 +62,7 @@ public class PortfolioView {
    *
    * @return the root layout node
    */
+  @Override
   public Parent getRoot() {
     return root;
   }
