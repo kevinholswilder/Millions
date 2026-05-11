@@ -12,7 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -26,7 +28,7 @@ import javafx.scene.layout.VBox;
  */
 public class NewGameView {
   private final AppController appController;
-  private final BorderPane root;
+  private final StackPane root;
   private final NewGameController controller;
   private final AudioManager audioManager;
   private final MenuButtonFactory buttonFactory;
@@ -51,12 +53,18 @@ public class NewGameView {
     this.appController = appController;
     this.audioManager = audioManager;
     this.buttonFactory = new MenuButtonFactory(audioManager);
-    this.root = new BorderPane();
+    this.root = new StackPane();
     this.root.getStylesheets().add(
         Objects.requireNonNull(getClass().getResource("/css/menu.css")).toExternalForm()
     );
-    this.root.getStyleClass().add("main-menu-root-container");
-    this.root.setCenter(centerMenu());
+    this.root.getChildren().addAll(backgroundView(), centerMenu());
+  }
+
+  private Region backgroundView() {
+    Region bg = new Region();
+    bg.getStyleClass().add("main-menu-root-container");
+    bg.setEffect(new GaussianBlur(20));
+    return bg;
   }
 
   /**

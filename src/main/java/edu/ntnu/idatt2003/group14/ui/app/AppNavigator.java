@@ -10,6 +10,11 @@ public interface AppNavigator {
   void showMainMenuView();
 
   /**
+   * Switch the view to show the options' menu.
+   */
+  void showOptionsView();
+
+  /**
    * Switch the view to show the new game screen.
    */
   void showNewGameView();

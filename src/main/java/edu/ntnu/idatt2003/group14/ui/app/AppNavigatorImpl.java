@@ -7,6 +7,8 @@ import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameView;
+import edu.ntnu.idatt2003.group14.ui.features.menu.options.OptionsController;
+import edu.ntnu.idatt2003.group14.ui.features.menu.options.OptionsView;
 import edu.ntnu.idatt2003.group14.ui.features.portfolio.GameLayout;
 import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioController;
 import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioView;
@@ -64,6 +66,12 @@ public class AppNavigatorImpl implements AppNavigator {
   public void showMainMenuView() {
     MainMenuController controller = new MainMenuController(appController, this);
     navigateTo(new MainMenuView(controller, audioManager).getRoot());
+  }
+
+  @Override
+  public void showOptionsView() {
+    OptionsController controller = new OptionsController(appController, audioManager, this);
+    navigateTo(new OptionsView(controller, audioManager).getRoot());
   }
 
   @Override
