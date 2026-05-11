@@ -1,8 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
-import edu.ntnu.idatt2003.group14.model.Portfolio;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
-import edu.ntnu.idatt2003.group14.service.PortfolioService;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameController;
@@ -86,8 +84,7 @@ public class AppNavigatorImpl implements AppNavigator {
     //  Service should probably be provided by a ServiceRegistry
     //  class which holds the services in memory.
 
-    PortfolioService service = new PortfolioService(new Portfolio());
-    PortfolioController controller = new PortfolioController(service);
+    PortfolioController controller = new PortfolioController();
 
     GameLayout layout = getGameLayout();
     layout.setContent(new PortfolioView(controller).getRoot());
