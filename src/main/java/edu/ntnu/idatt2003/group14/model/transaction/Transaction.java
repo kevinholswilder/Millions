@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2003.group14.model.transaction;
 
-import edu.ntnu.idatt2003.group14.api.calculator.TransactionCalculator;
+import edu.ntnu.idatt2003.group14.calculator.TransactionCalculator;
 import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.Share;

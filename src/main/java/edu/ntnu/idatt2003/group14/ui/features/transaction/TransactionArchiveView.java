@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2003.group14.ui.transaction;
+package edu.ntnu.idatt2003.group14.ui.features.transaction;
 
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
