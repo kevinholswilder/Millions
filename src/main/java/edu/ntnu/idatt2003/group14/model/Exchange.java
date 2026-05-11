@@ -212,7 +212,9 @@ public class Exchange extends Plottable {
    * @param listener who listens to week advancements
    */
   public void addWeekAdvanceListener(WeekAdvanceListener listener) {
-    weekListeners.add(listener);
+    if (!this.weekListeners.contains(listener)) {
+      weekListeners.add(listener);
+    }
   }
 
   @Override
