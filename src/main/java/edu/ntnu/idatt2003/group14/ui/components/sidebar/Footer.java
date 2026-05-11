@@ -24,6 +24,7 @@ public class Footer extends Button {
       if (GameSession.getExchange().isPresent()) {
         Exchange exchange = GameSession.getExchange().get();
         exchange.advance();
+        GameSession.getExchange().ifPresent(Exchange::advance);
       }
     });
   }
