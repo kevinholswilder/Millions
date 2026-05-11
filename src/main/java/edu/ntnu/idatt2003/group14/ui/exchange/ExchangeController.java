@@ -10,6 +10,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
+ * Controller responsible for creating and managing the exchange stock view.
+ *
+ * <p>The controller stores the current stock list, search query, sorting option,
+ * and sorting direction.</p>
  *
  * @author Kevin Holswilder
  * @since 0.0.1
@@ -20,6 +24,18 @@ public class ExchangeController {
   private String currentSearch = "";
   private List<Stock> stocks = List.of();
 
+  /**
+   * Creates a row displaying information about a {@link Stock}.
+   *
+   * <p>The row contains the stock symbol, company name, current price, latest
+   * price change, highest price, lowest price, week number, and a purchase
+   * button. Additionally, the row is styled differently depending on whether the index is even
+   * or odd.</p>
+   *
+   * @param stock the stock to display
+   * @param index the index of the stock row, used for alternating row styling
+   * @return an {@link HBox} containing the formatted stock row
+   */
   public HBox createStockRow(Stock stock, int index) {
     BigDecimal latestPrice = stock.getSalesPrice();
     BigDecimal highestPrice = stock.getHighestPrice();
@@ -84,6 +100,13 @@ public class ExchangeController {
     return row;
   }
 
+  /**
+   * Creates an information box with a title and value.
+   *
+   * @param title the label title to display
+   * @param value the value to display below the title
+   * @return a styled {@link VBox} containing the title and value labels
+   */
   private VBox createInfoBox(String title, String value) {
     Label titleLabel = new Label(title);
     titleLabel.getStyleClass().add("stock-info-title");
@@ -100,6 +123,12 @@ public class ExchangeController {
     return box;
   }
 
+  /**
+   * Creates a purchase button for the given stock.
+   *
+   * @param stock the stock associated with the purchase button
+   * @return a styled {@link Button} for purchasing the stock
+   */
   private Button createPurchaseButton(Stock stock) {
     Button button = new Button("Purchase");
 
@@ -116,18 +145,37 @@ public class ExchangeController {
     this.currentSearch = currentSearch;
   }
 
+  /**
+   * Sets the current sorting option.
+   *
+   * @param currentSort the sorting option to use
+   */
   public void setCurrentSort(String currentSort) {
     this.currentSort = currentSort;
   }
 
+  /**
+   * Toggles the current sorting direction between ascending and descending.
+   */
   public void toggleAscending() {
     this.ascending = !this.ascending;
   }
 
+  /**
+   * Returns whether the current sorting direction is ascending.
+   *
+   * @return {@code true} if sorting is ascending, otherwise {@code false}
+   */
   public boolean isAscending() {
     return ascending;
   }
 
+  /**
+   * Checks whether a stock matches the current search query.
+   *
+   * @param stock the stock to check
+   * @return {@code true} if the stock symbol or company name contains the search query
+   */
   private boolean matches(Stock stock) {
     String query = currentSearch.toLowerCase();
 
@@ -135,6 +183,13 @@ public class ExchangeController {
             || stock.getCompany().toLowerCase().contains(query);
   }
 
+  /**
+   * Compares two stocks using the current sorting option and sorting direction.
+   *
+   * @param a the first stock
+   * @param b the second stock
+   * @return a negative value, zero, or a positive value depending on the sort order
+   */
   private int compare(Stock a, Stock b) {
     int result = switch (currentSort) {
       case "Price" -> a.getSalesPrice()
@@ -148,7 +203,11 @@ public class ExchangeController {
     return ascending ? result : -result;
   }
 
-
+  /**
+   * Returns the stocks after applying the current search filter and sorting option.
+   *
+   * @return a filtered and sorted list of stocks
+   */
   public List<Stock> getProcessedStocks() {
     return this.stocks.stream()
             .filter(this::matches)

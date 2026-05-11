@@ -17,6 +17,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 /**
+ * View responsible for displaying the exchange.
+ *
+ * <p>The view contains a top bar with search and sorting controls, as well as
+ * a list view showing available stocks.</p>
  *
  * @author Kevin Holswilder
  * @since 0.0.1
@@ -26,12 +30,25 @@ public class ExchangeView {
   private final ExchangeController controller;
   private final ListView<Stock> stockListView;
 
+  /**
+   * Creates a new exchange view using the provided controller.
+   *
+   * @param controller the controller used to manage stock filtering, sorting, and row creation
+   */
   public ExchangeView(ExchangeController controller) {
     this.root = new BorderPane();
 
     this.controller = controller;
 
     this.stockListView = new ListView<>();
+
+    this.root.getStyleClass().add("exchange-root");
+
+    this.root.getStylesheets().addAll(
+            Objects.requireNonNull(
+                    getClass().getResource("/css/exchange/stock-row.css")
+            ).toExternalForm()
+    );
 
     Parent topBar = this.createTopBar();
     BorderPane.setMargin(topBar, new Insets(20, 20, 0, 20));
@@ -49,6 +66,12 @@ public class ExchangeView {
     }
   }
 
+  /**
+   * Configures the stock list view and its custom cell factory.
+   *
+   * <p>Each non-empty list cell is rendered using a stock row created by the
+   * controller.</p>
+   */
   private void setupStockListView() {
     this.stockListView.setCellFactory(_ -> new ListCell<>() {
       @Override
@@ -68,15 +91,28 @@ public class ExchangeView {
     BorderPane.setMargin(this.stockListView, new Insets(20));
   }
 
+  /**
+   * Sets the stocks to display in the exchange view.
+   *
+   * @param stocks the stocks to display
+   */
   public void setStocks(List<Stock> stocks) {
     this.controller.setStocks(stocks);
     this.refreshStocks();
   }
 
+  /**
+   * Refreshes the stock list view using the controller's processed stock list.
+   */
   private void refreshStocks() {
     this.stockListView.getItems().setAll(this.controller.getProcessedStocks());
   }
 
+  /**
+   * Creates the top bar containing search and sorting controls.
+   *
+   * @return the top bar as a {@link Parent}
+   */
   private Parent createTopBar() {
     TextField searchField = new TextField();
     searchField.setPromptText("Search stocks...");
@@ -114,6 +150,12 @@ public class ExchangeView {
     return topBar;
   }
 
+  /**
+   * Creates a sort button for the given sorting option.
+   *
+   * @param text the text and sorting option represented by the button
+   * @return a styled {@link Button} that updates the current sort option
+   */
   private Button createSortButton(String text) {
     Button button = new Button(text);
 
