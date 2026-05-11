@@ -1,8 +1,8 @@
 package edu.ntnu.idatt2003.group14.ui.features.portfolio;
 
+import edu.ntnu.idatt2003.group14.model.Portfolio;
 import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.model.Stock;
-import edu.ntnu.idatt2003.group14.model.portfolio.Portfolio;
 import edu.ntnu.idatt2003.group14.service.PortfolioService;
 import java.util.List;
 

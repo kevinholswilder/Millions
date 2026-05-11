@@ -1,7 +1,7 @@
-package edu.ntnu.idatt2003.group14.model.portfolio;
+package edu.ntnu.idatt2003.group14.model;
 
 import edu.ntnu.idatt2003.group14.calculator.SaleCalculator;
-import edu.ntnu.idatt2003.group14.model.Share;
+import edu.ntnu.idatt2003.group14.model.plottable.Plottable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author Kevin Holswilder, Elias Haugsbakk
  * @since 0.0.1
  */
-public class Portfolio extends ObservablePortfolio {
+public class Portfolio extends Plottable implements WeekAdvanceListener {
   private final List<Share> shares;
 
   /**
@@ -79,5 +79,26 @@ public class Portfolio extends ObservablePortfolio {
         .map(SaleCalculator::new)
         .map(SaleCalculator::calculateTotal)
         .reduce(BigDecimal.ZERO, BigDecimal::add);
+  }
+
+  @Override
+  public BigDecimal getValueForWeek(int week) {
+    return this.shares.stream()
+        .map(Share::getStock)
+        .map(stock -> stock.getValueForWeek(week))
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+  }
+
+  @Override
+  public int getWeek() {
+    if (this.shares.isEmpty()) {
+      return 0;
+    }
+    return this.shares.getFirst().getStock().getWeek();
+  }
+
+  @Override
+  public void onWeekAdvanced(int week) {
+    notifyNetWorthListeners(getValueForWeek(week));
   }
 }

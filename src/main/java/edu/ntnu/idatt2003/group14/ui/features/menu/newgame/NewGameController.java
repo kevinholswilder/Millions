@@ -1,14 +1,19 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
+import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
+import edu.ntnu.idatt2003.group14.model.Exchange;
+import edu.ntnu.idatt2003.group14.model.GameSession;
+import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
  * Controller class for handling user input from the New Game scene.
  *
- * @author Elias Haugsbakk
+ * @author Elias Haugsbakk, Kevin Holswilder
  * @since 0.0.1
  */
 public class NewGameController {
@@ -61,16 +66,31 @@ public class NewGameController {
    * @param startingMoney the users starting money
    * @param stockDataFile the file containing stock data
    */
-  public void handleStartGame(String username, BigDecimal startingMoney, File stockDataFile) {
+  public void handleStartGame(
+          String username,
+          BigDecimal startingMoney,
+          File stockDataFile
+  ) throws IOException {
     AppLogger.fine("Username: " + username);
     AppLogger.fine("Starting Money: " + startingMoney);
     AppLogger.fine("Stock data file: " + stockDataFile.getName());
+
+    // Initialize player
+    GameSession.setPlayer(
+            new Player(username, startingMoney)
+    );
+
+    // Initialize exchange
+    StockReader reader = new StockReader();
+    GameSession.setExchange(
+            new Exchange("Temporary placeholder", reader.read(stockDataFile.toPath().toString()))
+    );
     appNavigator.showPortfolioView();
   }
 
   private NewGameValidationState validateUsername(String username) {
     return username.isBlank() ? NewGameValidationState.EMPTY_USERNAME :
-        NewGameValidationState.VALID;
+            NewGameValidationState.VALID;
   }
 
   private NewGameValidationState validateAmount(String amount) {
@@ -89,6 +109,6 @@ public class NewGameController {
 
   private NewGameValidationState validateFileChosen(File stockDataFile) {
     return stockDataFile == null ? NewGameValidationState.NO_FILE_CHOSEN :
-        NewGameValidationState.VALID;
+            NewGameValidationState.VALID;
   }
 }

@@ -1,9 +1,12 @@
 package edu.ntnu.idatt2003.group14.model;
 
+import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
+import edu.ntnu.idatt2003.group14.model.plottable.Plottable;
 import edu.ntnu.idatt2003.group14.model.transaction.Purchase;
 import edu.ntnu.idatt2003.group14.model.transaction.Sale;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -17,16 +20,18 @@ import java.util.Random;
  * @author Elias Haugsbakk, Kevin Holswilder
  * @since 0.0.1
  */
-public class Exchange {
+public class Exchange extends Plottable {
   private final String name;
   private int week;
   private final Map<String, Stock> stockMap;
   private final Random random;
+  private final BigDecimal valueFirstWeek;
+  private final List<WeekAdvanceListener> weekListeners = new ArrayList<>();
 
   /**
    * Initiates a new exchange.
    *
-   * @param name the name of the exchange
+   * @param name   the name of the exchange
    * @param stocks the list of stocks being traded on the exchange
    */
   public Exchange(String name, List<Stock> stocks) {
@@ -38,12 +43,17 @@ public class Exchange {
     for (Stock stock : stocks) {
       this.stockMap.put(stock.getSymbol(), stock);
     }
+
+    valueFirstWeek = stocks.stream()
+        .map(stock -> stock.getValueForWeek(0))
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 
   public String getName() {
     return this.name;
   }
 
+  @Override
   public int getWeek() {
     return week;
   }
@@ -103,12 +113,13 @@ public class Exchange {
   /**
    * A player purchases a share.
    *
-   * @param symbol the symbol of the stock to purchase
+   * @param symbol   the symbol of the stock to purchase
    * @param quantity the amount of the stock to purchase
-   * @param player the player who is purchasing
+   * @param player   the player who is purchasing
    * @return the transaction containing the purchase
    */
-  public Transaction buy(String symbol, BigDecimal quantity, Player player) {
+  public Transaction buy(String symbol, BigDecimal quantity, Player player)
+      throws InsufficientBalanceException {
     // TODO: Does the stock exist in this exchange?
     // TODO: Does the player have enough funds?
     Stock stock = stockMap.get(symbol);
@@ -122,11 +133,11 @@ public class Exchange {
   /**
    * A player shells a share.
    *
-   * @param share the share to sell
+   * @param share  the share to sell
    * @param player the player who is selling
    * @return the transaction containing the sold share
    */
-  public Transaction sell(Share share, Player player) {
+  public Transaction sell(Share share, Player player) throws InsufficientBalanceException {
     Sale sale = new Sale(share, this.week);
     sale.commit(player);
     return sale;
@@ -178,9 +189,31 @@ public class Exchange {
       stock.addNewSalesPrice(price.multiply(BigDecimal.valueOf(change)));
     }
     this.week++;
+    weekListeners.forEach(listener -> listener.onWeekAdvanced(this.week));
+    notifyNetWorthListeners(getValueForWeek(this.week));
   }
 
   private String normalizeString(String string) {
-    return string.toLowerCase().trim().replaceAll(" ", "");
+    return string.toLowerCase().trim().replace(" ", "");
+  }
+
+  /**
+   * Add listeners to the week advancement.
+   *
+   * @param listener who listens to week advancements
+   */
+  public void addWeekAdvanceListener(WeekAdvanceListener listener) {
+    weekListeners.add(listener);
+  }
+
+  @Override
+  public BigDecimal getValueForWeek(int week) {
+    BigDecimal currentValue = this.stockMap.values().stream()
+        .map(stock -> stock.getValueForWeek(week))
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+    return currentValue
+        .divide(valueFirstWeek, 4, RoundingMode.HALF_UP)
+        .multiply(new BigDecimal("1000"));
   }
 }

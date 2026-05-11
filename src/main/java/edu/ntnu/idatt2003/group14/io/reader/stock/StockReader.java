@@ -38,9 +38,13 @@ public final class StockReader extends CSVReader {
       if (line.startsWith(CSVLabels.COMMENT_CHAR) || line.isEmpty()) {
         continue;
       }
-      String[] split = line.split(CSVLabels.SEPARATOR);
-      List<BigDecimal> prices = new ArrayList<>();
 
+      String[] split = line.split(CSVLabels.SEPARATOR);
+      if (split.length < 2) {
+        throw new IOException("Invalid stock data file format.");
+      }
+
+      List<BigDecimal> prices = new ArrayList<>();
       for (int i = 2; i < split.length; i++) {
         prices.add(new BigDecimal(split[i]));
       }

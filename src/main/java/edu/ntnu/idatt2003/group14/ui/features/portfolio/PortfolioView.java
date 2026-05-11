@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.portfolio;
 
-import edu.ntnu.idatt2003.group14.ui.components.PortfolioGraph;
+import edu.ntnu.idatt2003.group14.ui.components.PlottableGraph;
 import edu.ntnu.idatt2003.group14.ui.components.StockMoversComponent;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
@@ -35,7 +35,8 @@ public class PortfolioView {
     VBox portfolioPane = new VBox();
     VBox stockMoversPane = new VBox();
 
-    PortfolioGraph graph = new PortfolioGraph(controller.getPortfolio());
+    PlottableGraph graph = new PlottableGraph(controller.getPortfolio());
+    controller.getPortfolio().addListener(graph);
     portfolioPane.getChildren().add(graph);
 
     StockMoversComponent gainers =
