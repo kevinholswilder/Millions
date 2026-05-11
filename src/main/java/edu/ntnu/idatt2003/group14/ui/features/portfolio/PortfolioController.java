@@ -19,7 +19,7 @@ public class PortfolioController {
    * Initializes a new PortfolioController.
    */
   public PortfolioController() {
-    playerPortfolio = GameSession.getPlayer().orElseThrow().getPortfolio();
+    playerPortfolio = GameSession.getPlayer().getPortfolio();
   }
 
   public Portfolio getPortfolio() {

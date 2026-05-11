@@ -1,15 +1,13 @@
 package edu.ntnu.idatt2003.group14.model;
 
-import java.util.Optional;
-
 /**
  * Holds the current objects and options required at runtime.
  *
  * <p>These options change during normal running.
  * Any persistent options should live in {@link edu.ntnu.idatt2003.group14.GameConfig}.</p>
  *
- * <p>The player and exchange are returned as {@link Optional} to enforce explicit null handling
- * in the UI layer.
+ * <p>The player and exchange are expected to be assigned before the game starts.
+ * Accessing them before assignment will throw an {@link IllegalStateException}.</p>
  *
  * @author Elias Haugsbakk, Kevin Holswilder
  * @since 0.0.1
@@ -56,18 +54,26 @@ public class GameSession {
   /**
    * Gets the current player.
    *
-   * @return an {@link Optional} containing the player, or empty if none is set
+   * @return the current player
+   * @throws IllegalStateException if no player has been assigned to the session
    */
-  public static Optional<Player> getPlayer() {
-    return Optional.ofNullable(GameSession.player);
+  public static Player getPlayer() {
+    if (player == null) {
+      throw new IllegalStateException("No player assigned to the current session.");
+    }
+    return player;
   }
 
   /**
    * Gets the current exchange.
    *
-   * @return an {@link Optional} containing the exchange, or empty if none is set
+   * @return the current exchange
+   * @throws IllegalStateException if no exchange has been assigned to the session
    */
-  public static Optional<Exchange> getExchange() {
-    return Optional.ofNullable(GameSession.exchange);
+  public static Exchange getExchange() {
+    if (exchange == null) {
+      throw new IllegalStateException("No exchange assigned to the current session.");
+    }
+    return exchange;
   }
 }
