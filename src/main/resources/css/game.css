@@ -1,1 +1,10 @@
 /* Common stylesheet for all the game views */
+
+.popup-window {
+    -fx-background-radius: 8;
+}
+
+/* The background overlay providing a darker color */
+.popup-overlay {
+    -fx-background-color: rgba(0,0,0,0.3);
+}
