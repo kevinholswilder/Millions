@@ -53,6 +53,7 @@
     -fx-border-width: 6;
     -fx-border-style: solid;
 }
+
 .menu-button:hover {
     -fx-background-color: #959595;
     -fx-border-color: #ffffff;
@@ -78,3 +79,42 @@
     -fx-alignment: center;
 }
 
+.menu-slider {
+    -fx-background-color: #444444;
+    -fx-text-fill: black;
+    -fx-font-size: 40;
+    -fx-max-width: 700;
+    -fx-alignment: center;
+    -fx-padding: 3 3 3 3;
+
+    -fx-border-color: #000000;
+    -fx-border-width: 6;
+    -fx-border-style: solid;
+}
+
+.menu-slider .track {
+    -fx-background-color: #444444;
+    -fx-background-radius: 0; /* square */
+    -fx-pref-height: 80;
+}
+
+.menu-slider .thumb {
+    -fx-background-color: #959595;
+    -fx-border-width: 0;
+    -fx-border-style: solid;
+    -fx-background-radius: 0; /* square */
+    -fx-pref-height: 80;
+
+}
+
+.menu-slider .thumb:hover,
+.menu-slider .thumb:pressed {
+    -fx-background-color: #cdcdcd;
+
+}
+
+.menu-slider-label {
+    -fx-text-fill: white;
+    -fx-font-size: 40;
+    -fx-mouse-transparent: true;
+}

@@ -61,11 +61,11 @@ public class MainMenuView {
     btnBox.setAlignment(Pos.CENTER);
 
     Button startBtn = buttonFactory.createMenuButton("New Game", controller::handleNewGame);
-    Button fullScreenBtn = buttonFactory
-        .createMenuButton("Full Screen", controller::handleFullScreen);
+    Button optionsBtn = buttonFactory
+        .createMenuButton("Options", controller::showOptions);
     Button exitBtn = buttonFactory.createMenuButton("Exit", controller::handleExitGame);
 
-    btnBox.getChildren().addAll(startBtn, fullScreenBtn, exitBtn);
+    btnBox.getChildren().addAll(startBtn, optionsBtn, exitBtn);
     centerMenu.getChildren().addAll(
         title,
         btnBox
