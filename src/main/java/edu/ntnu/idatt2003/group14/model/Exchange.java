@@ -69,6 +69,15 @@ public class Exchange extends Plottable {
   }
 
   /**
+   * Returns the entire stock map.
+   *
+   * @return a list of {@link Stock} objects
+   */
+  public List<Stock> getStocks() {
+    return new ArrayList<>(stockMap.values());
+  }
+
+  /**
    * Returns the stock associated with a given symbol.
    *
    * @param symbol the symbol to the stock the method should return (e.g. "AAPL" for "Apple Inc.")

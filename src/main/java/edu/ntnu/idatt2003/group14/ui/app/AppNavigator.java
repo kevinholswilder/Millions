@@ -28,5 +28,10 @@ public interface AppNavigator {
    * Switch the view to display the user's transaction history.
    */
   void showTransactionArchiveView();
+
+  /**
+   * Switch the view to display the chosen exchange file.
+   */
+  void showExchangeView();
 }
 

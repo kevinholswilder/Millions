@@ -3,6 +3,8 @@ package edu.ntnu.idatt2003.group14.ui.app;
 import edu.ntnu.idatt2003.group14.model.Portfolio;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.service.PortfolioService;
+import edu.ntnu.idatt2003.group14.ui.exchange.ExchangeController;
+import edu.ntnu.idatt2003.group14.ui.exchange.ExchangeView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameController;
@@ -101,6 +103,16 @@ public class AppNavigatorImpl implements AppNavigator {
 
     TransactionArchiveController controller = new TransactionArchiveController();
     layout.setContent(new TransactionArchiveView(controller).getRoot());
+
+    navigateTo(layout.getRoot());
+  }
+
+  @Override
+  public void showExchangeView() {
+    GameLayout layout = getGameLayout();
+
+    ExchangeController controller = new ExchangeController();
+    layout.setContent(new ExchangeView(controller).getRoot());
 
     navigateTo(layout.getRoot());
   }

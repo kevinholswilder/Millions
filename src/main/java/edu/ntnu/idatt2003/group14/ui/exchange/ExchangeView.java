@@ -1,0 +1,133 @@
+package edu.ntnu.idatt2003.group14.ui.exchange;
+
+import edu.ntnu.idatt2003.group14.model.Exchange;
+import edu.ntnu.idatt2003.group14.model.GameSession;
+import edu.ntnu.idatt2003.group14.model.Stock;
+import java.util.List;
+import java.util.Objects;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+
+/**
+ *
+ * @author Kevin Holswilder
+ * @since 0.0.1
+ */
+public class ExchangeView {
+  private final BorderPane root;
+  private final ExchangeController controller;
+  private final ListView<Stock> stockListView;
+
+  public ExchangeView(ExchangeController controller) {
+    this.root = new BorderPane();
+
+    this.controller = controller;
+
+    this.stockListView = new ListView<>();
+
+    Parent topBar = this.createTopBar();
+    BorderPane.setMargin(topBar, new Insets(20, 20, 0, 20));
+    this.root.setTop(topBar);
+
+//    this.root.getStylesheets().addAll(
+//        Objects.requireNonNull(
+//            getClass().getResource("/css/exchange/stock-row.css")
+//        ).toExternalForm()
+//    );
+
+    this.setupStockListView();
+    this.root.setCenter(this.stockListView);
+
+    if (GameSession.getExchange().isPresent()) {
+      Exchange exchange = GameSession.getExchange().get();
+      this.setStocks(exchange.getStocks());
+    }
+  }
+
+  private void setupStockListView() {
+    this.stockListView.setCellFactory(_ -> new ListCell<>() {
+      @Override
+      protected void updateItem(Stock stock, boolean empty) {
+        super.updateItem(stock, empty);
+
+        if (empty || stock == null) {
+          setText(null);
+          setGraphic(null);
+          return;
+        }
+
+        setGraphic(controller.createStockRow(stock, getIndex()));
+      }
+    });
+
+    BorderPane.setMargin(this.stockListView, new Insets(20));
+  }
+
+  public void setStocks(List<Stock> stocks) {
+    this.controller.setStocks(stocks);
+    this.refreshStocks();
+  }
+
+  private void refreshStocks() {
+    this.stockListView.getItems().setAll(
+        this.controller.getProcessedStocks()
+    );
+  }
+
+  private Parent createTopBar() {
+    TextField searchField = new TextField();
+    searchField.setPromptText("Search stocks...");
+
+    searchField.textProperty().addListener((_, _, query) -> {
+      this.controller.setCurrentSearch(query);
+      this.refreshStocks();
+    });
+
+    Label sortLabel = new Label("Sort by:");
+
+    Button directionButton = new Button("↑");
+
+    directionButton.setOnAction(_ -> {
+      this.controller.toggleAscending();
+      directionButton.setText(this.controller.isAscending() ? "↑" : "↓");
+      this.refreshStocks();
+    });
+
+    HBox topBar = new HBox(12);
+    topBar.setAlignment(Pos.CENTER_LEFT);
+
+    topBar.getChildren().addAll(
+        searchField,
+        sortLabel,
+        this.createSortButton("Price"),
+        this.createSortButton("A-Z"),
+        directionButton
+    );
+
+    return topBar;
+  }
+
+  private Button createSortButton(String text) {
+    Button button = new Button(text);
+
+    button.setOnAction(_ -> {
+      this.controller.setCurrentSort(text);
+      this.refreshStocks();
+    });
+
+    return button;
+  }
+
+  public Parent getRoot() {
+    return root;
+  }
+
+}

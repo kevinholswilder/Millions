@@ -29,6 +29,14 @@ public class Header extends VBox {
         "Portfolio"
     );
 
-    this.getChildren().addAll(portfolioButton, transactionArchiveButton);
+    Button exchangeButton = controller.createExchangeButton(
+        "Exchange"
+    );
+
+    this.getChildren().addAll(
+        portfolioButton,
+        transactionArchiveButton,
+        exchangeButton
+    );
   }
 }
