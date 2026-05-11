@@ -1,47 +1,122 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
+import edu.ntnu.idatt2003.group14.ui.features.game.GameLayout;
+import java.util.Objects;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 /**
- * Handles switching between different scenes.
+ * Responsible for managing the primary stage and navigating between different views.
+ *
+ * @author Elias Haugsbakk, Kevin Holswilder
+ * @since 0.0.1
  */
-public interface AppNavigator {
-  /**
-   * Switch the view to show the main menu.
-   */
-  void showMainMenuView();
+public class AppNavigator {
+  // 16:9 720p HD: scales nicely to all 16:9 or 16:10 displays
+  private static final int DEFAULT_WIDTH = 1280;
+  private static final int DEFAULT_HEIGHT = 720;
+  private final Stage stage;
+  private final ViewRegistry viewRegistry;
+
+  private Parent previousView;
+  private GameLayout gameLayout;
 
   /**
-   * Switch the view to show the options' menu.
+   * Initializes a new AppNavigator.
+   *
+   * @param stage        the primary stage
+   * @param viewRegistry to fetch cached or constructed views
    */
-  void showOptionsView();
+  public AppNavigator(Stage stage, ViewRegistry viewRegistry) {
+    this.stage = stage;
+    this.viewRegistry = viewRegistry;
+  }
 
   /**
-   * Switch the view to show the new game screen.
+   * Returns the game layout, creating it if necessary.
+   *
+   * @return the game layout instance
    */
-  void showNewGameView();
+  private GameLayout getGameLayout() {
+    if (gameLayout == null) {
+      gameLayout = new GameLayout(this);
+    }
+    return gameLayout;
+  }
 
   /**
-   * Switch the view to show the users' portfolio.
+   * Display the previous view displayed before Options was opened.
    */
-  void showPortfolioView();
+  public void showPreviousView() {
+    if (this.previousView == null) {
+      showMainMenuView();
+    }
+    navigateTo(this.previousView);
+  }
 
   /**
-   * Switch the view to display the user's transaction history.
+   * Display the main menu view.
    */
-  void showTransactionArchiveView();
+  public void showMainMenuView() {
+    navigateTo(viewRegistry.getMainMenuView(this).getRoot());
+  }
 
   /**
-   * Display the game menu overlay.
+   * Display the options view.
    */
-  void showGameMenu();
+  public void showOptionsView() {
+    previousView = stage.getScene().getRoot();
+    navigateTo(viewRegistry.getOptionsView(this).getRoot());
+  }
 
   /**
-   * Hides the current popup.
+   * Display the new game view.
    */
-  void hidePopup();
+  public void showNewGameView() {
+    navigateTo(viewRegistry.getNewGameView(this).getRoot());
+  }
 
   /**
-   * Displays the previous view.
+   * Display portfolio view.
    */
-  void showPreviousView();
+  public void showPortfolioView() {
+    getGameLayout().setContent(viewRegistry.getPortfolioView().getRoot());
+    navigateTo(getGameLayout().getRoot());
+  }
+
+  /**
+   * Display transaction archive view.
+   */
+  public void showTransactionArchiveView() {
+    getGameLayout().setContent(viewRegistry.getTransactionArchiveView().getRoot());
+    navigateTo(getGameLayout().getRoot());
+  }
+
+  /**
+   * Display game menu.
+   */
+  public void showGameMenu() {
+    getGameLayout().showPopup(viewRegistry.getGameMenuView(this));
+  }
+
+  /**
+   * Hides any popup displayed in the game view.
+   */
+  public void hidePopup() {
+    getGameLayout().hidePopup();
+  }
+
+  private void navigateTo(Parent root) {
+    // First time setup
+    if (stage.getScene() == null) {
+      Scene scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+      String css =
+          Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm();
+      scene.getStylesheets().add(css);
+      stage.setScene(scene);
+    }
+    stage.getScene().setRoot(root);
+  }
 }
 

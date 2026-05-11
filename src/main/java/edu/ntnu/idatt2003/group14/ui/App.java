@@ -7,9 +7,7 @@ import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
-import edu.ntnu.idatt2003.group14.ui.app.AppControllerImpl;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
-import edu.ntnu.idatt2003.group14.ui.app.AppNavigatorImpl;
 import edu.ntnu.idatt2003.group14.ui.app.ViewRegistry;
 import edu.ntnu.idatt2003.group14.utils.AppDataPathUtil;
 import java.io.IOException;
@@ -53,9 +51,9 @@ public final class App extends Application {
     AudioManager audioManager = new AudioManager();
     audioManager.playOfficeNoice();
 
-    AppController appController = new AppControllerImpl(stage);
+    AppController appController = new AppController(stage);
     ViewRegistry viewRegistry = new ViewRegistry(appController, audioManager);
-    AppNavigator appNavigator = new AppNavigatorImpl(stage, viewRegistry);
+    AppNavigator appNavigator = new AppNavigator(stage, viewRegistry);
 
     if (skipMenu) {
       skipMenu(appNavigator);
