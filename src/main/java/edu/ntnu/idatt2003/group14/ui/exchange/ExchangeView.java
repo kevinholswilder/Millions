@@ -37,17 +37,14 @@ public class ExchangeView {
     BorderPane.setMargin(topBar, new Insets(20, 20, 0, 20));
     this.root.setTop(topBar);
 
-//    this.root.getStylesheets().addAll(
-//        Objects.requireNonNull(
-//            getClass().getResource("/css/exchange/stock-row.css")
-//        ).toExternalForm()
-//    );
-
     this.setupStockListView();
     this.root.setCenter(this.stockListView);
 
     if (GameSession.getExchange().isPresent()) {
       Exchange exchange = GameSession.getExchange().get();
+
+      exchange.addWeekAdvanceListener(_ -> this.refreshStocks());
+
       this.setStocks(exchange.getStocks());
     }
   }
@@ -77,14 +74,13 @@ public class ExchangeView {
   }
 
   private void refreshStocks() {
-    this.stockListView.getItems().setAll(
-        this.controller.getProcessedStocks()
-    );
+    this.stockListView.getItems().setAll(this.controller.getProcessedStocks());
   }
 
   private Parent createTopBar() {
     TextField searchField = new TextField();
     searchField.setPromptText("Search stocks...");
+    searchField.getStyleClass().add("exchange-search-field");
 
     searchField.textProperty().addListener((_, _, query) -> {
       this.controller.setCurrentSearch(query);
@@ -92,8 +88,10 @@ public class ExchangeView {
     });
 
     Label sortLabel = new Label("Sort by:");
+    sortLabel.getStyleClass().add("exchange-sort-label");
 
     Button directionButton = new Button("↑");
+    directionButton.getStyleClass().add("exchange-sort-button");
 
     directionButton.setOnAction(_ -> {
       this.controller.toggleAscending();
@@ -103,13 +101,14 @@ public class ExchangeView {
 
     HBox topBar = new HBox(12);
     topBar.setAlignment(Pos.CENTER_LEFT);
+    topBar.getStyleClass().add("exchange-top-bar");
 
     topBar.getChildren().addAll(
-        searchField,
-        sortLabel,
-        this.createSortButton("Price"),
-        this.createSortButton("A-Z"),
-        directionButton
+            searchField,
+            sortLabel,
+            this.createSortButton("Price"),
+            this.createSortButton("A-Z"),
+            directionButton
     );
 
     return topBar;
@@ -117,6 +116,8 @@ public class ExchangeView {
 
   private Button createSortButton(String text) {
     Button button = new Button(text);
+
+    button.getStyleClass().add("exchange-sort-button");
 
     button.setOnAction(_ -> {
       this.controller.setCurrentSort(text);
@@ -126,6 +127,11 @@ public class ExchangeView {
     return button;
   }
 
+  /**
+   * Returns the root node of the layout.
+   *
+   * @return the root layout node
+   */
   public Parent getRoot() {
     return root;
   }

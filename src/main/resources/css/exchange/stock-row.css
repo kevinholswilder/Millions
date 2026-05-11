@@ -1,0 +1,126 @@
+.exchange-root {
+    -fx-background-color: #f8fafc;
+}
+
+.exchange-top-bar {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1;
+    -fx-padding: 16;
+}
+
+.exchange-search-field {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1;
+    -fx-padding: 8 12;
+    -fx-font-size: 13px;
+    -fx-text-fill: #111827;
+}
+
+.exchange-search-field:focus {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #2563eb;
+}
+
+.exchange-sort-label {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+}
+
+.exchange-sort-button {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1;
+    -fx-padding: 8 12;
+    -fx-text-fill: #111827;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+}
+
+.exchange-sort-button:hover {
+    -fx-background-color: #eef2f7;
+}
+
+.stock-row {
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-padding: 16;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1;
+}
+
+.stock-row-even {
+    -fx-background-color: #ffffff;
+}
+
+.stock-row-odd {
+    -fx-background-color: #f8fafc;
+}
+
+.stock-row:hover {
+    -fx-background-color: #eef2f7;
+}
+
+.stock-info-box {
+    -fx-alignment: center;
+    -fx-min-width: 120;
+}
+
+.stock-info-title {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+}
+
+.stock-info-value {
+    -fx-text-fill: #111827;
+    -fx-font-size: 16px;
+    -fx-font-weight: 700;
+}
+
+.purchase-button {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 1;
+    -fx-padding: 8 12;
+    -fx-text-fill: #111827;
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+}
+
+.purchase-button:hover {
+    -fx-background-color: #eef2f7;
+}
+
+.stock-company-column {
+    -fx-min-width: 240;
+    -fx-pref-width: 240;
+    -fx-max-width: 240;
+}
+
+.stock-column {
+    -fx-min-width: 110;
+    -fx-pref-width: 110;
+    -fx-max-width: 110;
+}
+
+.stock-info-box {
+    -fx-alignment: center-left;
+}
+
+.stock-row {
+    -fx-alignment: center-left;
+}
