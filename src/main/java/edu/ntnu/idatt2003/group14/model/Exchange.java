@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.model;
 
+import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
 import edu.ntnu.idatt2003.group14.model.transaction.Purchase;
 import edu.ntnu.idatt2003.group14.model.transaction.Sale;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
@@ -108,7 +109,8 @@ public class Exchange {
    * @param player the player who is purchasing
    * @return the transaction containing the purchase
    */
-  public Transaction buy(String symbol, BigDecimal quantity, Player player) {
+  public Transaction buy(String symbol, BigDecimal quantity, Player player)
+      throws InsufficientBalanceException {
     // TODO: Does the stock exist in this exchange?
     // TODO: Does the player have enough funds?
     Stock stock = stockMap.get(symbol);
@@ -126,7 +128,7 @@ public class Exchange {
    * @param player the player who is selling
    * @return the transaction containing the sold share
    */
-  public Transaction sell(Share share, Player player) {
+  public Transaction sell(Share share, Player player) throws InsufficientBalanceException {
     Sale sale = new Sale(share, this.week);
     sale.commit(player);
     return sale;
@@ -181,6 +183,6 @@ public class Exchange {
   }
 
   private String normalizeString(String string) {
-    return string.toLowerCase().trim().replaceAll(" ", "");
+    return string.toLowerCase().trim().replace(" ", "");
   }
 }

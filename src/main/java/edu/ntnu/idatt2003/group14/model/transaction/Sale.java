@@ -2,6 +2,7 @@ package edu.ntnu.idatt2003.group14.model.transaction;
 
 import edu.ntnu.idatt2003.group14.api.calculator.TransactionCalculator;
 import edu.ntnu.idatt2003.group14.calculator.SaleCalculator;
+import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.Share;
 import java.math.BigDecimal;
@@ -36,7 +37,7 @@ public final class Sale extends Transaction {
    * @param player the player who owns the share
    */
   @Override
-  public void commit(Player player) {
+  public void commit(Player player) throws InsufficientBalanceException {
     super.commit(player);
 
     // Add money to the player's account

@@ -37,7 +37,7 @@ public final class Purchase extends Transaction {
    * @param player the player who owns the share
    */
   @Override
-  public void commit(Player player) {
+  public void commit(Player player) throws InsufficientBalanceException {
     super.commit(player);
 
     // Withdraw money from player
@@ -48,7 +48,7 @@ public final class Purchase extends Transaction {
     try {
       player.withdrawMoney(totalCosts);
     } catch (InsufficientBalanceException e) {
-      System.err.println("Insufficient funds to purchase stock." + e.getMessage());
+      throw new InsufficientBalanceException("Insufficient funds to purchase stock");
     }
 
     // Add a share to the player's portfolio
