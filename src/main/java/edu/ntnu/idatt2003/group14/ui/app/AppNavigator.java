@@ -28,5 +28,20 @@ public interface AppNavigator {
    * Switch the view to display the user's transaction history.
    */
   void showTransactionArchiveView();
+
+  /**
+   * Display the game menu overlay.
+   */
+  void showGameMenu();
+
+  /**
+   * Hides the current popup.
+   */
+  void hidePopup();
+
+  /**
+   * Displays the previous view.
+   */
+  void showPreviousView();
 }
 

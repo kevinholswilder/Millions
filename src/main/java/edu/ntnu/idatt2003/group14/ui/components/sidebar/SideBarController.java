@@ -1,8 +1,8 @@
 package edu.ntnu.idatt2003.group14.ui.components.sidebar;
 
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
-import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioView;
-import edu.ntnu.idatt2003.group14.ui.features.transaction.TransactionArchiveView;
+import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioView;
+import edu.ntnu.idatt2003.group14.ui.features.game.transaction.TransactionArchiveView;
 import javafx.scene.control.Button;
 
 /**
@@ -73,7 +73,7 @@ public class SideBarController {
    * that executes the provided navigation action when clicked.
    * </p>
    *
-   * @param text the text displayed on the button
+   * @param text   the text displayed on the button
    * @param action the action executed when the button is pressed
    * @return a configured navigation button
    */

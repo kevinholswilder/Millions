@@ -4,7 +4,7 @@ import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.app.View;
-import edu.ntnu.idatt2003.group14.ui.features.menu.MenuButtonFactory;
+import edu.ntnu.idatt2003.group14.ui.components.MenuButtonFactory;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;

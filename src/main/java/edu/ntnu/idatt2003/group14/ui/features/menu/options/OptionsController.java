@@ -40,7 +40,7 @@ public class OptionsController {
    * User requests to return to main menu.
    */
   public void handleReturnToMainMenu() {
-    appNavigator.showMainMenuView();
+    appNavigator.showPreviousView();
   }
 
   /**

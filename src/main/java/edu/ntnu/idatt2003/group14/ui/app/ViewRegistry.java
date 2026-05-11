@@ -1,18 +1,21 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
 import edu.ntnu.idatt2003.group14.service.AudioManager;
+import edu.ntnu.idatt2003.group14.ui.features.game.gamemenu.GameMenuController;
+import edu.ntnu.idatt2003.group14.ui.features.game.gamemenu.GameMenuView;
+import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioController;
+import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioView;
+import edu.ntnu.idatt2003.group14.ui.features.game.transaction.TransactionArchiveController;
+import edu.ntnu.idatt2003.group14.ui.features.game.transaction.TransactionArchiveView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.options.OptionsController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.options.OptionsView;
-import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioController;
-import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioView;
-import edu.ntnu.idatt2003.group14.ui.features.transaction.TransactionArchiveController;
-import edu.ntnu.idatt2003.group14.ui.features.transaction.TransactionArchiveView;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.Parent;
 
 /**
  * Registry responsible for constructing and managing the lifecycle of views.
@@ -31,7 +34,7 @@ public class ViewRegistry {
    * Initiates a new ViewRegistry.
    *
    * @param appController to interact with the application
-   * @param audioManager to interact with the application audio
+   * @param audioManager  to interact with the application audio
    */
   public ViewRegistry(AppController appController, AudioManager audioManager) {
     this.appController = appController;
@@ -99,5 +102,17 @@ public class ViewRegistry {
   public View getTransactionArchiveView() {
     return viewCache.computeIfAbsent("transactionArchiveView",
         _ -> new TransactionArchiveView(new TransactionArchiveController()));
+  }
+
+  /**
+   * Returns a new instance of the GameMenuView.
+   *
+   * <p>Reconstructed on every call.</p>
+   *
+   * @param appNavigator the navigator passed to the controller
+   * @return a new {@link GameMenuView}
+   */
+  public Parent getGameMenuView(AppNavigator appNavigator) {
+    return new GameMenuView(audioManager, new GameMenuController(appNavigator)).getRoot();
   }
 }

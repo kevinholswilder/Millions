@@ -3,7 +3,7 @@ package edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu;
 import edu.ntnu.idatt2003.group14.GameConfig;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.View;
-import edu.ntnu.idatt2003.group14.ui.features.menu.MenuButtonFactory;
+import edu.ntnu.idatt2003.group14.ui.components.MenuButtonFactory;
 import java.util.Objects;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

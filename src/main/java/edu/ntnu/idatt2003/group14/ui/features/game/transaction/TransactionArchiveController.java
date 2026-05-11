@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2003.group14.ui.features.transaction;
+package edu.ntnu.idatt2003.group14.ui.features.game.transaction;
 
 import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.model.Stock;

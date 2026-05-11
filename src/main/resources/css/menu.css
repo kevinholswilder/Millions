@@ -80,14 +80,14 @@
 }
 
 .menu-slider {
-    -fx-background-color: #444444;
+    -fx-background-color: #424242;
     -fx-text-fill: black;
     -fx-font-size: 40;
     -fx-max-width: 700;
     -fx-alignment: center;
     -fx-padding: 3 3 3 3;
 
-    -fx-border-color: #000000;
+    -fx-border-color: black;
     -fx-border-width: 6;
     -fx-border-style: solid;
 }

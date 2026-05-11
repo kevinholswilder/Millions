@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2003.group14.ui.features.portfolio;
+package edu.ntnu.idatt2003.group14.ui.features.game;
 
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
 import edu.ntnu.idatt2003.group14.ui.components.sidebar.SideBar;
@@ -7,6 +7,7 @@ import java.util.Objects;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -22,6 +23,7 @@ import javafx.scene.layout.StackPane;
 public class GameLayout {
   private final StackPane root;
   private final BorderPane layout;
+  private final AppNavigator appNavigator;
 
   /**
    * Creates a new game layout with sidebar navigation and stylesheets.
@@ -29,6 +31,7 @@ public class GameLayout {
    * @param appNavigator navigator used for view navigation
    */
   public GameLayout(AppNavigator appNavigator) {
+    this.appNavigator = appNavigator;
     this.layout = new BorderPane();
     this.root = new StackPane(this.layout);
     SideBar navigation = new SideBar(new SideBarController(appNavigator));
@@ -41,6 +44,11 @@ public class GameLayout {
 
     this.layout.getStylesheets().addAll(mainStyle, gameStyle);
     this.root.getStylesheets().add(gameStyle);
+    this.root.setOnKeyPressed(e -> {
+      if (e.getCode() == KeyCode.ESCAPE) {
+        escapePress();
+      }
+    });
   }
 
   /**
@@ -86,5 +94,15 @@ public class GameLayout {
    */
   public Parent getRoot() {
     return this.root;
+  }
+
+  private void escapePress() {
+    // hides popup if open
+    // opens options if no popup is open
+    if (root.getChildren().size() == 1) {
+      appNavigator.showGameMenu();
+    } else {
+      hidePopup();
+    }
   }
 }

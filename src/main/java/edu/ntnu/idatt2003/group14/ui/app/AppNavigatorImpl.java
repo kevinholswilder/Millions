@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
-import edu.ntnu.idatt2003.group14.ui.features.portfolio.GameLayout;
+import edu.ntnu.idatt2003.group14.ui.features.game.GameLayout;
 import java.util.Objects;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,6 +21,7 @@ public class AppNavigatorImpl implements AppNavigator {
   private final Stage stage;
   private final ViewRegistry viewRegistry;
 
+  private Parent previousView;
   private GameLayout gameLayout;
 
   /**
@@ -46,12 +47,21 @@ public class AppNavigatorImpl implements AppNavigator {
   }
 
   @Override
+  public void showPreviousView() {
+    if (this.previousView == null) {
+      showMainMenuView();
+    }
+    navigateTo(this.previousView);
+  }
+
+  @Override
   public void showMainMenuView() {
     navigateTo(viewRegistry.getMainMenuView(this).getRoot());
   }
 
   @Override
   public void showOptionsView() {
+    previousView = stage.getScene().getRoot();
     navigateTo(viewRegistry.getOptionsView(this).getRoot());
   }
 
@@ -62,16 +72,24 @@ public class AppNavigatorImpl implements AppNavigator {
 
   @Override
   public void showPortfolioView() {
-    GameLayout layout = getGameLayout();
-    layout.setContent(viewRegistry.getPortfolioView().getRoot());
-    navigateTo(layout.getRoot());
+    getGameLayout().setContent(viewRegistry.getPortfolioView().getRoot());
+    navigateTo(getGameLayout().getRoot());
   }
 
   @Override
   public void showTransactionArchiveView() {
-    GameLayout layout = getGameLayout();
-    layout.setContent(viewRegistry.getTransactionArchiveView().getRoot());
-    navigateTo(layout.getRoot());
+    getGameLayout().setContent(viewRegistry.getTransactionArchiveView().getRoot());
+    navigateTo(getGameLayout().getRoot());
+  }
+
+  @Override
+  public void showGameMenu() {
+    getGameLayout().showPopup(viewRegistry.getGameMenuView(this));
+  }
+
+  @Override
+  public void hidePopup() {
+    getGameLayout().hidePopup();
   }
 
   private void navigateTo(Parent root) {
