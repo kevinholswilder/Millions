@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.service;
 
+import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -37,6 +38,7 @@ public class AudioManager {
   private AudioClip loadClip(String resourcePath) {
     var resource = getClass().getResource(resourcePath);
     if (resource == null) {
+      AppLogger.error("Sound effect not found: " + resourcePath);
       throw new IllegalArgumentException("Sound effect not found: " + resourcePath);
     }
     return new AudioClip(resource.toExternalForm());
@@ -97,8 +99,7 @@ public class AudioManager {
 
       musicPlayer.play();
     } catch (Exception e) {
-      // TODO: implement proper logging
-      System.err.println("Could not play music: " + e.getMessage());
+      AppLogger.error("Could not play music", e);
     }
   }
 

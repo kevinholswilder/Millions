@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
-import edu.ntnu.idatt2003.group14.Launcher;
+import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.MenuButtonFactory;
@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.logging.Level;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -153,12 +152,7 @@ public class NewGameView {
                   this.stockDataFile
           );
         } catch (IOException e) {
-          Launcher.LOGGER.log(
-                  Level.SEVERE,
-                  "The selected file is invalid and/or cannot be read.",
-                  e
-          );
-
+          AppLogger.error("The selected file is invalid and/or cannot be read.", e);
           showError(
                   "The selected stock data file is invalid and/or cannot be read.",
                   fileChooserBtn

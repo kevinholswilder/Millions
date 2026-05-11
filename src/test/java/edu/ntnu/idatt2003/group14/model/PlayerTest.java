@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.model;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -53,11 +54,7 @@ public class PlayerTest {
 
   @Test
   public void verify_withdraw() {
-    try {
-      player.withdrawMoney(BigDecimal.valueOf(200.0));
-    } catch (InsufficientBalanceException e) {
-      System.err.println("Insufficient funds to withdraw." + e.getMessage());
-    }
+    assertDoesNotThrow(() -> player.withdrawMoney(BigDecimal.valueOf(200.0)));
     assertThrows(InsufficientBalanceException.class, () -> player.withdrawMoney(BigDecimal.valueOf(20000.0)));
     assertEquals(BigDecimal.valueOf(800.0), player.getMoney());
   }

@@ -1,10 +1,13 @@
 package edu.ntnu.idatt2003.group14.ui;
 
+import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.app.AppControllerImpl;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigatorImpl;
+import edu.ntnu.idatt2003.group14.utils.AppDataPathUtil;
+import java.io.IOException;
 import java.util.List;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -18,14 +21,21 @@ public final class App extends Application {
 
   @Override
   public void init() {
+    try {
+      AppDataPathUtil.initializeDataDirectory();
+    } catch (IOException e) {
+      AppLogger.error("Failed to initialize data directory.", e);
+      throw new RuntimeException("Cannot start application.", e);
+    }
+
     Parameters params = getParameters();
     List<String> raw = params.getRaw();
     skipMenu = raw.contains("--skipMenu");
 
     if (skipMenu) {
-      debugPrint("Skipping menu screen");
-      debugPrint("User: \"TestUser\"");
-      debugPrint("Stocks file: \"/resources/sp500.csv\"");
+      AppLogger.fine("Skipping menu screen");
+      AppLogger.fine("User: \"TestUser\"");
+      AppLogger.fine("Stocks file: \"/resources/sp500.csv\"");
     }
   }
 
@@ -53,9 +63,5 @@ public final class App extends Application {
     // javafx:run -Djavafx.args=--skipMenu
     // java -Djavafx.args="--skipMenu" -jar Millions.jar
     appNavigator.showPortfolioView();
-  }
-
-  private static void debugPrint(String message) {
-    IO.println("\u001B[33m[DEBUG]\u001B[38;5;15m " + message + "\u001B[0m");
   }
 }

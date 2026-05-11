@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
 import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
+import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.model.Exchange;
 import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Player;
@@ -70,9 +71,9 @@ public class NewGameController {
           BigDecimal startingMoney,
           File stockDataFile
   ) throws IOException {
-    IO.println("Username: " + username);
-    IO.println("Starting Money: " + startingMoney);
-    IO.println("Stock data file: " + stockDataFile.getName());
+    AppLogger.fine("Username: " + username);
+    AppLogger.fine("Starting Money: " + startingMoney);
+    AppLogger.fine("Stock data file: " + stockDataFile.getName());
 
     // Initialize player
     GameSession.setPlayer(

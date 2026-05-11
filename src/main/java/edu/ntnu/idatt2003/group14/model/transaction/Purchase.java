@@ -3,6 +3,7 @@ package edu.ntnu.idatt2003.group14.model.transaction;
 import edu.ntnu.idatt2003.group14.api.calculator.TransactionCalculator;
 import edu.ntnu.idatt2003.group14.calculator.PurchaseCalculator;
 import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
+import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.Share;
 import java.math.BigDecimal;
@@ -48,6 +49,7 @@ public final class Purchase extends Transaction {
     try {
       player.withdrawMoney(totalCosts);
     } catch (InsufficientBalanceException e) {
+      AppLogger.warn("Insufficient funds to purchase stock." + e.getMessage());
       throw new InsufficientBalanceException("Insufficient funds to purchase stock");
     }
 

@@ -16,38 +16,36 @@ import org.junit.jupiter.api.Test;
  * @since 0.0.1
  */
 public class GameSessionTest {
-  private GameSession session;
   private Player player;
   private Exchange exchange;
 
   @BeforeEach
-  void instantiate_game_session() {
-    this.session = new GameSession();
+  void instantiate_game_GameSession() {
     this.player = PlayerFactory.createPlayer();
     this.exchange = ExchangeFactory.createExchange();
   }
 
   @Test
   void verify_holds_player() {
-    assertFalse(session.getPlayer().isPresent());
+    assertFalse(GameSession.getPlayer().isPresent());
 
-    session.setPlayer(player);
-    assertTrue(session.getPlayer().isPresent());
-    assertEquals(player, session.getPlayer().orElseThrow());
+    GameSession.setPlayer(player);
+    assertTrue(GameSession.getPlayer().isPresent());
+    assertEquals(player, GameSession.getPlayer().orElseThrow());
 
-    session.clearPlayer();
-    assertFalse(session.getPlayer().isPresent());
+    GameSession.clearPlayer();
+    assertFalse(GameSession.getPlayer().isPresent());
   }
 
   @Test
   void verify_holds_exchange() {
-    assertFalse(session.getExchange().isPresent());
+    assertFalse(GameSession.getExchange().isPresent());
 
-    session.setExchange(exchange);
-    assertTrue(session.getExchange().isPresent());
-    assertEquals(exchange, session.getExchange().orElseThrow());
+    GameSession.setExchange(exchange);
+    assertTrue(GameSession.getExchange().isPresent());
+    assertEquals(exchange, GameSession.getExchange().orElseThrow());
 
-    session.clearExchange();
-    assertFalse(session.getExchange().isPresent());
+    GameSession.clearExchange();
+    assertFalse(GameSession.getExchange().isPresent());
   }
 }
