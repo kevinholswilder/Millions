@@ -7,7 +7,7 @@ import java.math.BigDecimal;
  *
  * <p>Class holds: one stock, quantity of the stock and the stock price at purchase.</p>
  *
- * @author Elias Haugsbakk
+ * @author Elias Haugsbakk, Kevin Holswilder
  * @since 0.0.1
  */
 public class Share {
@@ -38,5 +38,14 @@ public class Share {
 
   public BigDecimal getPurchasePrice() {
     return this.purchasePrice;
+  }
+
+  /**
+   * Returns the total purchase value of a share.
+   *
+   * @return the total purchase value
+   */
+  public BigDecimal getTotal() {
+    return this.getQuantity().multiply(this.getPurchasePrice());
   }
 }
