@@ -3,6 +3,7 @@ package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
+import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.features.menu.MenuButtonFactory;
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,7 @@ import javafx.scene.layout.VBox;
  * @author Elias Haugsbakk
  * @since 0.0.1
  */
-public class NewGameView {
+public class NewGameView implements View {
   private final AppController appController;
   private final StackPane root;
   private final NewGameController controller;
@@ -87,6 +88,7 @@ public class NewGameView {
     return this.startingMoneyField.getText().trim();
   }
 
+  @Override
   public Parent getRoot() {
     return this.root;
   }
@@ -147,15 +149,15 @@ public class NewGameView {
       case VALID -> {
         try {
           controller.handleStartGame(
-                  username,
-                  new BigDecimal(amount),
-                  this.stockDataFile
+              username,
+              new BigDecimal(amount),
+              this.stockDataFile
           );
         } catch (IOException e) {
           AppLogger.error("The selected file is invalid and/or cannot be read.", e);
           showError(
-                  "The selected stock data file is invalid and/or cannot be read.",
-                  fileChooserBtn
+              "The selected stock data file is invalid and/or cannot be read.",
+              fileChooserBtn
           );
         }
       }

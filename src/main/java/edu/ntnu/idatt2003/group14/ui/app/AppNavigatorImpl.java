@@ -1,17 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
-import edu.ntnu.idatt2003.group14.service.AudioManager;
-import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuController;
-import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuView;
-import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameController;
-import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameView;
-import edu.ntnu.idatt2003.group14.ui.features.menu.options.OptionsController;
-import edu.ntnu.idatt2003.group14.ui.features.menu.options.OptionsView;
 import edu.ntnu.idatt2003.group14.ui.features.portfolio.GameLayout;
-import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioController;
-import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioView;
-import edu.ntnu.idatt2003.group14.ui.features.transaction.TransactionArchiveController;
-import edu.ntnu.idatt2003.group14.ui.features.transaction.TransactionArchiveView;
 import java.util.Objects;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,8 +19,7 @@ public class AppNavigatorImpl implements AppNavigator {
   private static final int DEFAULT_WIDTH = 1280;
   private static final int DEFAULT_HEIGHT = 720;
   private final Stage stage;
-  private final AppController appController;
-  private final AudioManager audioManager;
+  private final ViewRegistry viewRegistry;
 
   private GameLayout gameLayout;
 
@@ -39,13 +27,10 @@ public class AppNavigatorImpl implements AppNavigator {
    * Initializes a new AppNavigatorImpl.
    *
    * @param stage         the primary stage
-   * @param appController the application controller
-   * @param audioManager  the audio manager
    */
-  public AppNavigatorImpl(Stage stage, AppController appController, AudioManager audioManager) {
+  public AppNavigatorImpl(Stage stage, ViewRegistry viewRegistry) {
     this.stage = stage;
-    this.appController = appController;
-    this.audioManager = audioManager;
+    this.viewRegistry = viewRegistry;
   }
 
   /**
@@ -62,43 +47,30 @@ public class AppNavigatorImpl implements AppNavigator {
 
   @Override
   public void showMainMenuView() {
-    MainMenuController controller = new MainMenuController(appController, this);
-    navigateTo(new MainMenuView(controller, audioManager).getRoot());
+    navigateTo(viewRegistry.getMainMenuView(this).getRoot());
   }
 
   @Override
   public void showOptionsView() {
-    OptionsController controller = new OptionsController(appController, audioManager, this);
-    navigateTo(new OptionsView(controller, audioManager).getRoot());
+    navigateTo(viewRegistry.getOptionsView(this).getRoot());
   }
 
   @Override
   public void showNewGameView() {
-    NewGameController controller = new NewGameController(this);
-    navigateTo(new NewGameView(controller, appController, audioManager).getRoot());
+    navigateTo(viewRegistry.getNewGameView(this).getRoot());
   }
 
   @Override
   public void showPortfolioView() {
-    // TODO: Service and portfolio should not be created here.
-    //  Service should probably be provided by a ServiceRegistry
-    //  class which holds the services in memory.
-
-    PortfolioController controller = new PortfolioController();
-
     GameLayout layout = getGameLayout();
-    layout.setContent(new PortfolioView(controller).getRoot());
-
+    layout.setContent(viewRegistry.getPortfolioView().getRoot());
     navigateTo(layout.getRoot());
   }
 
   @Override
   public void showTransactionArchiveView() {
     GameLayout layout = getGameLayout();
-
-    TransactionArchiveController controller = new TransactionArchiveController();
-    layout.setContent(new TransactionArchiveView(controller).getRoot());
-
+    layout.setContent(viewRegistry.getTransactionArchiveView().getRoot());
     navigateTo(layout.getRoot());
   }
 

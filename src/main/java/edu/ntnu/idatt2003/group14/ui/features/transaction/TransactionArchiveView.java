@@ -3,6 +3,7 @@ package edu.ntnu.idatt2003.group14.ui.features.transaction;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
 import edu.ntnu.idatt2003.group14.model.transaction.TransactionArchive;
+import edu.ntnu.idatt2003.group14.ui.app.View;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -26,7 +27,7 @@ import javafx.scene.layout.VBox;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class TransactionArchiveView {
+public class TransactionArchiveView implements View {
   private final BorderPane root;
   private final TransactionArchiveController controller;
 
@@ -44,12 +45,12 @@ public class TransactionArchiveView {
     this.root.setTop(topBar);
 
     this.root.getStylesheets().addAll(
-            Objects.requireNonNull(
-                getClass().getResource("/css/transaction_archive/transaction-row.css")
-            ).toExternalForm(),
-            Objects.requireNonNull(
-                getClass().getResource("/css/transaction_archive/topbar.css")
-            ).toExternalForm()
+        Objects.requireNonNull(
+            getClass().getResource("/css/transaction_archive/transaction-row.css")
+        ).toExternalForm(),
+        Objects.requireNonNull(
+            getClass().getResource("/css/transaction_archive/topbar.css")
+        ).toExternalForm()
     );
 
     // TODO: Retrieve the transactions from a Player object.
@@ -86,9 +87,9 @@ public class TransactionArchiveView {
     list.setPadding(new Insets(20));
 
     IntStream.range(0, transactions.size()).forEach(i -> list.getChildren().add(
-            this.controller.createTransactionRow(transactions.get(i),
-                    i
-            )
+        this.controller.createTransactionRow(transactions.get(i),
+            i
+        )
     ));
 
     return list;
@@ -126,16 +127,16 @@ public class TransactionArchiveView {
     topBar.getStyleClass().add("transaction-topbar");
 
     topBar.getChildren().addAll(
-            searchField,
-            this.createFilterButton("All"),
-            this.createFilterButton("Purchases"),
-            this.createFilterButton("Sales"),
-            sortLabel,
-            this.createSortButton("Week"),
-            this.createSortButton("Price"),
-            this.createSortButton("Quantity"),
-            this.createSortButton("Total"),
-            directionButton
+        searchField,
+        this.createFilterButton("All"),
+        this.createFilterButton("Purchases"),
+        this.createFilterButton("Sales"),
+        sortLabel,
+        this.createSortButton("Week"),
+        this.createSortButton("Price"),
+        this.createSortButton("Quantity"),
+        this.createSortButton("Total"),
+        directionButton
     );
 
     return topBar;
@@ -182,6 +183,7 @@ public class TransactionArchiveView {
    *
    * @return the root layout node
    */
+  @Override
   public Parent getRoot() {
     return root;
   }

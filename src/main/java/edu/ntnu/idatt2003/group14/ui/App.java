@@ -10,6 +10,7 @@ import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.app.AppControllerImpl;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigatorImpl;
+import edu.ntnu.idatt2003.group14.ui.app.ViewRegistry;
 import edu.ntnu.idatt2003.group14.utils.AppDataPathUtil;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -53,7 +54,8 @@ public final class App extends Application {
     audioManager.playOfficeNoice();
 
     AppController appController = new AppControllerImpl(stage);
-    AppNavigator appNavigator = new AppNavigatorImpl(stage, appController, audioManager);
+    ViewRegistry viewRegistry = new ViewRegistry(appController, audioManager);
+    AppNavigator appNavigator = new AppNavigatorImpl(stage, viewRegistry);
 
     if (skipMenu) {
       skipMenu(appNavigator);
