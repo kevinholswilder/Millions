@@ -92,4 +92,15 @@ public class StockTest {
     );
     Assertions.assertEquals(new BigDecimal("0"), stockNoHistory.getLatestPriceChange());
   }
+
+  @Test
+  void verify_getValueForWeek() {
+    assertEquals(new BigDecimal("1"), stock.getValueForWeek(0));
+    assertEquals(new BigDecimal("5"), stock.getValueForWeek(4));
+  }
+
+  @Test
+  void verify_getWeeks() {
+    assertEquals(5, stock.getWeek());
+  }
 }

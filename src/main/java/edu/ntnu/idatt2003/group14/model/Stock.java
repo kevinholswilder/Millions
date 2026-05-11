@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.model;
 
+import edu.ntnu.idatt2003.group14.model.plottable.Plottable;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Elias Haugsbakk
  * @since 0.0.1
  */
-public class Stock {
+public class Stock extends Plottable {
   private final String symbol;
   private final String company;
   private final List<BigDecimal> prices;
@@ -77,5 +78,16 @@ public class Stock {
    */
   public void addNewSalesPrice(BigDecimal price) {
     this.prices.add(price);
+    notifyNetWorthListeners(price);
+  }
+
+  @Override
+  public BigDecimal getValueForWeek(int week) {
+    return this.prices.get(week);
+  }
+
+  @Override
+  public int getWeek() {
+    return this.prices.size();
   }
 }

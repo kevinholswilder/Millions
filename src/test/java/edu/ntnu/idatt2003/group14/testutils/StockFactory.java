@@ -65,6 +65,18 @@ public final class StockFactory {
     return stocks;
   }
 
+  /**
+   * Creates a new stock.
+   *
+   * @param symbol the stock symbol
+   * @param name the stock name
+   * @param prices the prices of the stock
+   * @return a new stock
+   */
+  public static Stock createStock(String symbol, String name, List<BigDecimal> prices) {
+    return new Stock(symbol, name, new ArrayList<>(prices));
+  }
+
   private static Stock createStock(int i) {
     String w1 = WORD_ONE[i / WORD_TWO.length % WORD_ONE.length];
     String w2 = WORD_TWO[i % WORD_TWO.length];
