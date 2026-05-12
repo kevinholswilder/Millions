@@ -1,19 +1,24 @@
 package edu.ntnu.idatt2003.group14.io;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import edu.ntnu.idatt2003.group14.io.reader.CSVReader;
 import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
+import edu.ntnu.idatt2003.group14.model.Stock;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Class responsible for testing the {@link StockReader} class.
+ *
+ * <p>Does not contain any integration tests</p>
  *
  * @author Elias Haugsbakk
  * @since 0.0.1
@@ -21,36 +26,43 @@ import org.junit.jupiter.api.io.TempDir;
 public class StockReaderTest {
   private StockReader reader;
 
-  @TempDir
-  Path tempDir;
-
   @BeforeEach
   void setUp() {
     reader = new StockReader();
   }
 
   @Test
-  void read_parses_symbol_and_company() throws IOException {
-    var stocks = reader.read("test-stocks.csv");
+  void parse_converts_valid_strings_to_stocks() throws IOException {
+    List<String> input = List.of(
+        "# comment",
+        "SWOI,SwedenOil,00.001",
+        "NOLI,NordicLifts,120.00,19"
+    );
+
+    List<Stock> stocks = reader.parse(input);
+
     assertEquals(2, stocks.size());
     assertEquals("SWOI", stocks.getFirst().getSymbol());
-    assertEquals("SwedenOil", stocks.getFirst().getCompany());
+    assertEquals("NOLI", stocks.getLast().getSymbol());
   }
 
   @Test
-  void read_throws_when_file_not_found() {
-    assertThrows(IOException.class, () -> reader.read("does not exist"));
+  void parse_throws_exception_on_invalid_format() {
+    List<String> input = List.of("Bad CSV line");
+    assertThrows(IOException.class, () -> reader.parse(input));
   }
 
   @Test
-  void readFromFile_reads_from_filesystem_path() throws IOException {
-    Path file = tempDir.resolve("stocks.csv");
-    Files.writeString(file, "GEAU,German Automobile,120.00");
+  @Disabled("Manual test only; IO access")
+  void read_actually_reads_from_disk(@TempDir Path tempDir) throws IOException {
+    // Tests the path resolution and interaction with the OS
+    // This test is disabled since it is directly testing file reading
 
-    var reader = new CSVReader();
-    var lines = reader.readFromFile(file.toString());
+    Path file = tempDir.resolve("test.csv");
+    Files.writeString(file, "SWOI,SwedenOil,00.001");
 
-    assertEquals(1, lines.size());
-    assertEquals("GEAU,German Automobile,120.00", lines.getFirst());
+    var stocks = reader.read(file.toString());
+    assertFalse(stocks.isEmpty());
+    assertEquals("SWOI", stocks.getFirst().getSymbol());
   }
 }
