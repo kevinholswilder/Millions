@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a class for reading stock data from a CSV file.
+ * Responsible for reading from file and serializing CSV into {@link Stock} objects.
+ *
+ * <p>The class distinguishes between formatting logic and IO operations
+ * to allow for isolated unit testing.</p>
  *
  * @author Kevin Holswilder
  * @since 0.0.1
@@ -33,6 +36,17 @@ public final class StockReader extends CSVReader {
   public List<Stock> read(String filename) throws IOException {
     List<String> data = readFromFile(filename);
 
+    return parse(data);
+  }
+
+  /**
+   * Parses a list of {@link String} containing {@link Stock} CSV data.
+   *
+   * @param data the data to parse
+   * @return the {@link List} of {@link Stock}s
+   * @throws IOException if the parsing fails
+   */
+  public List<Stock> parse(List<String> data) throws IOException {
     ArrayList<Stock> stocks = new ArrayList<>();
     for (String line : data) {
       if (line.startsWith(CSVLabels.COMMENT_CHAR) || line.isEmpty()) {
@@ -58,5 +72,4 @@ public final class StockReader extends CSVReader {
     }
     return stocks;
   }
-
 }
