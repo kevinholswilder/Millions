@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.components.sidebar;
 
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
+import edu.ntnu.idatt2003.group14.ui.exchange.ExchangeView;
 import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioView;
 import edu.ntnu.idatt2003.group14.ui.features.transaction.TransactionArchiveView;
 import javafx.scene.control.Button;
@@ -63,6 +64,19 @@ public class SideBarController {
     return createNavigationButton(
         text,
         appNavigator::showPortfolioView
+    );
+  }
+
+  /**
+   * Creates a navigation button that opens the {@link ExchangeView}.
+   *
+   * @param text the text displayed on the button
+   * @return a configured exchange navigation button
+   */
+  public Button createExchangeButton(String text) {
+    return createNavigationButton(
+        text,
+        appNavigator::showExchangeView
     );
   }
 

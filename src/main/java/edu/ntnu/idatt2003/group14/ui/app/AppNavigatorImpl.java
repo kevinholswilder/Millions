@@ -1,5 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
+import edu.ntnu.idatt2003.group14.ui.exchange.ExchangeController;
+import edu.ntnu.idatt2003.group14.ui.exchange.ExchangeView;
 import edu.ntnu.idatt2003.group14.ui.features.portfolio.GameLayout;
 import java.util.Objects;
 import javafx.scene.Parent;
@@ -71,6 +73,16 @@ public class AppNavigatorImpl implements AppNavigator {
   public void showTransactionArchiveView() {
     GameLayout layout = getGameLayout();
     layout.setContent(viewRegistry.getTransactionArchiveView().getRoot());
+    navigateTo(layout.getRoot());
+  }
+
+  @Override
+  public void showExchangeView() {
+    GameLayout layout = getGameLayout();
+
+    ExchangeController controller = new ExchangeController();
+    layout.setContent(new ExchangeView(controller).getRoot());
+
     navigateTo(layout.getRoot());
   }
 
