@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.features.game;
 
-import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
+import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
+import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.sidebar.SideBar;
 import edu.ntnu.idatt2003.group14.ui.components.sidebar.SideBarController;
 import java.util.Objects;
@@ -20,21 +21,21 @@ import javafx.scene.layout.StackPane;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class GameLayout {
+public class GameLayout implements View {
   private final StackPane root;
   private final BorderPane layout;
-  private final AppNavigator appNavigator;
+  private final AppRouter router;
 
   /**
    * Creates a new game layout with sidebar navigation and stylesheets.
    *
-   * @param appNavigator navigator used for view navigation
+   * @param router the application router
    */
-  public GameLayout(AppNavigator appNavigator) {
-    this.appNavigator = appNavigator;
+  public GameLayout(AppRouter router) {
+    this.router = router;
     this.layout = new BorderPane();
     this.root = new StackPane(this.layout);
-    SideBar navigation = new SideBar(new SideBarController(appNavigator));
+    SideBar navigation = new SideBar(new SideBarController(router));
     this.layout.setLeft(navigation);
 
     String mainStyle =
@@ -44,9 +45,10 @@ public class GameLayout {
 
     this.layout.getStylesheets().addAll(mainStyle, gameStyle);
     this.root.getStylesheets().add(gameStyle);
+
     this.root.setOnKeyPressed(e -> {
       if (e.getCode() == KeyCode.ESCAPE) {
-        escapePress();
+        handleEscapePress();
       }
     });
   }
@@ -87,22 +89,12 @@ public class GameLayout {
     root.getChildren().removeIf(n -> n != layout);
   }
 
-  /**
-   * Returns the root node of the layout.
-   *
-   * @return the root layout node
-   */
+  @Override
   public Parent getRoot() {
     return this.root;
   }
 
-  private void escapePress() {
-    // hides popup if open
-    // opens options if no popup is open
-    if (root.getChildren().size() == 1) {
-      appNavigator.showGameMenu();
-    } else {
-      hidePopup();
-    }
+  private void handleEscapePress() {
+    router.handleEscape();
   }
 }

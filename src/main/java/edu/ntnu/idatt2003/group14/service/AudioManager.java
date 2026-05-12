@@ -143,7 +143,7 @@ public class AudioManager {
    *
    * @return the sound effect volume from 0 to 1
    */
-  public double getSoundEffectVolumeVolume() {
+  public double getSoundEffectVolume() {
     return this.soundEffectVolume;
   }
 

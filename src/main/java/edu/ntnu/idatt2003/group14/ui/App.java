@@ -8,6 +8,8 @@ import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
+import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
+import edu.ntnu.idatt2003.group14.ui.app.Route;
 import edu.ntnu.idatt2003.group14.ui.app.ViewRegistry;
 import edu.ntnu.idatt2003.group14.utils.AppDataPathUtil;
 import java.io.IOException;
@@ -52,18 +54,19 @@ public final class App extends Application {
     audioManager.playOfficeNoice();
 
     AppController appController = new AppController(stage);
-    ViewRegistry viewRegistry = new ViewRegistry(appController, audioManager);
-    AppNavigator appNavigator = new AppNavigator(stage, viewRegistry);
+    ViewRegistry registry = new ViewRegistry(appController, audioManager);
+    AppNavigator navigator = new AppNavigator(stage);
+    AppRouter router = new AppRouter(registry, navigator);
 
     if (skipMenu) {
-      skipMenu(appNavigator);
+      skipMenu(router);
     } else {
-      appNavigator.showMainMenuView();
+      router.navigate(Route.MAIN_MENU);
     }
     stage.show();
   }
 
-  private void skipMenu(AppNavigator appNavigator) {
+  private void skipMenu(AppRouter router) {
     // enable by running with:
     // javafx:run -Djavafx.args=--skipMenu
     // java -Djavafx.args="--skipMenu" -jar Millions.jar
@@ -78,6 +81,6 @@ public final class App extends Application {
       AppLogger.error("Could not load /resources/sp500.csv", e);
       throw new RuntimeException(e);
     }
-    appNavigator.showPortfolioView();
+    router.navigate(Route.PORTFOLIO);
   }
 }

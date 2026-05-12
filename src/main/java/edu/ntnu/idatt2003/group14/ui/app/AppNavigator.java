@@ -17,94 +17,68 @@ public class AppNavigator {
   private static final int DEFAULT_WIDTH = 1280;
   private static final int DEFAULT_HEIGHT = 720;
   private final Stage stage;
-  private final ViewRegistry viewRegistry;
 
-  private Parent previousView;
   private GameLayout gameLayout;
 
   /**
    * Initializes a new AppNavigator.
    *
-   * @param stage        the primary stage
-   * @param viewRegistry to fetch cached or constructed views
+   * @param stage the primary stage
    */
-  public AppNavigator(Stage stage, ViewRegistry viewRegistry) {
+  public AppNavigator(Stage stage) {
     this.stage = stage;
-    this.viewRegistry = viewRegistry;
   }
 
   /**
    * Returns the game layout, creating it if necessary.
    *
+   * @param router the application router
    * @return the game layout instance
    */
-  private GameLayout getGameLayout() {
+  private GameLayout getGameLayout(AppRouter router) {
     if (gameLayout == null) {
-      gameLayout = new GameLayout(this);
+      gameLayout = new GameLayout(router);
     }
     return gameLayout;
   }
 
   /**
-   * Display the previous view displayed before Options was opened.
+   * Displays a standard view by setting it as the scene root.
+   *
+   * @param view the view to display
    */
-  public void showPreviousView() {
-    if (this.previousView == null) {
-      showMainMenuView();
-    }
-    navigateTo(this.previousView);
+  public void showView(View view) {
+    navigateTo(view.getRoot());
   }
 
   /**
-   * Display the main menu view.
+   * Displays a view within the game layout.
+   *
+   * @param view   the view to display
+   * @param router the application router
    */
-  public void showMainMenuView() {
-    navigateTo(viewRegistry.getMainMenuView(this).getRoot());
+  public void showGameView(View view, AppRouter router) {
+    getGameLayout(router).setContent(view.getRoot());
+    navigateTo(getGameLayout(router).getRoot());
   }
 
   /**
-   * Display the options view.
+   * Displays a popup overlay over the current game view.
+   *
+   * @param view   the view to display as a popup
+   * @param router the application router
    */
-  public void showOptionsView() {
-    previousView = stage.getScene().getRoot();
-    navigateTo(viewRegistry.getOptionsView(this).getRoot());
+  public void showPopup(View view, AppRouter router) {
+    getGameLayout(router).showPopup(view.getRoot());
   }
 
   /**
-   * Display the new game view.
+   * Hides any active popup displayed in the game view.
+   *
+   * @param router the application router
    */
-  public void showNewGameView() {
-    navigateTo(viewRegistry.getNewGameView(this).getRoot());
-  }
-
-  /**
-   * Display portfolio view.
-   */
-  public void showPortfolioView() {
-    getGameLayout().setContent(viewRegistry.getPortfolioView().getRoot());
-    navigateTo(getGameLayout().getRoot());
-  }
-
-  /**
-   * Display transaction archive view.
-   */
-  public void showTransactionArchiveView() {
-    getGameLayout().setContent(viewRegistry.getTransactionArchiveView().getRoot());
-    navigateTo(getGameLayout().getRoot());
-  }
-
-  /**
-   * Display game menu.
-   */
-  public void showGameMenu() {
-    getGameLayout().showPopup(viewRegistry.getGameMenuView(this));
-  }
-
-  /**
-   * Hides any popup displayed in the game view.
-   */
-  public void hidePopup() {
-    getGameLayout().hidePopup();
+  public void hidePopup(AppRouter router) {
+    getGameLayout(router).hidePopup();
   }
 
   private void navigateTo(Parent root) {
@@ -119,4 +93,3 @@ public class AppNavigator {
     stage.getScene().setRoot(root);
   }
 }
-

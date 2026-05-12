@@ -2,7 +2,7 @@ package edu.ntnu.idatt2003.group14.ui.features.menu.options;
 
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
-import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
+import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 
 /**
  * Controller class for handling user input from the Options scene.
@@ -12,20 +12,21 @@ import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
  */
 public class OptionsController {
   private final AppController appController;
-  private final AppNavigator appNavigator;
+  private final AppRouter router;
   private final AudioManager audioManager;
 
   /**
    * Initializes a new OptionsController.
    *
    * @param appController the application controller
+   * @param router        the application router
    * @param audioManager  the application audio manager
-   * @param appNavigator  the application navigator
    */
-  public OptionsController(AppController appController, AudioManager audioManager,
-                           AppNavigator appNavigator) {
+
+  public OptionsController(AppController appController, AppRouter router,
+                           AudioManager audioManager) {
     this.appController = appController;
-    this.appNavigator = appNavigator;
+    this.router = router;
     this.audioManager = audioManager;
   }
 
@@ -40,7 +41,7 @@ public class OptionsController {
    * User requests to return to main menu.
    */
   public void handleReturnToMainMenu() {
-    appNavigator.showPreviousView();
+    router.back();
   }
 
   /**

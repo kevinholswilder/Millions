@@ -73,7 +73,7 @@ public class OptionsView implements View {
     );
     StackPane ambiance = createLabeledSlider(ambianceSlider, "Music");
 
-    Slider effectsSlider = new Slider(0, 100, audioManager.getSoundEffectVolumeVolume() * 100);
+    Slider effectsSlider = new Slider(0, 100, audioManager.getSoundEffectVolume() * 100);
     effectsSlider.getStyleClass().add("menu-slider");
     effectsSlider.valueProperty().addListener(
         (_, _, newVal) -> controller.handleSoundEffectVolume(newVal.doubleValue())

@@ -6,7 +6,7 @@ import javafx.scene.Parent;
  * Represents a view in the application.
  *
  * <p>All views must expose a root {@link Parent} node which can be
- * placed in the scene graph by the {@link AppNavigator}.</p>
+ * placed in the scene graph by the {@link AppRouter}.</p>
  */
 public interface View {
 

@@ -57,11 +57,6 @@ public class PortfolioView implements View {
     root.getChildren().addAll(portfolioPane, stockMoversPane);
   }
 
-  /**
-   * Returns the root node of the view.
-   *
-   * @return the root layout node
-   */
   @Override
   public Parent getRoot() {
     return root;

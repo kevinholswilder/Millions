@@ -22,6 +22,11 @@ public class PortfolioController {
     playerPortfolio = GameSession.getPlayer().getPortfolio();
   }
 
+  /**
+   * Returns the player's portfolio.
+   *
+   * @return the player's {@link Portfolio}
+   */
   public Portfolio getPortfolio() {
     return playerPortfolio;
   }

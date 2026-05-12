@@ -29,7 +29,7 @@ public class GameMenuView implements View {
    * Initializes a new GameMenuView.
    *
    * @param audioManager the audio manager
-   * @param controller   the application controller
+   * @param controller   the game menu controller
    */
   public GameMenuView(AudioManager audioManager, GameMenuController controller) {
     this.root = new BorderPane();

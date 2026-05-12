@@ -178,11 +178,6 @@ public class TransactionArchiveView implements View {
     return button;
   }
 
-  /**
-   * Returns the root node of the layout.
-   *
-   * @return the root layout node
-   */
   @Override
   public Parent getRoot() {
     return root;

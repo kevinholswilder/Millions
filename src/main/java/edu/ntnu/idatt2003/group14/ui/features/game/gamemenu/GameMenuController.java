@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.gamemenu;
 
-import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
+import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
+import edu.ntnu.idatt2003.group14.ui.app.Route;
 
 /**
  * Controller class for handling user input from the Game Menu scene.
@@ -9,22 +10,22 @@ import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
  * @since 0.0.1
  */
 public class GameMenuController {
-  private final AppNavigator appNavigator;
+  private final AppRouter router;
 
   /**
    * Initializes a new GameMenuController.
    *
-   * @param appNavigator the application navigator
+   * @param router the application view router
    */
-  public GameMenuController(AppNavigator appNavigator) {
-    this.appNavigator = appNavigator;
+  public GameMenuController(AppRouter router) {
+    this.router = router;
   }
 
   /**
    * Switch to the options view.
    */
   public void showOptions() {
-    this.appNavigator.showOptionsView();
+    router.navigate(Route.OPTIONS);
   }
 
   /**
@@ -32,13 +33,13 @@ public class GameMenuController {
    */
   public void handleSaveAndQuit() {
     // TODO: implement saving
-    this.appNavigator.showMainMenuView();
+    router.navigate(Route.MAIN_MENU);
   }
 
   /**
    * User requests to resume the game.
    */
   public void resumeGame() {
-    this.appNavigator.hidePopup();
+    router.hidePopup();
   }
 }
