@@ -45,9 +45,9 @@ public class ExchangeView {
     this.root.getStyleClass().add("exchange-root");
 
     this.root.getStylesheets().addAll(
-            Objects.requireNonNull(
-                    getClass().getResource("/css/exchange/stock-row.css")
-            ).toExternalForm()
+        Objects.requireNonNull(
+            getClass().getResource("/css/exchange/stock-row.css")
+        ).toExternalForm()
     );
 
     Parent topBar = this.createTopBar();
@@ -57,13 +57,9 @@ public class ExchangeView {
     this.setupStockListView();
     this.root.setCenter(this.stockListView);
 
-    if (GameSession.getExchange().isPresent()) {
-      Exchange exchange = GameSession.getExchange().get();
-
-      exchange.addWeekAdvanceListener(_ -> this.refreshStocks());
-
-      this.setStocks(exchange.getStocks());
-    }
+    Exchange exchange = GameSession.getExchange();
+    exchange.addWeekAdvanceListener(_ -> this.refreshStocks());
+    this.setStocks(exchange.getStocks());
   }
 
   /**

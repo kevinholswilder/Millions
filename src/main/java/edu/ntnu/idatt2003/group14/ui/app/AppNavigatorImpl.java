@@ -1,5 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
+import edu.ntnu.idatt2003.group14.ui.exchange.ExchangeController;
+import edu.ntnu.idatt2003.group14.ui.exchange.ExchangeView;
 import edu.ntnu.idatt2003.group14.ui.features.portfolio.GameLayout;
 import java.util.Objects;
 import javafx.scene.Parent;
