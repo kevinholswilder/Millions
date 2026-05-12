@@ -3,7 +3,7 @@ package edu.ntnu.idatt2003.group14.ui.components.sidebar;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
 import edu.ntnu.idatt2003.group14.ui.exchange.ExchangeView;
 import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioView;
-import edu.ntnu.idatt2003.group14.ui.transaction.TransactionArchiveView;
+import edu.ntnu.idatt2003.group14.ui.features.transaction.TransactionArchiveView;
 import javafx.scene.control.Button;
 
 /**

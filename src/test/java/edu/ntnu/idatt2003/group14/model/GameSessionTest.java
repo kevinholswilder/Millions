@@ -1,8 +1,8 @@
 package edu.ntnu.idatt2003.group14.model;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import edu.ntnu.idatt2003.group14.testutils.ExchangeFactory;
 import edu.ntnu.idatt2003.group14.testutils.PlayerFactory;
@@ -27,25 +27,25 @@ public class GameSessionTest {
 
   @Test
   void verify_holds_player() {
-    assertFalse(GameSession.getPlayer().isPresent());
+    assertThrows(IllegalStateException.class, GameSession::getPlayer);
 
     GameSession.setPlayer(player);
-    assertTrue(GameSession.getPlayer().isPresent());
-    assertEquals(player, GameSession.getPlayer().orElseThrow());
+    assertDoesNotThrow(GameSession::getPlayer);
+    assertEquals(player, GameSession.getPlayer());
 
     GameSession.clearPlayer();
-    assertFalse(GameSession.getPlayer().isPresent());
+    assertThrows(IllegalStateException.class, GameSession::getPlayer);
   }
 
   @Test
   void verify_holds_exchange() {
-    assertFalse(GameSession.getExchange().isPresent());
+    assertThrows(IllegalStateException.class, GameSession::getExchange);
 
     GameSession.setExchange(exchange);
-    assertTrue(GameSession.getExchange().isPresent());
-    assertEquals(exchange, GameSession.getExchange().orElseThrow());
+    assertDoesNotThrow(GameSession::getExchange);
+    assertEquals(exchange, GameSession.getExchange());
 
     GameSession.clearExchange();
-    assertFalse(GameSession.getExchange().isPresent());
+    assertThrows(IllegalStateException.class, GameSession::getExchange);
   }
 }
