@@ -51,6 +51,13 @@ public class GameLayout implements View {
         handleEscapePress();
       }
     });
+
+    // Prevent autofocus
+    this.root.sceneProperty().addListener((_, _, newScene) -> {
+      if (newScene != null) {
+        this.root.requestFocus();
+      }
+    });
   }
 
   /**
@@ -68,6 +75,7 @@ public class GameLayout implements View {
    * @param content the contents of the popup window
    */
   public void showPopup(Parent content) {
+    layout.setDisable(true);
     layout.setEffect(new GaussianBlur(10));
 
     StackPane popup = new StackPane(content);
@@ -78,13 +86,21 @@ public class GameLayout implements View {
     Region overlay = new Region();
     overlay.getStyleClass().add("popup-overlay");
 
-    root.getChildren().addAll(overlay, popup);
+    this.root.getChildren().addAll(overlay, popup);
+
+    // Prevent autofocus on the first button
+    this.root.sceneProperty().addListener((_, _, newScene) -> {
+      if (newScene != null) {
+        this.root.requestFocus();
+      }
+    });
   }
 
   /**
    * Removes the popup window.
    */
   public void hidePopup() {
+    layout.setDisable(false);
     layout.setEffect(null);
     root.getChildren().removeIf(n -> n != layout);
   }

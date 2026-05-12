@@ -41,8 +41,14 @@ public class OptionsView implements View {
     this.root.getStylesheets().add(
         Objects.requireNonNull(getClass().getResource("/css/menu.css")).toExternalForm()
     );
-
     this.root.getChildren().addAll(backgroundView(), centerMenu());
+
+    // Prevent autofocus
+    this.root.sceneProperty().addListener((_, _, newScene) -> {
+      if (newScene != null) {
+        this.root.requestFocus();
+      }
+    });
   }
 
   @Override

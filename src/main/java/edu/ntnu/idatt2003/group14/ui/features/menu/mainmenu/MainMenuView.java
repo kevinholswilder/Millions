@@ -43,6 +43,13 @@ public class MainMenuView implements View {
     this.root.getStyleClass().add("main-menu-root-container");
     this.root.setCenter(centerMenu());
     this.root.setBottom(bottomBar());
+
+    // Prevent autofocus
+    this.root.sceneProperty().addListener((_, _, newScene) -> {
+      if (newScene != null) {
+        this.root.requestFocus();
+      }
+    });
   }
 
   @Override
