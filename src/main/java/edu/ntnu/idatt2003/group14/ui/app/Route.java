@@ -11,6 +11,7 @@ public enum Route {
 
   // Game routes
   PORTFOLIO(RouteType.GAME),
+  EXCHANGE(RouteType.GAME),
   TRANSACTION_ARCHIVE(RouteType.GAME),
 
   // Popup routes

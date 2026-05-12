@@ -1,6 +1,8 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
 import edu.ntnu.idatt2003.group14.service.AudioManager;
+import edu.ntnu.idatt2003.group14.ui.features.game.exchange.ExchangeController;
+import edu.ntnu.idatt2003.group14.ui.features.game.exchange.ExchangeView;
 import edu.ntnu.idatt2003.group14.ui.features.game.gamemenu.GameMenuController;
 import edu.ntnu.idatt2003.group14.ui.features.game.gamemenu.GameMenuView;
 import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioController;
@@ -92,6 +94,11 @@ public class ViewRegistry {
   public View getPortfolioView() {
     return viewCache.computeIfAbsent(Route.PORTFOLIO,
         _ -> new PortfolioView(new PortfolioController()));
+  }
+
+  public View getExchangeView() {
+    return viewCache.computeIfAbsent(Route.EXCHANGE,
+        _ -> new ExchangeView(new ExchangeController()));
   }
 
   /**

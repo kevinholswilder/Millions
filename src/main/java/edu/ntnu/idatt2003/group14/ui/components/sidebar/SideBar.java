@@ -1,7 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.components.sidebar;
 
-import edu.ntnu.idatt2003.group14.ui.components.ExchangeOverview;
-import javafx.scene.control.ScrollPane;
+import java.util.Objects;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -20,14 +19,15 @@ public class SideBar extends BorderPane {
   public SideBar(SideBarController controller) {
     Header header = new Header(controller);
     Footer footer = new Footer();
-    ExchangeOverview center = new ExchangeOverview();
 
-    ScrollPane scrollPane = new ScrollPane(center);
-    scrollPane.setFitToWidth(true);
+    this.getStylesheets().add(
+        Objects.requireNonNull(getClass().getResource("/css/sidebar/sidebar.css")).toExternalForm()
+    );
+
+    this.getStyleClass().add("sidebar-container");
 
     this.setBottom(footer);
     this.setTop(header);
-    this.setCenter(scrollPane);
 
     sceneProperty().addListener((_, _, newScene) -> {
       prefWidthProperty().bind(newScene.widthProperty().multiply(0.15));
