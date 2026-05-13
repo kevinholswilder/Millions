@@ -127,15 +127,19 @@ public class Exchange extends Plottable {
    * @param player   the player who is purchasing
    * @return the transaction containing the purchase
    */
-  public Transaction buy(String symbol, BigDecimal quantity, Player player)
-      throws InsufficientBalanceException {
-    // TODO: Does the stock exist in this exchange?
-    // TODO: Does the player have enough funds?
+  public Transaction purchase(
+      String symbol,
+      BigDecimal quantity,
+      Player player,
+      boolean commit
+  ) throws InsufficientBalanceException {
     Stock stock = stockMap.get(symbol);
     BigDecimal purchasePrice = stock.getSalesPrice();
     Share share = new Share(stock, quantity, purchasePrice);
     Purchase purchase = new Purchase(share, this.week);
-    purchase.commit(player);
+    if (commit) {
+      purchase.commit(player);
+    }
     return purchase;
   }
 

@@ -69,7 +69,7 @@ public class Player {
     }
 
     if (this.money.compareTo(amount) < 0) {
-      throw new InsufficientBalanceException("You do not have enough money to withdraw.");
+      throw new InsufficientBalanceException("You have insufficient balance.");
     }
 
     this.money = this.money.subtract(amount);

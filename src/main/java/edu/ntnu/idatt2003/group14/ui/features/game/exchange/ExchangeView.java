@@ -45,7 +45,7 @@ public class ExchangeView implements View {
 
     this.root.getStyleClass().add("exchange-root");
 
-    this.root.getStylesheets().addAll(
+    this.root.getStylesheets().add(
         Objects.requireNonNull(
             getClass().getResource("/css/exchange/stock-row.css")
         ).toExternalForm()
