@@ -14,13 +14,9 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 /**
  * Controller class for {@link PortfolioView}. Provides live updated JavaFX components to display.
@@ -74,42 +70,6 @@ public class PortfolioController implements PlottableChangeListener {
     });
   }
 
-  public HBox createShareRow(Share share, int index) {
-    // Identity
-    VBox assetBox = createInfoBox(share.getStock().getSymbol(), share.getStock().getCompany());
-
-    // Position
-    VBox posBox = createInfoBox("Quantity", String.valueOf(share.getQuantity()));
-
-    // Total Value
-    VBox valueBox = createInfoBox("Total Value",
-        "$" + share.getCurrentValue().setScale(2, RoundingMode.HALF_UP));
-
-    // Buttons
-    HBox actions = new HBox(10);
-    Button buyMore = new Button("Buy");
-    Button sellAll = new Button("Sell");
-    actions.getChildren().addAll(buyMore, sellAll);
-    actions.setAlignment(Pos.CENTER);
-
-    HBox row = new HBox(24);
-    row.getStyleClass().add("stock-row");
-    row.getStyleClass().add(index % 2 == 0 ? "stock-row-even" : "stock-row-odd");
-
-    row.getChildren().addAll(assetBox, posBox, valueBox, actions);
-    return row;
-  }
-
-  private VBox createInfoBox(String title, String value) {
-    Label t = new Label(title);
-    t.getStyleClass().add("stock-info-title");
-    Label v = new Label(value);
-    v.getStyleClass().add("stock-info-value");
-    VBox box = new VBox(6);
-    box.getChildren().addAll(t, v);
-    return box;
-  }
-
   /**
    * Returns the player's portfolio.
    *
@@ -134,14 +94,31 @@ public class PortfolioController implements PlottableChangeListener {
     return this.shares;
   }
 
+  /**
+   * Sets the labels in the topbar.
+   *
+   * <p>Called by the view to let the controller update the data in the labels.</p>
+   *
+   * @param netWorthLabel displaying the players net worth
+   * @param cashLabel displaying the players cash
+   * @param portfolioLabel displaying the value of the portfolio
+   */
   public void setTopBarLabels(Label netWorthLabel, Label cashLabel, Label portfolioLabel) {
     this.netWorthLabel = netWorthLabel;
     this.cashLabel = cashLabel;
     this.portfolioValueLabel = portfolioLabel;
   }
 
+  /**
+   * Sets the image in the topbar.
+   *
+   * <p>Called by the view to let the controller update the image.</p>
+   *
+   * @param imageView the image
+   */
   public void setStatusImageView(ImageView imageView) {
     this.statusImageView = imageView;
+    updateStatusImage();
   }
 
   private void updateStatusImage() {

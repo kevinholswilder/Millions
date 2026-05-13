@@ -4,8 +4,13 @@ import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.PlottableGraph;
 import edu.ntnu.idatt2003.group14.ui.components.StockMoversComponent;
+import java.math.RoundingMode;
+import java.util.Objects;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -25,6 +30,8 @@ import javafx.scene.layout.VBox;
 public class PortfolioView implements View {
   private final BorderPane root;
   private final PortfolioController controller;
+  private StockMoversComponent gainers;
+  private StockMoversComponent losers;
 
   /**
    * Creates a new portfolio view.
@@ -36,6 +43,15 @@ public class PortfolioView implements View {
     this.root = new BorderPane();
 
     populate();
+
+    this.root.getStylesheets().addAll(
+        Objects.requireNonNull(
+            getClass().getResource("/css/portfolio/portfolio.css")
+        ).toExternalForm(),
+        Objects.requireNonNull(
+            getClass().getResource("/css/exchange/stock-row.css")
+        ).toExternalForm()
+    );
 
     // Prevent autofocus
     this.root.sceneProperty().addListener((_, _, newScene) -> {
@@ -50,10 +66,19 @@ public class PortfolioView implements View {
    */
   private void populate() {
     PlottableGraph graph = createGraph();
-    VBox stockMoversPane = createStockMovers();
+    VBox moversWrapper = new VBox();
+
+    // Initial movers
+    updateMovers(moversWrapper);
+
+    controller.getPortfolio()
+        .addListener(_ -> Platform.runLater(() -> updateMovers(moversWrapper)));
+
+    HBox.setHgrow(graph, Priority.ALWAYS);
 
     // Holds portfolio graph and stock movers
-    HBox graphMoversPane = new HBox(graph, stockMoversPane);
+    HBox graphMoversPane = new HBox(5, graph, moversWrapper);
+    HBox.setMargin(moversWrapper, new Insets(0, 5, 0, 0));
 
     ListView<Share> shareListView = createListView();
 
@@ -63,6 +88,28 @@ public class PortfolioView implements View {
     this.root.setCenter(portfolioPane);
 
     this.root.setTop(createTopBar());
+  }
+
+  private void updateMovers(VBox wrapper) {
+    if (gainers != null) {
+      controller.getPortfolio().removeListener(gainers);
+    }
+    if (losers != null) {
+      controller.getPortfolio().removeListener(losers);
+    }
+
+    wrapper.getChildren().clear();
+
+    gainers = new StockMoversComponent(controller.getPortfolioStockList(),
+        StockMoversComponent.Type.GAINERS);
+    losers = new StockMoversComponent(controller.getPortfolioStockList(),
+        StockMoversComponent.Type.LOSERS);
+
+    controller.getPortfolio().addListener(gainers);
+    controller.getPortfolio().addListener(losers);
+
+    wrapper.getChildren().addAll(gainers, losers);
+    wrapper.setSpacing(5);
   }
 
   private HBox createTopBar() {
@@ -99,7 +146,7 @@ public class PortfolioView implements View {
           setText(null);
           setGraphic(null);
         } else {
-          setGraphic(controller.createShareRow(share, getIndex()));
+          setGraphic(createShareRow(share, getIndex()));
         }
       }
     });
@@ -110,22 +157,49 @@ public class PortfolioView implements View {
     return listView;
   }
 
-  private PlottableGraph createGraph() {
-    PlottableGraph graph = new PlottableGraph(controller.getPortfolio());
-    controller.getPortfolio().addListener(graph);
-    return graph;
+  private HBox createShareRow(Share share, int index) {
+    // Identity
+    VBox assetBox = createInfoBox(share.getStock().getSymbol(), share.getStock().getCompany());
+
+    // Position
+    VBox posBox = createInfoBox("Quantity", String.valueOf(share.getQuantity()));
+
+    // Total Value
+    VBox valueBox = createInfoBox("Total Value",
+        "$" + share.getCurrentValue().setScale(2, RoundingMode.HALF_UP));
+
+    // Buttons
+    // TODO: hook up buttons to buy and sell functionality in controller
+    HBox actions = new HBox(10);
+    Button buyMore = new Button("Buy");
+    Button sellAll = new Button("Sell");
+    actions.getChildren().addAll(buyMore, sellAll);
+    actions.setAlignment(Pos.CENTER);
+
+    HBox row = new HBox(24);
+    row.getStyleClass().add("stock-row");
+    row.getStyleClass().add(index % 2 == 0 ? "stock-row-even" : "stock-row-odd");
+
+    row.getChildren().addAll(assetBox, posBox, valueBox, actions);
+    return row;
   }
 
-  private VBox createStockMovers() {
-    StockMoversComponent gainers = new StockMoversComponent(controller.getPortfolioStockList(),
-        StockMoversComponent.Type.GAINERS);
-    StockMoversComponent losers = new StockMoversComponent(controller.getPortfolioStockList(),
-        StockMoversComponent.Type.LOSERS);
+  private VBox createInfoBox(String title, String value) {
+    Label t = new Label(title);
+    t.getStyleClass().add("stock-info-title");
+    Label v = new Label(value);
+    v.getStyleClass().add("stock-info-value");
+    VBox box = new VBox(6);
+    box.getChildren().addAll(t, v);
+    return box;
+  }
 
-    controller.getPortfolio().addListener(gainers);
-    controller.getPortfolio().addListener(losers);
+  private PlottableGraph createGraph() {
+    PlottableGraph graph = new PlottableGraph(controller.getPortfolio());
 
-    return new VBox(gainers, losers);
+    graph.getStyleClass().add("portfolio-graph");
+
+    return graph;
   }
 
   @Override

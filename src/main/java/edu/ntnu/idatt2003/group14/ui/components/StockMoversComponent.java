@@ -46,7 +46,6 @@ public class StockMoversComponent extends VBox implements PlottableChangeListene
     this.stocks = stocks;
     this.type = type;
 
-    this.setMaxSize(200, 150);
     this.setSpacing(10);
     this.setPadding(new Insets(12));
     this.getStyleClass().add("movers-component");
