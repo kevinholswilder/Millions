@@ -95,7 +95,7 @@ public class PlayerTest {
 
     // Advance to week 10 with purchases every week.
     for (int i = 0; i < 10; i++) {
-      exchange.buy("AMCH", new BigDecimal("1"), player);
+      exchange.purchase("AMCH", new BigDecimal("1"), player, true);
       exchange.advance();
     }
 
@@ -108,7 +108,7 @@ public class PlayerTest {
 
     // Advance to week 20.
     for (int i = 0; i < 10; i++) {
-      exchange.buy("AMCH", new BigDecimal("1"), player);
+      exchange.purchase("AMCH", new BigDecimal("1"), player, true);
       exchange.advance();
     }
 
