@@ -40,6 +40,7 @@ public class AppRouter {
     routes.put(Route.TRANSACTION_ARCHIVE, viewRegistry::getTransactionArchiveView);
     routes.put(Route.EXCHANGE, () -> viewRegistry.getExchangeView(this));
     routes.put(Route.GAME_MENU, () -> viewRegistry.getGameMenuView(this));
+    routes.put(Route.PURCHASE_STOCK, () -> viewRegistry.getPurchaseStockView(this));
   }
 
   /**

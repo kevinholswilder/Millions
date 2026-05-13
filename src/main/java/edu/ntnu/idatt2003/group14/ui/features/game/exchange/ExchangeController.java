@@ -4,8 +4,8 @@ import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Stock;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import edu.ntnu.idatt2003.group14.ui.app.Route;
+import edu.ntnu.idatt2003.group14.ui.features.game.exchange.stock.PurchaseStockController;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -148,6 +148,8 @@ public class ExchangeController {
     button.getStyleClass().add("purchase-button");
 
     button.setOnAction(e -> {
+      PurchaseStockController.getInstance().setStock(stock);
+      router.navigate(Route.PURCHASE_STOCK);
     });
 
     return button;
