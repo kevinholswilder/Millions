@@ -9,7 +9,6 @@ import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import edu.ntnu.idatt2003.group14.ui.app.Route;
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.PlottableGraph;
-import edu.ntnu.idatt2003.group14.ui.features.game.transaction.receipt.TransactionReceiptController;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -162,10 +161,10 @@ public class PurchaseStockView implements View {
 
         transaction.get().commit(GameSession.getPlayer());
 
-        TransactionReceiptController.getInstance().setTransaction(transaction.get());
+        // TransactionReceiptController.getInstance().setTransaction(transaction.get());
 
         router.hidePopup();
-        router.navigate(Route.TRANSACTION_RECEIPT);
+        // router.navigate(Route.TRANSACTION_RECEIPT);
       } catch (InsufficientBalanceException e) {
         errorLabel.setText(e.getMessage());
       }
