@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -39,7 +39,7 @@ public class StockWriterTest {
   }
 
   @Test
-  @Disabled("Manual test only; IO access")
+  @Tag("integration")
   void writeStocksToFile_successfully_creates_file_on_disk(@TempDir Path tempDir)
       throws IOException {
     Path filePath = tempDir.resolve("integration_test.csv");
@@ -52,7 +52,7 @@ public class StockWriterTest {
   }
 
   @Test
-  @Disabled("Manual test only; IO access")
+  @Tag("integration")
   void writeStockToFile_overwrites_existing_file_content(@TempDir Path tempDir) throws IOException {
     Path filePath = tempDir.resolve("overwrite_test.csv");
 
