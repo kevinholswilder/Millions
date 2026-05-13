@@ -2,7 +2,7 @@ package edu.ntnu.idatt2003.group14.ui.features.menu.options;
 
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.View;
-import edu.ntnu.idatt2003.group14.ui.features.menu.MenuButtonFactory;
+import edu.ntnu.idatt2003.group14.ui.components.MenuButtonFactory;
 import java.util.Objects;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -41,8 +41,14 @@ public class OptionsView implements View {
     this.root.getStylesheets().add(
         Objects.requireNonNull(getClass().getResource("/css/menu.css")).toExternalForm()
     );
-
     this.root.getChildren().addAll(backgroundView(), centerMenu());
+
+    // Prevent autofocus
+    this.root.sceneProperty().addListener((_, _, newScene) -> {
+      if (newScene != null) {
+        this.root.requestFocus();
+      }
+    });
   }
 
   @Override
@@ -73,7 +79,7 @@ public class OptionsView implements View {
     );
     StackPane ambiance = createLabeledSlider(ambianceSlider, "Music");
 
-    Slider effectsSlider = new Slider(0, 100, audioManager.getSoundEffectVolumeVolume() * 100);
+    Slider effectsSlider = new Slider(0, 100, audioManager.getSoundEffectVolume() * 100);
     effectsSlider.getStyleClass().add("menu-slider");
     effectsSlider.valueProperty().addListener(
         (_, _, newVal) -> controller.handleSoundEffectVolume(newVal.doubleValue())

@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2003.group14.ui.features.portfolio;
+package edu.ntnu.idatt2003.group14.ui.features.game.portfolio;
 
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.PlottableGraph;
@@ -57,11 +57,6 @@ public class PortfolioView implements View {
     root.getChildren().addAll(portfolioPane, stockMoversPane);
   }
 
-  /**
-   * Returns the root node of the view.
-   *
-   * @return the root layout node
-   */
   @Override
   public Parent getRoot() {
     return root;

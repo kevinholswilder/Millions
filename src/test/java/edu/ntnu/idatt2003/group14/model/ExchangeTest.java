@@ -103,8 +103,8 @@ public class ExchangeTest {
     exchange.buy("NOCH", new BigDecimal("10"), player);
 
     assertFalse(player.getPortfolio().getShares().isEmpty());
-    // cost of 50 + fees of 2.5 (0.5%)
-    assertEquals(new BigDecimal("947.50"), player.getMoney());
+    // cost of 50 + fees of 2.5 (0.05%)
+    assertEquals(new BigDecimal("949.750"), player.getMoney());
   }
 
   @Test
@@ -116,14 +116,14 @@ public class ExchangeTest {
     exchange.buy("NOCH", new BigDecimal("10"), player);
 
     assertFalse(player.getPortfolio().getShares().isEmpty());
-    // cost of 50 + fees of 2.5 (0.5%)
-    assertEquals(new BigDecimal("947.50"), player.getMoney());
+    // cost of 50 + fees of 2.5 (0.05%)
+    assertEquals(new BigDecimal("949.750"), player.getMoney());
 
     exchange.sell(player.getPortfolio().getShares().getFirst(), player);
 
     assertTrue(player.getPortfolio().getShares().isEmpty());
     // 947.5 + 50 + 1% commission rate
-    assertEquals(new BigDecimal("997.00"), player.getMoney());
+    assertEquals(new BigDecimal("999.250"), player.getMoney());
   }
 
   @Test

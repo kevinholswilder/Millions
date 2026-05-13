@@ -28,8 +28,8 @@ public final class PurchaseCalculatorTest {
 
   @Test
   void calculate_commission_calculates_the_expected_commission() {
-    // 5% of 15 = 0.075
-    BigDecimal expected = new BigDecimal("0.75");
+    // 0.5% of 15 = 0.075
+    BigDecimal expected = new BigDecimal("0.075");
     assertEquals(expected.stripTrailingZeros(),
         purchaseCalculator.calculateCommission().stripTrailingZeros());
   }
@@ -41,8 +41,10 @@ public final class PurchaseCalculatorTest {
 
   @Test
   void calculate_total_calculates_the_expected_total() {
-    // 15 + 0.75 = 15.075
-    BigDecimal expected = new BigDecimal("15.75");
+    // commission 0.5%
+    // 0 tax
+    // 15 + 15 * 0.005 = 15.075
+    BigDecimal expected = new BigDecimal("15.075");
     assertEquals(expected.stripTrailingZeros(),
         purchaseCalculator.calculateTotal().stripTrailingZeros());
   }

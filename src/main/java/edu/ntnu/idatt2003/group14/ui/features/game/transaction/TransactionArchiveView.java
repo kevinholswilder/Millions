@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2003.group14.ui.features.transaction;
+package edu.ntnu.idatt2003.group14.ui.features.game.transaction;
 
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
@@ -178,11 +178,6 @@ public class TransactionArchiveView implements View {
     return button;
   }
 
-  /**
-   * Returns the root node of the layout.
-   *
-   * @return the root layout node
-   */
   @Override
   public Parent getRoot() {
     return root;

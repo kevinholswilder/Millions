@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2003.group14.ui.exchange;
+package edu.ntnu.idatt2003.group14.ui.features.game.exchange;
 
 import edu.ntnu.idatt2003.group14.model.Stock;
 import java.math.BigDecimal;

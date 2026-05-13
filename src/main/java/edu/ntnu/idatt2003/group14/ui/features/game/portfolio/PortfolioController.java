@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2003.group14.ui.features.portfolio;
+package edu.ntnu.idatt2003.group14.ui.features.game.portfolio;
 
 import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Portfolio;
@@ -22,6 +22,11 @@ public class PortfolioController {
     playerPortfolio = GameSession.getPlayer().getPortfolio();
   }
 
+  /**
+   * Returns the player's portfolio.
+   *
+   * @return the player's {@link Portfolio}
+   */
   public Portfolio getPortfolio() {
     return playerPortfolio;
   }

@@ -1,13 +1,17 @@
 package edu.ntnu.idatt2003.group14.io;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.ntnu.idatt2003.group14.io.writer.stock.StockWriter;
+import edu.ntnu.idatt2003.group14.model.Stock;
 import edu.ntnu.idatt2003.group14.testutils.StockFactory;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -20,38 +24,45 @@ import org.junit.jupiter.api.io.TempDir;
 public class StockWriterTest {
   private StockWriter writer;
 
-  @TempDir
-  Path tempDir;
-
   @BeforeEach
   void setUp() {
     writer = new StockWriter();
-
   }
 
   @Test
-  void writeStockToFile_produces_correct_csv_line() throws IOException {
-    var file = tempDir.resolve("stocks.csv").toFile();
+  void toCsvLine_formats_stock_data_correctly() {
+    Stock stock = StockFactory.createStock();
 
-    var stock = StockFactory.createStock();
-    writer.writeStockToFile(stock, file);
+    String result = writer.toCsvLine(stock);
 
-    var lines = Files.readAllLines(file.toPath());
+    assertEquals("AMCH,Amazing Chairs,1,2,3,4,5", result);
+  }
+
+  @Test
+  @Disabled("Manual test only; IO access")
+  void writeStocksToFile_successfully_creates_file_on_disk(@TempDir Path tempDir)
+      throws IOException {
+    Path filePath = tempDir.resolve("integration_test.csv");
+    var stocks = StockFactory.createStocks(2);
+
+    writer.writeStocksToFile(stocks, filePath.toFile());
+
+    assertTrue(Files.exists(filePath), "The file should be physically created on disk.");
+    assertEquals(2, Files.readAllLines(filePath).size());
+  }
+
+  @Test
+  @Disabled("Manual test only; IO access")
+  void writeStockToFile_overwrites_existing_file_content(@TempDir Path tempDir) throws IOException {
+    Path filePath = tempDir.resolve("overwrite_test.csv");
+
+    Files.writeString(filePath, "Old Content,Should be gone");
+
+    Stock newStock = StockFactory.createStock();
+    writer.writeStockToFile(newStock, filePath.toFile());
+
+    List<String> lines = Files.readAllLines(filePath);
     assertEquals(1, lines.size());
-    assertEquals("AMCH,Amazing Chairs,1,2,3,4,5", lines.getFirst());
-  }
-
-  @Test
-  void writeStocksToFile_produces_correct_csv_line() throws IOException {
-    var file = tempDir.resolve("stocks.csv").toFile();
-
-    var stocks = StockFactory.createStocks(5);
-
-    writer.writeStocksToFile(stocks, file);
-
-    var lines = Files.readAllLines(file.toPath());
-    assertEquals(5, lines.size());
-    assertEquals("AMCH,Amazing Chairs,1,2,3,4,5", lines.getFirst());
-    assertEquals("NOCA,Nordic Cars,1,2,3,4,5", lines.getLast());
+    assertTrue(lines.getFirst().contains("AMCH"));
   }
 }

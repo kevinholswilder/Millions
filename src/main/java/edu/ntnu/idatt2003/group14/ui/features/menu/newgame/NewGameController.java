@@ -5,7 +5,8 @@ import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.model.Exchange;
 import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Player;
-import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
+import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
+import edu.ntnu.idatt2003.group14.ui.app.Route;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -17,23 +18,23 @@ import java.math.BigDecimal;
  * @since 0.0.1
  */
 public class NewGameController {
-  private final AppNavigator appNavigator;
+  private final AppRouter router;
 
   /**
    * Initializes a new NewGameController.
    *
-   * @param appNavigator the main application controller used for navigation
-   *
+   * @param router the application router
    */
-  public NewGameController(AppNavigator appNavigator) {
-    this.appNavigator = appNavigator;
+
+  public NewGameController(AppRouter router) {
+    this.router = router;
   }
 
   /**
    * Shows the main menu.
    */
   public void handleMainMenu() {
-    appNavigator.showMainMenuView();
+    router.navigate(Route.MAIN_MENU);
   }
 
   /**
@@ -85,7 +86,7 @@ public class NewGameController {
     GameSession.setExchange(
             new Exchange("Temporary placeholder", reader.read(stockDataFile.toPath().toString()))
     );
-    appNavigator.showPortfolioView();
+    router.navigate(Route.PORTFOLIO);
   }
 
   private NewGameValidationState validateUsername(String username) {

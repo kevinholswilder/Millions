@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * @since 0.0.1
  */
 public final class PurchaseCalculator implements TransactionCalculator {
-  private final BigDecimal commissionRate = BigDecimal.valueOf(0.05); // 5% commission rate
+  private final BigDecimal commissionRate = BigDecimal.valueOf(0.005); // 0.5% commission rate
 
   private final BigDecimal purchasePrice;
   private final BigDecimal quantity;

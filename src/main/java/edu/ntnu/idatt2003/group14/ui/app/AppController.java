@@ -1,26 +1,58 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
 import java.io.File;
+import javafx.application.Platform;
+import javafx.scene.input.KeyCombination;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
- * Application and window utilities.
+ * Provides core application functionality such as exit and full screen management.
+ *
+ * @author Elias Haugsbakk
+ * @since 0.0.1
  */
-public interface AppController {
-  /**
-   * If the application is windowed, it gets full-screened.
-   * If the application is fullscreen, it gets windowed.
-   */
-  void toggleFullScreen();
+public class AppController {
+  private final Stage stage;
 
   /**
-   * Exits the game gracefully.
-   */
-  void exitGame();
-
-  /**
-   * Opens a file picker dialog to choose a CSV-file.
+   * Initializes a new AppController.
    *
-   * @return the {@link File} to the CSV-file
+   * @param stage the primary stage
    */
-  File openStockFileDialog();
+  public AppController(Stage stage) {
+    this.stage = stage;
+  }
+
+  /**
+   * Exit the game gracefully.
+   */
+  public void exitGame() {
+    Platform.exit();
+  }
+
+  /**
+   * Toggles the application between full screen and floating.
+   */
+  public void toggleFullScreen() {
+    stage.setFullScreenExitHint("");
+    stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+    stage.setFullScreen(!stage.isFullScreen());
+  }
+
+  /**
+   * Requests the OS to open the file picker dialog.
+   *
+   * @return {@link File} of the Stock File
+   */
+  public File openStockFileDialog() {
+    File stockDataFile;
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Open CSV-file with stock data");
+    fileChooser.getExtensionFilters().addAll(
+        new FileChooser.ExtensionFilter("CSV files", "*.csv"));
+
+    stockDataFile = fileChooser.showOpenDialog(this.stage);
+    return stockDataFile;
+  }
 }

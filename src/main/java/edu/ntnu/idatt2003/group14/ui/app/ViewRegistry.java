@@ -1,16 +1,20 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
 import edu.ntnu.idatt2003.group14.service.AudioManager;
+import edu.ntnu.idatt2003.group14.ui.features.game.exchange.ExchangeController;
+import edu.ntnu.idatt2003.group14.ui.features.game.exchange.ExchangeView;
+import edu.ntnu.idatt2003.group14.ui.features.game.gamemenu.GameMenuController;
+import edu.ntnu.idatt2003.group14.ui.features.game.gamemenu.GameMenuView;
+import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioController;
+import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioView;
+import edu.ntnu.idatt2003.group14.ui.features.game.transaction.TransactionArchiveController;
+import edu.ntnu.idatt2003.group14.ui.features.game.transaction.TransactionArchiveView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.options.OptionsController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.options.OptionsView;
-import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioController;
-import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioView;
-import edu.ntnu.idatt2003.group14.ui.features.transaction.TransactionArchiveController;
-import edu.ntnu.idatt2003.group14.ui.features.transaction.TransactionArchiveView;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,13 +29,13 @@ import java.util.Map;
 public class ViewRegistry {
   private final AppController appController;
   private final AudioManager audioManager;
-  private final Map<String, View> viewCache;
+  private final Map<Route, View> viewCache;
 
   /**
    * Initiates a new ViewRegistry.
    *
    * @param appController to interact with the application
-   * @param audioManager to interact with the application audio
+   * @param audioManager  to interact with the application audio
    */
   public ViewRegistry(AppController appController, AudioManager audioManager) {
     this.appController = appController;
@@ -44,11 +48,12 @@ public class ViewRegistry {
    *
    * <p>Reconstructed on every call.</p>
    *
-   * @param appNavigator the navigator passed to the controller
+   * @param router the application router
    * @return a new {@link MainMenuView}
    */
-  public View getMainMenuView(AppNavigator appNavigator) {
-    return new MainMenuView(new MainMenuController(appController, appNavigator), audioManager);
+
+  public View getMainMenuView(AppRouter router) {
+    return new MainMenuView(new MainMenuController(appController, router), audioManager);
   }
 
   /**
@@ -56,12 +61,13 @@ public class ViewRegistry {
    *
    * <p>Reconstructed on every call.</p>
    *
-   * @param appNavigator the navigator passed to the controller
+   * @param router the application router
    * @return a new {@link OptionsView}
    */
-  public View getOptionsView(AppNavigator appNavigator) {
+
+  public View getOptionsView(AppRouter router) {
     return new OptionsView(
-        new OptionsController(appController, audioManager, appNavigator), audioManager);
+        new OptionsController(appController, router, audioManager), audioManager);
   }
 
   /**
@@ -69,12 +75,13 @@ public class ViewRegistry {
    *
    * <p>Reconstructed on every call.</p>
    *
-   * @param appNavigator the navigator passed to the controller
+   * @param router the application router
    * @return a new {@link NewGameView}
    */
-  public View getNewGameView(AppNavigator appNavigator) {
+
+  public View getNewGameView(AppRouter router) {
     return new NewGameView(
-        new NewGameController(appNavigator), appController, audioManager);
+        new NewGameController(router), appController, audioManager);
   }
 
   /**
@@ -85,8 +92,13 @@ public class ViewRegistry {
    * @return the cached {@link PortfolioView}
    */
   public View getPortfolioView() {
-    return viewCache.computeIfAbsent("portfolioView",
+    return viewCache.computeIfAbsent(Route.PORTFOLIO,
         _ -> new PortfolioView(new PortfolioController()));
+  }
+
+  public View getExchangeView() {
+    return viewCache.computeIfAbsent(Route.EXCHANGE,
+        _ -> new ExchangeView(new ExchangeController()));
   }
 
   /**
@@ -97,7 +109,20 @@ public class ViewRegistry {
    * @return the cached {@link TransactionArchiveView}
    */
   public View getTransactionArchiveView() {
-    return viewCache.computeIfAbsent("transactionArchiveView",
+    return viewCache.computeIfAbsent(Route.TRANSACTION_ARCHIVE,
         _ -> new TransactionArchiveView(new TransactionArchiveController()));
+  }
+
+  /**
+   * Returns a new instance of the GameMenuView.
+   *
+   * <p>Reconstructed on every call.</p>
+   *
+   * @param router the application router
+   * @return a new {@link GameMenuView}
+   */
+
+  public View getGameMenuView(AppRouter router) {
+    return new GameMenuView(audioManager, new GameMenuController(router));
   }
 }

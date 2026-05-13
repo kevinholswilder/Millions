@@ -1,7 +1,8 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu;
 
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
-import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
+import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
+import edu.ntnu.idatt2003.group14.ui.app.Route;
 
 /**
  * Controller class for handling user input from the Main Menu.
@@ -11,31 +12,31 @@ import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
  */
 public class MainMenuController {
   private final AppController appController;
-  private final AppNavigator appNavigator;
+  private final AppRouter router;
 
   /**
    * Initializes a new MainMenuController.
    *
    * @param appController the application controller
-   * @param appNavigator  the application navigator
+   * @param router        the application router
    */
-  public MainMenuController(AppController appController, AppNavigator appNavigator) {
+  public MainMenuController(AppController appController, AppRouter router) {
     this.appController = appController;
-    this.appNavigator = appNavigator;
+    this.router = router;
   }
 
   /**
    * User requests new game.
    */
   public void handleNewGame() {
-    appNavigator.showNewGameView();
+    router.navigate(Route.NEW_GAME);
   }
 
   /**
    * User requests to show the options view.
    */
   public void showOptions() {
-    appNavigator.showOptionsView();
+    router.navigate(Route.OPTIONS);
   }
 
   /**

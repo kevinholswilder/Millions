@@ -1,16 +1,17 @@
 package edu.ntnu.idatt2003.group14.ui.components.sidebar;
 
-import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
-import edu.ntnu.idatt2003.group14.ui.exchange.ExchangeView;
-import edu.ntnu.idatt2003.group14.ui.features.portfolio.PortfolioView;
-import edu.ntnu.idatt2003.group14.ui.features.transaction.TransactionArchiveView;
+import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
+import edu.ntnu.idatt2003.group14.ui.app.Route;
+import edu.ntnu.idatt2003.group14.ui.features.game.exchange.ExchangeView;
+import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioView;
+import edu.ntnu.idatt2003.group14.ui.features.game.transaction.TransactionArchiveView;
 import javafx.scene.control.Button;
 
 /**
  * Controller responsible for creating and configuring sidebar navigation buttons.
  *
  * <p>Each button is connected to a specific navigation action handled by the
- * {@link AppNavigator}.
+ * {@link AppRouter}.
  * </p>
  *
  * @author Kevin Holswilder
@@ -28,17 +29,17 @@ public class SideBarController {
   private static final double PREFERRED_BUTTON_HEIGHT = 100.0;
 
   /**
-   * Navigator used to switch between views.
+   * AppRouter used to switch between views.
    */
-  private final AppNavigator appNavigator;
+  private final AppRouter router;
 
   /**
    * Instantiates a new controller.
    *
-   * @param appNavigator the navigator responsible for handling view transitions
+   * @param router the application router
    */
-  public SideBarController(AppNavigator appNavigator) {
-    this.appNavigator = appNavigator;
+  public SideBarController(AppRouter router) {
+    this.router = router;
   }
 
   /**
@@ -50,7 +51,7 @@ public class SideBarController {
   public Button createTransactionButton(String text) {
     return createNavigationButton(
         text,
-        appNavigator::showTransactionArchiveView
+        () -> router.navigate(Route.TRANSACTION_ARCHIVE)
     );
   }
 
@@ -63,7 +64,7 @@ public class SideBarController {
   public Button createPortfolioButton(String text) {
     return createNavigationButton(
         text,
-        appNavigator::showPortfolioView
+        () -> router.navigate(Route.PORTFOLIO)
     );
   }
 
@@ -76,7 +77,7 @@ public class SideBarController {
   public Button createExchangeButton(String text) {
     return createNavigationButton(
         text,
-        appNavigator::showExchangeView
+        () -> router.navigate(Route.EXCHANGE)
     );
   }
 
@@ -87,7 +88,7 @@ public class SideBarController {
    * that executes the provided navigation action when clicked.
    * </p>
    *
-   * @param text the text displayed on the button
+   * @param text   the text displayed on the button
    * @param action the action executed when the button is pressed
    * @return a configured navigation button
    */

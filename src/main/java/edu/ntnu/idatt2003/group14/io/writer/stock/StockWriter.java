@@ -11,75 +11,56 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Represents a class for writing stock data to a CSV file.
+ * Responsible for serializing {@link Stock} objects into CSV format and writing them to file.
  *
- * @author Kevin Holswilder
+ * <p>The class distinguishes between formatting logic and IO operations to allow for isolated
+ * unit testing.</p>
+ *
+ * @author Kevin Holswilder, Elias Haugsbakk
  * @since 0.0.1
  */
 public class StockWriter {
 
   /**
-   * Serializes a stock to a CSV file.
+   * Converts a single {@link Stock} object into a CSV-formatted string line.
    *
-   * <p>Example usage:
-   *
-   * <pre>
-   * StockWriter writer = new StockWriter();
-   * writer.writeStockToFile(stock, "stock.csv");
-   * </pre>
-   *
-   * @param stock the stock to serialize
-   * @param file the name of the CSV file to write to
-   * @throws IOException if an I/O error occurs
+   * @param stock the stock object to be formatted
+   * @return a CSV-formatted string representation of the stock
    */
-  public void writeStockToFile(Stock stock, File file) throws IOException {
-    try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
+  public String toCsvLine(Stock stock) {
+    String symbol = stock.getSymbol();
+    String company = stock.getCompany();
+    List<BigDecimal> prices = stock.getHistoricalPrices();
 
-      String symbol = stock.getSymbol();
-      String company = stock.getCompany();
-      List<BigDecimal> prices = stock.getHistoricalPrices();
+    String priceString =
+        prices.stream().map(BigDecimal::toString).collect(Collectors.joining(CSVLabels.SEPARATOR));
 
-      String priceString = prices.stream()
-          .map(BigDecimal::toString)
-          .collect(Collectors.joining(CSVLabels.SEPARATOR));
-
-      String result = String.join(CSVLabels.SEPARATOR, symbol, company, priceString);
-
-      writer.println(result);
-    }
+    return String.join(CSVLabels.SEPARATOR, symbol, company, priceString);
   }
 
   /**
-   * Serializes a list of stocks to a CSV file.
+   * Writes a single {@link Stock} to a file.
    *
-   * <p>Example usage:
+   * @param stock the stock to write to disk
+   * @param file  the {@link File} to write the stock data to
+   * @throws IOException if an error occurs during the writing process
+   */
+  public void writeStockToFile(Stock stock, File file) throws IOException {
+    writeStocksToFile(List.of(stock), file);
+  }
+
+  /**
+   * Writes a list of {@link Stock} objects to a file, one stock per line.
    *
-   * <pre>
-   * StockWriter writer = new StockWriter();
-   * writer.writeStocksToFile(stocks, "stocks.csv");
-   * </pre>
-   *
-   * @param stocks the list of stocks to serialize
-   * @param file the name of the CSV file to write to
-   * @throws IOException if an I/O error occurs
+   * @param stocks the list of stocks to write to disk
+   * @param file   the {@link File} to write the stock data to
+   * @throws IOException if an error occurs during the writing process
    */
   public void writeStocksToFile(List<Stock> stocks, File file) throws IOException {
     try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
-
       for (Stock stock : stocks) {
-        String symbol = stock.getSymbol();
-        String company = stock.getCompany();
-        List<BigDecimal> prices = stock.getHistoricalPrices();
-
-        String priceString = prices.stream()
-            .map(BigDecimal::toString)
-            .collect(Collectors.joining(CSVLabels.SEPARATOR));
-
-        String result = String.join(CSVLabels.SEPARATOR, symbol, company, priceString);
-
-        writer.println(result);
+        writer.println(toCsvLine(stock));
       }
     }
   }
-
 }

@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2003.group14.ui.features.menu;
+package edu.ntnu.idatt2003.group14.ui.components;
 
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import javafx.scene.control.Button;
@@ -23,15 +23,15 @@ public class MenuButtonFactory {
   /**
    * Creates a new button.
    *
-   * @param text the displayed text on the button
+   * @param text     the displayed text on the button
    * @param onAction what to run when button is clicked
    * @return the newly crated {@link Button} object
    */
   public Button createMenuButton(String text, Runnable onAction) {
     Button btn = new Button(text);
     btn.getStyleClass().add("menu-button");
-    btn.setOnMouseEntered(e -> audioManager.playButtonHoverSound());
-    btn.setOnAction(e -> {
+    btn.setOnMouseEntered(_ -> audioManager.playButtonHoverSound());
+    btn.setOnAction(_ -> {
       audioManager.playButtonClickSound();
       onAction.run();
     });

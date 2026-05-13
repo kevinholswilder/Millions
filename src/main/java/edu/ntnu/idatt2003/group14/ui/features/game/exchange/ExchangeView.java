@@ -1,8 +1,9 @@
-package edu.ntnu.idatt2003.group14.ui.exchange;
+package edu.ntnu.idatt2003.group14.ui.features.game.exchange;
 
 import edu.ntnu.idatt2003.group14.model.Exchange;
 import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Stock;
+import edu.ntnu.idatt2003.group14.ui.app.View;
 import java.util.List;
 import java.util.Objects;
 import javafx.geometry.Insets;
@@ -25,7 +26,7 @@ import javafx.scene.layout.HBox;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class ExchangeView {
+public class ExchangeView implements View {
   private final BorderPane root;
   private final ExchangeController controller;
   private final ListView<Stock> stockListView;
@@ -165,11 +166,7 @@ public class ExchangeView {
     return button;
   }
 
-  /**
-   * Returns the root node of the layout.
-   *
-   * @return the root layout node
-   */
+  @Override
   public Parent getRoot() {
     return root;
   }

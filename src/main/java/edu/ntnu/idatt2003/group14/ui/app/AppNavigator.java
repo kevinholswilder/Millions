@@ -1,37 +1,95 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
+import edu.ntnu.idatt2003.group14.ui.features.game.GameLayout;
+import java.util.Objects;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 /**
- * Handles switching between different scenes.
+ * Responsible for managing the primary stage and navigating between different views.
+ *
+ * @author Elias Haugsbakk, Kevin Holswilder
+ * @since 0.0.1
  */
-public interface AppNavigator {
-  /**
-   * Switch the view to show the main menu.
-   */
-  void showMainMenuView();
+public class AppNavigator {
+  // 16:9 720p HD: scales nicely to all 16:9 or 16:10 displays
+  private static final int DEFAULT_WIDTH = 1280;
+  private static final int DEFAULT_HEIGHT = 720;
+  private final Stage stage;
+
+  private GameLayout gameLayout;
 
   /**
-   * Switch the view to show the options' menu.
+   * Initializes a new AppNavigator.
+   *
+   * @param stage the primary stage
    */
-  void showOptionsView();
+  public AppNavigator(Stage stage) {
+    this.stage = stage;
+  }
 
   /**
-   * Switch the view to show the new game screen.
+   * Returns the game layout, creating it if necessary.
+   *
+   * @param router the application router
+   * @return the game layout instance
    */
-  void showNewGameView();
+  private GameLayout getGameLayout(AppRouter router) {
+    if (gameLayout == null) {
+      gameLayout = new GameLayout(router);
+    }
+    return gameLayout;
+  }
 
   /**
-   * Switch the view to show the users' portfolio.
+   * Displays a standard view by setting it as the scene root.
+   *
+   * @param view the view to display
    */
-  void showPortfolioView();
+  public void showView(View view) {
+    navigateTo(view.getRoot());
+  }
 
   /**
-   * Switch the view to display the user's transaction history.
+   * Displays a view within the game layout.
+   *
+   * @param view   the view to display
+   * @param router the application router
    */
-  void showTransactionArchiveView();
+  public void showGameView(View view, AppRouter router) {
+    getGameLayout(router).setContent(view.getRoot());
+    navigateTo(getGameLayout(router).getRoot());
+  }
 
   /**
-   * Switch the view to display the chosen exchange file.
+   * Displays a popup overlay over the current game view.
+   *
+   * @param view   the view to display as a popup
+   * @param router the application router
    */
-  void showExchangeView();
+  public void showPopup(View view, AppRouter router) {
+    getGameLayout(router).showPopup(view.getRoot());
+  }
+
+  /**
+   * Hides any active popup displayed in the game view.
+   *
+   * @param router the application router
+   */
+  public void hidePopup(AppRouter router) {
+    getGameLayout(router).hidePopup();
+  }
+
+  private void navigateTo(Parent root) {
+    // First time setup
+    if (stage.getScene() == null) {
+      Scene scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+      String css =
+          Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm();
+      scene.getStylesheets().add(css);
+      stage.setScene(scene);
+    }
+    stage.getScene().setRoot(root);
+  }
 }
-
