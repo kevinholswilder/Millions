@@ -10,6 +10,7 @@ import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioController
 import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioView;
 import edu.ntnu.idatt2003.group14.ui.features.game.transaction.TransactionArchiveController;
 import edu.ntnu.idatt2003.group14.ui.features.game.transaction.TransactionArchiveView;
+import edu.ntnu.idatt2003.group14.ui.features.game.transaction.receipt.TransactionReceiptView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameController;
@@ -143,6 +144,17 @@ public class ViewRegistry {
    */
   public View getPurchaseStockView(AppRouter router) {
     return new PurchaseStockView(router);
+  }
+
+  /**
+   * Returns a new instance of the Transaction Receipt modal.
+   *
+   * <p>Reconstructed on every call.</p>
+   *
+   * @return a new {@link TransactionReceiptView}
+   */
+  public View getTransactionReceiptView(AppRouter router) {
+    return new TransactionReceiptView(router);
   }
 
 }
