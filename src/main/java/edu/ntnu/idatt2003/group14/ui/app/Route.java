@@ -16,7 +16,8 @@ public enum Route {
 
   // Popup routes
   GAME_MENU(RouteType.POPUP),
-  PURCHASE_STOCK(RouteType.POPUP);
+  PURCHASE_STOCK(RouteType.POPUP),
+  TRANSACTION_RECEIPT(RouteType.POPUP);
 
   private final RouteType type;
 
