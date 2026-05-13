@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.model;
 
 import edu.ntnu.idatt2003.group14.calculator.SaleCalculator;
+import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.model.plottable.Plottable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,6 +31,11 @@ public class Portfolio extends Plottable implements WeekAdvanceListener {
    * @return {@code true} (as specified by {@link Collection#add})
    */
   public boolean addShare(Share share) {
+    try {
+      notifyNetWorthListeners(getValueForWeek(this.getWeek()));
+    } catch (Exception e) {
+      AppLogger.error("Portfolio on week advance failed", e);
+    }
     return this.shares.add(share);
   }
 
@@ -40,6 +46,11 @@ public class Portfolio extends Plottable implements WeekAdvanceListener {
    * @return {@code true} (as specified by {@link Collection#add})
    */
   public boolean removeShare(Share share) {
+    try {
+      notifyNetWorthListeners(getValueForWeek(this.getWeek()));
+    } catch (Exception e) {
+      AppLogger.error("Portfolio on week advance failed", e);
+    }
     return this.shares.remove(share);
   }
 
@@ -94,11 +105,15 @@ public class Portfolio extends Plottable implements WeekAdvanceListener {
     if (this.shares.isEmpty()) {
       return 0;
     }
-    return this.shares.getFirst().getStock().getWeek();
+    return this.shares.getFirst().getStock().getWeek() - 1;
   }
 
   @Override
   public void onWeekAdvanced(int week) {
-    notifyNetWorthListeners(getValueForWeek(week));
+    try {
+      notifyNetWorthListeners(getValueForWeek(this.getWeek()));
+    } catch (Exception e) {
+      AppLogger.error("Portfolio on week advance failed", e);
+    }
   }
 }
