@@ -97,9 +97,16 @@ public class ViewRegistry {
         _ -> new PortfolioView(new PortfolioController()));
   }
 
-  public View getExchangeView() {
+  /**
+   * Returns the exchange view, instantiating it on first access.
+   *
+   * <p>Cached to persist the view.</p>
+   *
+   * @return the cached {@link ExchangeView}
+   */
+  public View getExchangeView(AppRouter router) {
     return viewCache.computeIfAbsent(Route.EXCHANGE,
-        _ -> new ExchangeView(new ExchangeController()));
+        _ -> new ExchangeView(new ExchangeController(router)));
   }
 
   /**
