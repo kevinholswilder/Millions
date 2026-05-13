@@ -62,23 +62,23 @@ public class ExchangeController {
 
     VBox priceBox = this.createInfoBox(
             "Price",
-            "$" + latestPrice.setScale(2, RoundingMode.HALF_UP).toPlainString()
+            "$" + Money.normalize(latestPrice).toPlainString()
     );
 
     VBox changeBox = this.createInfoBox(
             "Change",
             (priceChange.compareTo(BigDecimal.ZERO) >= 0 ? "+$" : "-$")
-                    + priceChange.abs().setScale(2, RoundingMode.HALF_UP).toPlainString()
+                    + Money.normalize(priceChange).abs().toPlainString()
     );
 
     VBox highestBox = this.createInfoBox(
             "High",
-            "$" + highestPrice.setScale(2, RoundingMode.HALF_UP).toPlainString()
+            "$" + Money.normalize(highestPrice).toPlainString()
     );
 
     VBox lowestBox = this.createInfoBox(
             "Low",
-            "$" + lowestPrice.setScale(2, RoundingMode.HALF_UP).toPlainString()
+            "$" + Money.normalize(lowestPrice).toPlainString()
     );
 
     VBox weeksBox = this.createInfoBox(
