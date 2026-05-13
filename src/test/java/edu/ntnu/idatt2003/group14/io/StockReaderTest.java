@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -53,11 +53,8 @@ public class StockReaderTest {
   }
 
   @Test
-  @Disabled("Manual test only; IO access")
+  @Tag("integration")
   void read_actually_reads_from_disk(@TempDir Path tempDir) throws IOException {
-    // Tests the path resolution and interaction with the OS
-    // This test is disabled since it is directly testing file reading
-
     Path file = tempDir.resolve("test.csv");
     Files.writeString(file, "SWOI,SwedenOil,00.001");
 

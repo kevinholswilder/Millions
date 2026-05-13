@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -16,8 +16,9 @@ import org.junit.jupiter.api.Test;
  * <b>Note</b>: This writes to the actual log file.</p>
  */
 public class AppLoggerTest {
-  @Disabled("Manual test only; writes to log file")
+
   @Test
+  @Tag("integration")
   void error_writes_to_log_file() throws IOException {
     // should also write to terminal, but harder to assert
     AppLogger.error("test error");
@@ -27,8 +28,8 @@ public class AppLoggerTest {
     assertTrue(log.contains("test error"));
   }
 
-  @Disabled("Manual test only; writes to log file")
   @Test
+  @Tag("integration")
   void warn_does_not_write_to_log_file() throws IOException {
     String before = Files.readString(Path.of("millions.log"));
     AppLogger.warn("test warn");
