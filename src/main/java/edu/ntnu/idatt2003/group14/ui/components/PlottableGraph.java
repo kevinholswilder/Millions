@@ -16,7 +16,7 @@ import javafx.scene.chart.NumberAxis;
  */
 public class PlottableGraph extends AreaChart<Number, Number> implements PlottableChangeListener {
   private final Series<Number, Number> series;
-  private int weekCounter = 1;
+  private int weekCounter = 0;
 
   /**
    * Instantiates a new PlottableGraph for the given plottable.
@@ -27,6 +27,7 @@ public class PlottableGraph extends AreaChart<Number, Number> implements Plottab
     super(createXAxis(), new NumberAxis());
     this.setLegendVisible(false);
     this.setAnimated(false);
+    this.setCreateSymbols(false);
 
     this.series = new Series<>();
     this.getData().add(series);
@@ -41,8 +42,6 @@ public class PlottableGraph extends AreaChart<Number, Number> implements Plottab
     axis.setLowerBound(1);
     axis.setUpperBound(5);
     axis.setTickUnit(1);
-    axis.setTickLabelsVisible(false);
-    axis.setTickMarkVisible(false);
     return axis;
   }
 
