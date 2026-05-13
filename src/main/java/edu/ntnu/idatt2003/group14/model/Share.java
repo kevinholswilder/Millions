@@ -48,4 +48,13 @@ public class Share {
   public BigDecimal getTotal() {
     return this.getQuantity().multiply(this.getPurchasePrice());
   }
+
+  /**
+   * Returns the current total value of a share.
+   *
+   * @return the total share value
+   */
+  public BigDecimal getCurrentValue() {
+    return this.getQuantity().multiply(this.getStock().getSalesPrice());
+  }
 }

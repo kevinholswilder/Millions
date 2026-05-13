@@ -1,0 +1,7 @@
+.portfolio-top-bar {
+    -fx-text-fill: black;
+    -fx-font-size: 45;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-padding: 0 0 40 0;
+}
