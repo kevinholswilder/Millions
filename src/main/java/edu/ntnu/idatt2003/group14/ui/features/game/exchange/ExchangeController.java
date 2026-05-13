@@ -1,6 +1,9 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.exchange;
 
+import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Stock;
+import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
+import edu.ntnu.idatt2003.group14.ui.app.Route;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -23,6 +26,16 @@ public class ExchangeController {
   private boolean ascending = true;
   private String currentSearch = "";
   private List<Stock> stocks = List.of();
+  private final AppRouter router;
+
+  /**
+   * Creates a new exchange controller.
+   *
+   * @param router the application router used for navigation
+   */
+  public ExchangeController(AppRouter router) {
+    this.router = router;
+  }
 
   /**
    * Creates a row displaying information about a {@link Stock}.
@@ -80,7 +93,7 @@ public class ExchangeController {
     lowestBox.getStyleClass().add("stock-column");
     weeksBox.getStyleClass().add("stock-column");
 
-    Button purchaseButton = this.createPurchaseButton(stock);
+    Button purchaseButton = this.createPurchaseButton(stock, router);
 
     HBox row = new HBox(24);
 
@@ -129,10 +142,13 @@ public class ExchangeController {
    * @param stock the stock associated with the purchase button
    * @return a styled {@link Button} for purchasing the stock
    */
-  private Button createPurchaseButton(Stock stock) {
+  private Button createPurchaseButton(Stock stock, AppRouter router) {
     Button button = new Button("Purchase");
 
     button.getStyleClass().add("purchase-button");
+
+    button.setOnAction(e -> {
+    });
 
     return button;
   }
