@@ -88,6 +88,6 @@ public class Stock extends Plottable {
 
   @Override
   public int getWeek() {
-    return this.prices.size();
+    return this.prices.size() - 1;
   }
 }

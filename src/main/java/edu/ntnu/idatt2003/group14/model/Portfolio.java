@@ -105,7 +105,7 @@ public class Portfolio extends Plottable implements WeekAdvanceListener {
     if (this.shares.isEmpty()) {
       return 0;
     }
-    return this.shares.getFirst().getStock().getWeek() - 1;
+    return this.shares.getFirst().getStock().getWeek();
   }
 
   @Override

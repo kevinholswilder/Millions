@@ -39,8 +39,7 @@ public class PurchaseTest {
   }
 
   @Test
-  void verify_negative_or_zero_week_purchase_is_not_allowed() {
-    assertThrows(IllegalArgumentException.class, () -> new Purchase(share, 0));
+  void verify_negative_week_purchase_is_not_allowed() {
     assertThrows(IllegalArgumentException.class, () -> new Purchase(share, -1));
   }
 

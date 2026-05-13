@@ -5,6 +5,7 @@ import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.model.Exchange;
 import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Player;
+import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
@@ -76,7 +77,19 @@ public final class App extends Application {
           "sp500",
           new StockReader().read("sp500.csv")
       );
+
+
       GameSession.setExchange(exchange);
+      GameSession.getPlayer().getPortfolio().addShare(
+          new Share(
+              GameSession.getExchange().getStock("NVDA"),
+              BigDecimal.ONE,
+              BigDecimal.TEN
+          )
+      );
+      GameSession.getExchange().addWeekAdvanceListener(
+          GameSession.getPlayer().getPortfolio()
+      );
     } catch (IOException e) {
       AppLogger.error("Could not load /resources/sp500.csv", e);
       throw new RuntimeException(e);
