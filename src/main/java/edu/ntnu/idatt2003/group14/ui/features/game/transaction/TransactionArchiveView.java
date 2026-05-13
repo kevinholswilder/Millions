@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.transaction;
 
+import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
 import edu.ntnu.idatt2003.group14.model.transaction.TransactionArchive;
@@ -52,9 +53,6 @@ public class TransactionArchiveView implements View {
             getClass().getResource("/css/transaction_archive/topbar.css")
         ).toExternalForm()
     );
-
-    // TODO: Retrieve the transactions from a Player object.
-    // this.setTransactions(transactions);
   }
 
   /**
@@ -180,6 +178,7 @@ public class TransactionArchiveView implements View {
 
   @Override
   public Parent getRoot() {
+    this.setTransactions(GameSession.getPlayer().getTransactionArchive().getTransactions());
     return root;
   }
 
