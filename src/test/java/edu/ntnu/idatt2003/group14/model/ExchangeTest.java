@@ -100,7 +100,7 @@ public class ExchangeTest {
     assertEquals(new BigDecimal("1000.0"), player.getMoney());
     assertTrue(player.getPortfolio().getShares().isEmpty());
 
-    exchange.buy("NOCH", new BigDecimal("10"), player);
+    exchange.purchase("NOCH", new BigDecimal("10"), player, true);
 
     assertFalse(player.getPortfolio().getShares().isEmpty());
     // cost of 50 + fees of 2.5 (0.05%)
@@ -113,7 +113,7 @@ public class ExchangeTest {
     assertEquals(new BigDecimal("1000.0"), player.getMoney());
     assertTrue(player.getPortfolio().getShares().isEmpty());
 
-    exchange.buy("NOCH", new BigDecimal("10"), player);
+    exchange.purchase("NOCH", new BigDecimal("10"), player, true);
 
     assertFalse(player.getPortfolio().getShares().isEmpty());
     // cost of 50 + fees of 2.5 (0.05%)
