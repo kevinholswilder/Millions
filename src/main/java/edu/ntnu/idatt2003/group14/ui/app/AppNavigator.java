@@ -47,7 +47,7 @@ public class AppNavigator {
    *
    * @param view the view to display
    */
-  public void showView(View view) {
+  void showView(View view) {
     navigateTo(view.getRoot());
   }
 
@@ -57,7 +57,7 @@ public class AppNavigator {
    * @param view   the view to display
    * @param router the application router
    */
-  public void showGameView(View view, AppRouter router) {
+  void showGameView(View view, AppRouter router) {
     getGameLayout(router).setContent(view.getRoot());
     navigateTo(getGameLayout(router).getRoot());
   }
@@ -68,7 +68,7 @@ public class AppNavigator {
    * @param view   the view to display as a popup
    * @param router the application router
    */
-  public void showPopup(View view, AppRouter router) {
+  void showPopup(View view, AppRouter router) {
     getGameLayout(router).showPopup(view.getRoot());
   }
 
@@ -77,7 +77,7 @@ public class AppNavigator {
    *
    * @param router the application router
    */
-  public void hidePopup(AppRouter router) {
+  void hidePopup(AppRouter router) {
     getGameLayout(router).hidePopup();
   }
 
