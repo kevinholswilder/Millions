@@ -25,6 +25,7 @@
         <maven-javadoc.version>3.12.0</maven-javadoc.version>
         <maven-checkstyle.version>3.6.0</maven-checkstyle.version>
         <javafx-maven.version>0.0.8</javafx-maven.version>
+        <jpackage.version>1.7.4</jpackage.version>
     </properties>
 
 
@@ -53,6 +54,29 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>${jpackage.version}</version>
+                <configuration>
+                    <name>Millions</name>
+                    <destination>target/dist</destination>
+                    <input>target</input>
+                    <mainJar>Millions-0.0.1.jar</mainJar>
+                    <mainClass>edu.ntnu.idatt2003.group14.Launcher</mainClass>
+
+                    <winShortcut>true</winShortcut>
+                    <winMenu>true</winMenu>
+                    <winDirChooser>true</winDirChooser>
+
+                    <vendor>Team 14</vendor>
+
+                    <type>EXE</type>   <!-- Windows -->
+                    <type>DMG</type>   <!-- macOS -->
+                    <type>DEB</type>   <!-- Linux -->
+                </configuration>
             </plugin>
 
             <plugin>
