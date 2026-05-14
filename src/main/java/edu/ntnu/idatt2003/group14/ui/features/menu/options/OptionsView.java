@@ -66,7 +66,6 @@ public class OptionsView implements View {
   }
 
   private VBox centerMenu() {
-
     VBox centerMenu = new VBox(50);
     centerMenu.setAlignment(Pos.CENTER);
     centerMenu.setPadding(new Insets(100, 0, 0, 0));
@@ -79,14 +78,15 @@ public class OptionsView implements View {
     ambianceSlider.valueProperty().addListener(
         (_, _, newVal) -> controller.handleMusicVolume(newVal.doubleValue())
     );
-    StackPane ambiance = createLabeledSlider(ambianceSlider, "Music");
+    StackPane ambiance = createLabeledSlider(ambianceSlider, LangConfig.getInstance().lang("options-menu.music"));
 
     Slider effectsSlider = new Slider(0, 100, audioManager.getSoundEffectVolume() * 100);
     effectsSlider.getStyleClass().add("menu-slider");
     effectsSlider.valueProperty().addListener(
         (_, _, newVal) -> controller.handleSoundEffectVolume(newVal.doubleValue())
     );
-    StackPane effects = createLabeledSlider(effectsSlider, "Sound Effects");
+    StackPane effects = createLabeledSlider(effectsSlider, LangConfig.getInstance().lang("options-menu.sound_effects"));
+
     // Language option
     ComboBox<String> languageBox = new ComboBox<>();
     languageBox.getStyleClass().add("menu-button");
@@ -113,10 +113,11 @@ public class OptionsView implements View {
     });
 
     Button fullScreenBtn = buttonFactory
-        .createMenuButton("Toggle Full Screen", controller::handleFullScreen);
-    Button doneBtn = buttonFactory.createMenuButton("Done", controller::handleReturnToMainMenu);
+        .createMenuButton(LangConfig.getInstance().lang("options-menu.toggle_full_screen"), controller::handleFullScreen);
+    Button doneBtn = buttonFactory
+            .createMenuButton(LangConfig.getInstance().lang("options-menu.return"), controller::handleReturnToMainMenu);
 
-    btnBox.getChildren().addAll(ambiance, effects, fullScreenBtn, doneBtn);
+    btnBox.getChildren().addAll(ambiance, effects, languageBox, fullScreenBtn, doneBtn);
     centerMenu.getChildren().add(btnBox);
 
     return centerMenu;

@@ -1,10 +1,11 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.portfolio;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
+import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.PlottableGraph;
 import edu.ntnu.idatt2003.group14.ui.components.StockMoversComponent;
-import java.math.RoundingMode;
 import java.util.Objects;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -152,7 +153,7 @@ public class PortfolioView implements View {
       }
     });
 
-    listView.setPlaceholder(new Label("No shares to show yet."));
+    listView.setPlaceholder(new Label(LangConfig.getInstance().lang("portfolio-menu.no_shares")));
     VBox.setVgrow(listView, Priority.ALWAYS);
 
     return listView;
@@ -163,19 +164,21 @@ public class PortfolioView implements View {
     VBox assetBox = createInfoBox(share.getStock().getSymbol(), share.getStock().getCompany());
 
     // Position
-    VBox posBox = createInfoBox("Quantity", String.valueOf(share.getQuantity()));
+    VBox posBox = createInfoBox(LangConfig.getInstance().lang("portfolio-menu.portfolio.row.label.quantity"), String.valueOf(share.getQuantity()));
 
     // Total Value
-    VBox valueBox = createInfoBox("Total Value",
-        "$" + share.getCurrentValue().setScale(2, RoundingMode.HALF_UP));
+    VBox valueBox = createInfoBox(
+            LangConfig.getInstance().lang("portfolio-menu.portfolio.row.label.total_value"),
+            "$" + Money.normalize(share.getCurrentValue())
+    );
 
     // Buttons
     HBox actions = new HBox(10);
-    Button buyMore = new Button("Buy");
+    Button buyMore = new Button(LangConfig.getInstance().lang("portfolio-menu.portfolio.row.button.buy"));
     buyMore.setOnAction(
         _ -> controller.buyStock(share.getStock())
     );
-    Button sellAll = new Button("Sell");
+    Button sellAll = new Button(LangConfig.getInstance().lang("portfolio-menu.portfolio.row.button.sell"));
     sellAll.setOnAction(
         _ -> controller.sellShare(share)
     );

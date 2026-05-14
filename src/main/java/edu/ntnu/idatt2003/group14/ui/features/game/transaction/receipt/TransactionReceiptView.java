@@ -1,9 +1,11 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.transaction.receipt;
 
 import edu.ntnu.idatt2003.group14.calculator.TransactionCalculator;
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.model.Stock;
+import edu.ntnu.idatt2003.group14.model.transaction.Purchase;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import edu.ntnu.idatt2003.group14.ui.app.View;
@@ -66,19 +68,22 @@ public class TransactionReceiptView implements View {
     Share share = transaction.getShare();
     Stock stock = share.getStock();
 
-    Label title = new Label("Purchase Receipt");
+    String type = transaction instanceof Purchase
+            ? LangConfig.getInstance().lang("receipt-menu.type.purchase")
+            : LangConfig.getInstance().lang("receipt-menu.type.sale");
+    Label title = new Label(LangConfig.getInstance().lang("receipt-menu.title").replace("{type}", type));
     title.getStyleClass().add("receipt-title-label");
 
-    Label stockLabel = new Label("Symbol: " + stock.getSymbol());
-    Label companyLabel = new Label("Company: " + stock.getCompany());
-    Label weekLabel = new Label("Week: " + (transaction.getWeek() + 1));
+    Label stockLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.symbol") + " " + stock.getSymbol());
+    Label companyLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.company") + " " + stock.getCompany());
+    Label weekLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.week") + " " + (transaction.getWeek() + 1));
 
     Label quantityLabel =
-        new Label("Quantity: " + Money.normalize(share.getQuantity()).toPlainString());
+        new Label(LangConfig.getInstance().lang("receipt-menu.label.quantity") + " " + Money.normalize(share.getQuantity()).toPlainString());
     Label priceLabel =
-        new Label("Price per share: $" + Money.normalize(share.getPurchasePrice()).toPlainString());
+        new Label(LangConfig.getInstance().lang("receipt-menu.label.price") + " " + Money.normalize(share.getPurchasePrice()).toPlainString());
     Label subtotalLabel =
-        new Label("Subtotal: $" + Money.normalize(share.getTotal()).toPlainString());
+        new Label(LangConfig.getInstance().lang("receipt-menu.label.subtotal") + " " + Money.normalize(share.getTotal()).toPlainString());
 
     TransactionCalculator calculator = transaction.getCalculator();
 
@@ -88,14 +93,14 @@ public class TransactionReceiptView implements View {
     BigDecimal tax = calculator.calculateTax();
 
     Label commissionLabel =
-        new Label("Commission: $" + Money.normalize(commission).toPlainString());
-    Label grossLabel = new Label("Gross: $" + Money.normalize(gross).toPlainString());
-    Label taxLabel = new Label("Tax: $" + Money.normalize(tax).toPlainString());
-    Label totalLabel = new Label("Total: $" + Money.normalize(total).toPlainString());
+        new Label(LangConfig.getInstance().lang("receipt-menu.label.commission") + " " + Money.normalize(commission).toPlainString());
+    Label grossLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.gross") + " " + Money.normalize(gross).toPlainString());
+    Label taxLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.tax") + " " + Money.normalize(tax).toPlainString());
+    Label totalLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.total") + " " + Money.normalize(total).toPlainString());
 
-    Label statusLabel = new Label("Status: Settled");
+    Label statusLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.status"));
 
-    Button closeButton = new Button("Close");
+    Button closeButton = new Button(LangConfig.getInstance().lang("receipt-menu.button.close"));
     closeButton.getStyleClass().add("purchase-button");
 
     closeButton.setOnAction(_ -> router.hidePopup());

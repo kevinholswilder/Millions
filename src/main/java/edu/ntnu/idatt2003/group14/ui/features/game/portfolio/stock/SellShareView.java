@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.portfolio.stock;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
 import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Share;
@@ -73,7 +74,7 @@ public class SellShareView implements View {
     menu.setPadding(new Insets(20));
 
     Label title = new Label(
-        "Sell Stock: " + share.getStock().getCompany() + " | " + share.getStock().getSymbol()
+        LangConfig.getInstance().lang("sell-stock-menu.title") + " " + share.getStock().getCompany() + " | " + share.getStock().getSymbol()
     );
     title.getStyleClass().add("purchase-title");
 
@@ -85,27 +86,27 @@ public class SellShareView implements View {
     BigDecimal tax = sale.getCalculator().calculateTax();
     BigDecimal total = sale.getCalculator().calculateTotal();
 
-    Label stockAmount = new Label("Number of stocks: " + share.getQuantity());
+    Label stockAmount = new Label(LangConfig.getInstance().lang("sell-stock-menu.label.amount") + " " + share.getQuantity());
     stockAmount.getStyleClass().add("purchase-comission-label");
 
     Label comissionLabel = new Label(
-        "Commission: $" + Money.normalize(commission).toPlainString()
+            LangConfig.getInstance().lang("sell-stock-menu.label.commission") + " " + Money.normalize(commission).toPlainString()
     );
     comissionLabel.getStyleClass().add("purchase-comission-label");
 
     Label taxLabel = new Label(
-        "Tax: $" + Money.normalize(tax).toPlainString()
+            LangConfig.getInstance().lang("sell-stock-menu.label.tax") + " " + Money.normalize(tax).toPlainString()
     );
     taxLabel.getStyleClass().add("purchase-comission-label");
 
     Label totalLabel = new Label(
-        "Total: $" + Money.normalize(total).toPlainString()
+            LangConfig.getInstance().lang("sell-stock-menu.label.total") + " " + Money.normalize(total).toPlainString()
     );
     totalLabel.getStyleClass().add("purchase-total-label");
 
     PlottableGraph graph = new PlottableGraph(share.getStock());
 
-    Button sellButton = new Button("Sell");
+    Button sellButton = new Button(LangConfig.getInstance().lang("sell-stock-menu.button.sell"));
     sellButton.getStyleClass().add("purchase-button");
 
     sellButton.setOnAction(_ -> {

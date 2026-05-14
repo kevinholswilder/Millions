@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu;
 
-import edu.ntnu.idatt2003.group14.GameConfig;
+import edu.ntnu.idatt2003.group14.config.GameConfig;
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.MenuButtonFactory;
@@ -69,10 +70,12 @@ public class MainMenuView implements View {
     VBox btnBox = new VBox(15);
     btnBox.setAlignment(Pos.CENTER);
 
-    Button startBtn = buttonFactory.createMenuButton("New Game", controller::handleNewGame);
+    Button startBtn = buttonFactory
+            .createMenuButton(LangConfig.getInstance().lang("main-menu.new_game"), controller::handleNewGame);
     Button optionsBtn = buttonFactory
-        .createMenuButton("Options", controller::showOptions);
-    Button exitBtn = buttonFactory.createMenuButton("Exit", controller::handleExitGame);
+        .createMenuButton(LangConfig.getInstance().lang("main-menu.options"), controller::showOptions);
+    Button exitBtn = buttonFactory
+            .createMenuButton(LangConfig.getInstance().lang("main-menu.exit"), controller::handleExitGame);
 
     btnBox.getChildren().addAll(startBtn, optionsBtn, exitBtn);
     centerMenu.getChildren().addAll(
@@ -88,10 +91,10 @@ public class MainMenuView implements View {
     HBox bottomBar = new HBox();
     bottomBar.setPadding(new Insets(20));
 
-    Label leftLabel = new Label("version " + GameConfig.VERSION);
+    Label leftLabel = new Label(LangConfig.getInstance().lang("main-menu.version") + " " + GameConfig.VERSION);
     leftLabel.getStyleClass().add("menu-text");
 
-    Label rightLabel = new Label("Developed by " + GameConfig.AUTHOR);
+    Label rightLabel = new Label(LangConfig.getInstance().lang("main-menu.authors") +  " " + GameConfig.AUTHOR);
     rightLabel.getStyleClass().add("menu-text");
 
     Region spacer = new Region();
