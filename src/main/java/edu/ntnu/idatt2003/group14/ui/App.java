@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
@@ -33,7 +34,9 @@ public final class App extends Application {
       throw new RuntimeException("Cannot start application.", e);
     }
 
-    Parameters params = getParameters();
+      LangConfig.getInstance().load("/lang/en_us.json");
+
+      Parameters params = getParameters();
     List<String> raw = params.getRaw();
     skipMenu = raw.contains("--skipMenu");
 
