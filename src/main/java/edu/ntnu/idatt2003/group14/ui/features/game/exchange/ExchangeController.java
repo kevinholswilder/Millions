@@ -83,7 +83,7 @@ public class ExchangeController {
 
     VBox weeksBox = this.createInfoBox(
             "Week",
-            String.valueOf(stock.getWeek())
+            String.valueOf(stock.getWeek() + 1)
     );
 
     stockBox.getStyleClass().add("stock-company-column");
@@ -147,7 +147,7 @@ public class ExchangeController {
 
     button.getStyleClass().add("purchase-button");
 
-    button.setOnAction(e -> {
+    button.setOnAction(_ -> {
       PurchaseStockController.getInstance().setStock(stock);
       router.navigate(Route.PURCHASE_STOCK);
     });

@@ -71,7 +71,7 @@ public class TransactionReceiptView implements View {
 
     Label stockLabel = new Label("Symbol: " + stock.getSymbol());
     Label companyLabel = new Label("Company: " + stock.getCompany());
-    Label weekLabel = new Label("Week: " + transaction.getWeek());
+    Label weekLabel = new Label("Week: " + (transaction.getWeek() + 1));
 
     Label quantityLabel =
         new Label("Quantity: " + Money.normalize(share.getQuantity()).toPlainString());

@@ -46,7 +46,7 @@ public class TransactionArchiveController {
 
     BigDecimal quantity = share.getQuantity();
     BigDecimal price = share.getPurchasePrice();
-    BigDecimal total = quantity.multiply(price);
+    BigDecimal total = transaction.getCalculator().calculateTotal();
 
     VBox typeBox = this.createInfoBox(
         transactionType,
@@ -55,7 +55,7 @@ public class TransactionArchiveController {
 
     VBox quantityBox = this.createInfoBox(
         "Quantity",
-        Money.normalize(quantity).toPlainString() + " shares"
+        quantity.toPlainString() + " shares"
     );
 
     VBox priceBox = this.createInfoBox(
@@ -70,7 +70,7 @@ public class TransactionArchiveController {
 
     VBox weekBox = this.createInfoBox(
         "Week",
-        String.valueOf(transaction.getWeek())
+        String.valueOf(transaction.getWeek() + 1)
     );
 
     HBox row = new HBox(40);
