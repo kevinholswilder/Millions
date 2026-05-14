@@ -1,7 +1,7 @@
 package edu.ntnu.idatt2003.group14.io.reader;
 
-import edu.ntnu.idatt2003.group14.exception.csvReading.CSVError;
-import edu.ntnu.idatt2003.group14.exception.csvReading.CSVReadException;
+import edu.ntnu.idatt2003.group14.exception.csvreading.CSVError;
+import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,8 +55,6 @@ public class CSVReader {
           new InputStreamReader(is, StandardCharsets.UTF_8))) {
         return br.readAllLines();
       }
-    } catch (CSVReadException e) {
-      throw e;
     } catch (IOException e) {
       AppLogger.error("CSV file could not be read: " + filename, e);
       throw new CSVReadException("Could not read from: " + filename, e, CSVError.READ_FAILED);

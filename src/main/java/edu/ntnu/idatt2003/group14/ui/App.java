@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui;
 
-import edu.ntnu.idatt2003.group14.exception.csvReading.CSVReadException;
+import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
 import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
@@ -21,6 +21,10 @@ import javafx.stage.Stage;
 /**
  * The JavaFx entry point. Responsible for initializing
  * the necessary classes and starting the application.
+ *
+ * @author Elias Haugsbakk
+ * @version 1.0.0
+ * @since 0.0.1
  */
 public final class App extends Application {
   private boolean skipMenu = false;

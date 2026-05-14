@@ -1,13 +1,12 @@
 package edu.ntnu.idatt2003.group14.service;
 
-import edu.ntnu.idatt2003.group14.exception.csvReading.CSVReadException;
+import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
 import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
 import edu.ntnu.idatt2003.group14.model.Exchange;
 import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
@@ -47,8 +46,6 @@ public class GameService {
         stockDataFile.getName().substring(0, stockDataFile.getName().lastIndexOf("."));
     Exchange exchange =
         new Exchange(exchangeName, stockReader.read(stockDataFile.toPath().toString()));
-    // TODO: should notify the user if  the read fails, and why.
-    //  (improper formatted file? disk read failer?)
 
     // Add portfolio as listener to the exchange
     exchange.addWeekAdvanceListener(player.getPortfolio());

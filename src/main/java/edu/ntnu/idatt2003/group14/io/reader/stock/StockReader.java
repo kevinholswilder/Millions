@@ -1,16 +1,14 @@
 package edu.ntnu.idatt2003.group14.io.reader.stock;
 
-import edu.ntnu.idatt2003.group14.exception.csvReading.CSVError;
-import edu.ntnu.idatt2003.group14.exception.csvReading.CSVReadException;
-import edu.ntnu.idatt2003.group14.exception.csvReading.ParsingError;
+import edu.ntnu.idatt2003.group14.exception.csvreading.CSVError;
+import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
+import edu.ntnu.idatt2003.group14.exception.csvreading.ParsingError;
 import edu.ntnu.idatt2003.group14.io.CSVLabels;
 import edu.ntnu.idatt2003.group14.io.reader.CSVReader;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.model.Stock;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -19,7 +17,8 @@ import java.util.List;
  * <p>The class distinguishes between formatting logic and IO operations
  * to allow for isolated unit testing.</p>
  *
- * @author Kevin Holswilder
+ * @author Kevin Holswilder, Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public final class StockReader extends CSVReader {
@@ -36,7 +35,7 @@ public final class StockReader extends CSVReader {
    *
    * @param filename the name of the CSV file to read from
    * @return a list of {@link Stock}s, or an empty list if the file is empty
-   * @throws IOException if the file cannot be read
+   * @throws CSVReadException if the file cannot be read
    */
   public List<Stock> read(String filename) throws CSVReadException {
     List<String> data = readFromFile(filename);
@@ -49,7 +48,7 @@ public final class StockReader extends CSVReader {
    *
    * @param data the data to parse
    * @return the {@link List} of {@link Stock}s
-   * @throws IOException if the parsing fails
+   * @throws CSVReadException if the parsing fails
    */
   public List<Stock> parse(List<String> data) throws CSVReadException {
     ArrayList<Stock> stocks = new ArrayList<>();
