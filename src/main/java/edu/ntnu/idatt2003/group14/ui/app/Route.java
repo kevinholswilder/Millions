@@ -2,6 +2,10 @@ package edu.ntnu.idatt2003.group14.ui.app;
 
 /**
  * Describes a route to a new view and the type of route.
+ *
+ * @author Elias Haugsbakk, Kevin Holswilder
+ * @version 1.0.0
+ * @since 0.0.1
  */
 public enum Route {
   // Menu routes
@@ -17,6 +21,7 @@ public enum Route {
   // Popup routes
   GAME_MENU(RouteType.POPUP),
   PURCHASE_STOCK(RouteType.POPUP),
+  SELL_STOCK(RouteType.POPUP),
   TRANSACTION_RECEIPT(RouteType.POPUP);
 
   private final RouteType type;

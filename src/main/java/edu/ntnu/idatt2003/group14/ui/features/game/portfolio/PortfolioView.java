@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
  * View displaying portfolio information and stock movers.
  *
  * @author Kevin Holswilder, Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public class PortfolioView implements View {
@@ -169,10 +170,15 @@ public class PortfolioView implements View {
         "$" + share.getCurrentValue().setScale(2, RoundingMode.HALF_UP));
 
     // Buttons
-    // TODO: hook up buttons to buy and sell functionality in controller
     HBox actions = new HBox(10);
     Button buyMore = new Button("Buy");
+    buyMore.setOnAction(
+        _ -> controller.buyStock(share.getStock())
+    );
     Button sellAll = new Button("Sell");
+    sellAll.setOnAction(
+        _ -> controller.sellShare(share)
+    );
     actions.getChildren().addAll(buyMore, sellAll);
     actions.setAlignment(Pos.CENTER);
 

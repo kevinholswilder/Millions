@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.transaction.receipt;
 
 import edu.ntnu.idatt2003.group14.calculator.TransactionCalculator;
+import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.model.Stock;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
@@ -21,7 +22,8 @@ import javafx.scene.layout.VBox;
  * <p>The receipt contains stock information, transaction details,
  * calculated costs, and transaction status.</p>
  *
- * @author Kevin Holswilder
+ * @author Kevin Holswilder, Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public class TransactionReceiptView implements View {
@@ -71,9 +73,12 @@ public class TransactionReceiptView implements View {
     Label companyLabel = new Label("Company: " + stock.getCompany());
     Label weekLabel = new Label("Week: " + transaction.getWeek());
 
-    Label quantityLabel = new Label("Quantity: " + share.getQuantity());
-    Label priceLabel = new Label("Price per share: " + share.getPurchasePrice());
-    Label subtotalLabel = new Label("Subtotal: " + share.getTotal());
+    Label quantityLabel =
+        new Label("Quantity: " + Money.normalize(share.getQuantity()).toPlainString());
+    Label priceLabel =
+        new Label("Price per share: $" + Money.normalize(share.getPurchasePrice()).toPlainString());
+    Label subtotalLabel =
+        new Label("Subtotal: $" + Money.normalize(share.getTotal()).toPlainString());
 
     TransactionCalculator calculator = transaction.getCalculator();
 
@@ -82,19 +87,18 @@ public class TransactionReceiptView implements View {
     BigDecimal gross = calculator.calculateGross();
     BigDecimal tax = calculator.calculateTax();
 
-    Label commissionLabel = new Label("Commission: " + commission);
-    Label grossLabel = new Label("Gross: " + gross);
-    Label taxLabel = new Label("Tax: " + tax);
-    Label totalLabel = new Label("Total: " + total);
+    Label commissionLabel =
+        new Label("Commission: $" + Money.normalize(commission).toPlainString());
+    Label grossLabel = new Label("Gross: $" + Money.normalize(gross).toPlainString());
+    Label taxLabel = new Label("Tax: $" + Money.normalize(tax).toPlainString());
+    Label totalLabel = new Label("Total: $" + Money.normalize(total).toPlainString());
 
     Label statusLabel = new Label("Status: Settled");
 
     Button closeButton = new Button("Close");
     closeButton.getStyleClass().add("purchase-button");
 
-    closeButton.setOnAction(_ -> {
-      router.hidePopup();
-    });
+    closeButton.setOnAction(_ -> router.hidePopup());
 
     receipt.getChildren().addAll(
         title,

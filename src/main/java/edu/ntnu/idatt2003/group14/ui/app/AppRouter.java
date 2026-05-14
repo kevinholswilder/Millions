@@ -12,6 +12,7 @@ import java.util.function.Supplier;
  * functionality, and tracks the state of active popups.</p>
  *
  * @author Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public class AppRouter {
@@ -38,11 +39,13 @@ public class AppRouter {
     routes.put(Route.OPTIONS, () -> viewRegistry.getOptionsView(this));
 
     // Game views
-    routes.put(Route.PORTFOLIO, viewRegistry::getPortfolioView);
+    routes.put(Route.PORTFOLIO, () -> viewRegistry.getPortfolioView(this));
     routes.put(Route.TRANSACTION_ARCHIVE, viewRegistry::getTransactionArchiveView);
     routes.put(Route.EXCHANGE, () -> viewRegistry.getExchangeView(this));
+    // Popups
     routes.put(Route.GAME_MENU, () -> viewRegistry.getGameMenuView(this));
     routes.put(Route.PURCHASE_STOCK, () -> viewRegistry.getPurchaseStockView(this));
+    routes.put(Route.SELL_STOCK, () -> viewRegistry.getSellStockView(this));
     routes.put(Route.TRANSACTION_RECEIPT, () -> viewRegistry.getTransactionReceiptView(this));
   }
 
