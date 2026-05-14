@@ -26,6 +26,7 @@ public class GameLayout implements View {
   private final StackPane root;
   private final BorderPane layout;
   private final AppRouter router;
+  private final GameService gameService;
 
   /**
    * Creates a new game layout with sidebar navigation and stylesheets.
@@ -33,6 +34,7 @@ public class GameLayout implements View {
    * @param router the application router
    */
   public GameLayout(GameService gameService, AppRouter router) {
+    this.gameService = gameService;
     this.router = router;
     this.layout = new BorderPane();
     this.root = new StackPane(this.layout);
@@ -59,6 +61,14 @@ public class GameLayout implements View {
         this.root.requestFocus();
       }
     });
+  }
+
+  /**
+   * Reinstantiates the sidebar
+   */
+  public void refreshSidebar() {
+    SideBar navigation = new SideBar(new SideBarController(this.router), this.gameService);
+    this.layout.setLeft(navigation);
   }
 
   /**

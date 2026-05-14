@@ -84,6 +84,15 @@ public class AppNavigator {
     getGameLayout(router).hidePopup();
   }
 
+  /**
+   * Refreshes the game layout.
+   */
+  void refreshGameLayout() {
+    if (this.gameLayout != null) {
+      this.gameLayout.refreshSidebar();
+    }
+  }
+
   private void navigateTo(Parent root) {
     // First time setup
     if (stage.getScene() == null) {

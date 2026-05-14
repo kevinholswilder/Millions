@@ -61,4 +61,12 @@ public class OptionsController {
   public void handleSoundEffectVolume(double value) {
     audioManager.setSoundEffectVolume(value / 100);
   }
+
+  /**
+   * Refreshes the view cache
+   */
+  public void refresh() {
+    router.clearViewCache();
+    router.refresh();
+  }
 }
