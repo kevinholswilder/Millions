@@ -103,6 +103,8 @@ public class OptionsView implements View {
 
       switch (selected) {
         case "English" -> LangConfig.getInstance().load("/lang/en_us.json");
+        case "Dutch" -> LangConfig.getInstance().load("/lang/nl_nl.json");
+        case "Norwegian" -> LangConfig.getInstance().load("/lang/no_no.json");
       }
 
       LangConfig.setLanguage(selected);
