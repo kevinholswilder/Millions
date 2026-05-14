@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
+import edu.ntnu.idatt2003.group14.exception.csvReading.CSVReadException;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
@@ -43,7 +44,7 @@ public class NewGameController {
    * @param amount        the amount of starting money
    * @param stockDataFile the stock data {@link File}
    * @return the {@link NewGameValidationState} containing information
-   *      on if the inputted information is valid
+   * on if the inputted information is valid
    */
   public NewGameValidationState validateNewGameInput(String username, String amount,
                                                      File stockDataFile) {
@@ -70,12 +71,13 @@ public class NewGameController {
       String username,
       BigDecimal startingMoney,
       File stockDataFile
-  ) throws IOException {
+  ) throws CSVReadException {
     AppLogger.fine("Username: " + username);
     AppLogger.fine("Starting Money: " + startingMoney);
     AppLogger.fine("Stock data file: " + stockDataFile.getName());
 
     gameService.startGame(username, startingMoney, stockDataFile);
+
     router.navigate(Route.EXCHANGE);
   }
 

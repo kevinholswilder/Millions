@@ -1,12 +1,11 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
-import edu.ntnu.idatt2003.group14.logging.AppLogger;
+import edu.ntnu.idatt2003.group14.exception.csvReading.CSVReadException;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.MenuButtonFactory;
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Objects;
 import javafx.geometry.Pos;
@@ -153,14 +152,24 @@ public class NewGameView implements View {
               new BigDecimal(amount),
               this.stockDataFile
           );
-        } catch (IOException e) {
-          AppLogger.error("The selected file is invalid and/or cannot be read.", e);
-          showError(
-              "The selected stock data file is invalid and/or cannot be read.",
-              fileChooserBtn
-          );
+        } catch (CSVReadException e) {
+          IO.println("debugger parsing error: " + e.getError().name());
+          switch (e.getError()) {
+            case READ_FAILED ->
+                showError("The reading of the CSV file failed; see millions.log", fileChooserBtn);
+            case FILE_NOT_FOUND ->
+                showError("CSV file not found; see millions.log", fileChooserBtn);
+            case EMPTY_FILE ->
+                showError("The CSV file does not contain any stocks", fileChooserBtn);
+            case PARSING -> {
+              showError(
+                  "Could not pares line " + e.getParsingError().errorLineNumber() + ": " + "\"" +
+                      e.getParsingError().errorLineString() + "\"", fileChooserBtn);
+            }
+          }
         }
       }
+
       case NEGATIVE_AMOUNT -> showError(
           "Starting Money must be positive",
           startingMoneyField

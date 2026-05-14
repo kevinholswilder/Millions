@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.service;
 
+import edu.ntnu.idatt2003.group14.exception.csvReading.CSVReadException;
 import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
 import edu.ntnu.idatt2003.group14.model.Exchange;
 import edu.ntnu.idatt2003.group14.model.GameSession;
@@ -40,7 +41,7 @@ public class GameService {
    * @param stockDataFile the file containing stock data for the exchange
    */
   public void startGame(String username, BigDecimal startingMoney, File stockDataFile)
-      throws IOException {
+      throws CSVReadException {
     Player player = new Player(username, startingMoney);
     String exchangeName =
         stockDataFile.getName().substring(0, stockDataFile.getName().lastIndexOf("."));
