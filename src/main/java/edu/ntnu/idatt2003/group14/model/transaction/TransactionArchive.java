@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.model.transaction;
 
+import edu.ntnu.idatt2003.group14.model.Player;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,6 +35,15 @@ public final class TransactionArchive {
 
   public boolean isEmpty() {
     return transactions.isEmpty();
+  }
+
+  /**
+   * Returns all transactions.
+   *
+   * @return the entire transaction archive of a {@link Player} object
+   */
+  public List<Transaction> getTransactions() {
+    return transactions;
   }
 
   /**

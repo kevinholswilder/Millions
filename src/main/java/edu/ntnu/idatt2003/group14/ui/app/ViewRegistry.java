@@ -3,12 +3,14 @@ package edu.ntnu.idatt2003.group14.ui.app;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.features.game.exchange.ExchangeController;
 import edu.ntnu.idatt2003.group14.ui.features.game.exchange.ExchangeView;
+import edu.ntnu.idatt2003.group14.ui.features.game.exchange.stock.PurchaseStockView;
 import edu.ntnu.idatt2003.group14.ui.features.game.gamemenu.GameMenuController;
 import edu.ntnu.idatt2003.group14.ui.features.game.gamemenu.GameMenuView;
 import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioController;
 import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioView;
 import edu.ntnu.idatt2003.group14.ui.features.game.transaction.TransactionArchiveController;
 import edu.ntnu.idatt2003.group14.ui.features.game.transaction.TransactionArchiveView;
+import edu.ntnu.idatt2003.group14.ui.features.game.transaction.receipt.TransactionReceiptView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuController;
 import edu.ntnu.idatt2003.group14.ui.features.menu.mainmenu.MainMenuView;
 import edu.ntnu.idatt2003.group14.ui.features.menu.newgame.NewGameController;
@@ -96,9 +98,16 @@ public class ViewRegistry {
         _ -> new PortfolioView(new PortfolioController()));
   }
 
-  public View getExchangeView() {
+  /**
+   * Returns the exchange view, instantiating it on first access.
+   *
+   * <p>Cached to persist the view.</p>
+   *
+   * @return the cached {@link ExchangeView}
+   */
+  public View getExchangeView(AppRouter router) {
     return viewCache.computeIfAbsent(Route.EXCHANGE,
-        _ -> new ExchangeView(new ExchangeController()));
+        _ -> new ExchangeView(new ExchangeController(router)));
   }
 
   /**
@@ -125,4 +134,27 @@ public class ViewRegistry {
   public View getGameMenuView(AppRouter router) {
     return new GameMenuView(audioManager, new GameMenuController(router));
   }
+
+  /**
+   * Returns a new instance of the Purchase Stock Menu.
+   *
+   * <p>Reconstructed on every call.</p>
+   *
+   * @return a new {@link PurchaseStockView}
+   */
+  public View getPurchaseStockView(AppRouter router) {
+    return new PurchaseStockView(router);
+  }
+
+  /**
+   * Returns a new instance of the Transaction Receipt modal.
+   *
+   * <p>Reconstructed on every call.</p>
+   *
+   * @return a new {@link TransactionReceiptView}
+   */
+  public View getTransactionReceiptView(AppRouter router) {
+    return new TransactionReceiptView(router);
+  }
+
 }

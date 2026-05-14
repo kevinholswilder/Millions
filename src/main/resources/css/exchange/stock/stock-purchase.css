@@ -1,0 +1,67 @@
+.purchase-container {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 16px;
+}
+
+.purchase-title {
+    -fx-font-size: 9rem;
+    -fx-text-fill: black;
+}
+
+.purchase-numerical-label {
+    -fx-font-size: 6rem;
+    -fx-text-fill: black;
+}
+
+.purchase-error-label {
+    -fx-font-size: 4rem;
+    -fx-text-fill: red;
+}
+
+.purchase-numerical-field {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #cfd8dc;
+    -fx-border-width: 1.5;
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
+    -fx-text-fill: #263238;
+    -fx-prompt-text-fill: #90a4ae;
+}
+
+.purchase-numerical-field:focus {
+    -fx-border-color: #4f8cff;
+    -fx-border-width: 2;
+    -fx-background-color: white;
+}
+
+.purchase-numerical-field:hover {
+    -fx-border-color: #90caf9;
+}
+
+.purchase-button {
+    -fx-background-color: #4f8cff;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+}
+
+.purchase-button:hover {
+    -fx-background-color: #5c97ff;
+}
+
+.purchase-button:pressed {
+    -fx-background-color: #3f7ae6;
+}
+
+.purchase-total-label
+ .purchase-comission-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2e7d32;
+    -fx-padding: 6 0 0 0;
+}
