@@ -101,6 +101,6 @@ public class StockTest {
 
   @Test
   void verify_getWeeks() {
-    assertEquals(5, stock.getWeek());
+    assertEquals(4, stock.getWeek());
   }
 }

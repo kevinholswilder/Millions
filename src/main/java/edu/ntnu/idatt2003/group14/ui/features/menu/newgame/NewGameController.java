@@ -44,7 +44,7 @@ public class NewGameController {
    * @param amount        the amount of starting money
    * @param stockDataFile the stock data {@link File}
    * @return the {@link NewGameValidationState} containing information
-   *        on if the inputted information is valid
+   *      on if the inputted information is valid
    */
   public NewGameValidationState validateNewGameInput(String username, String amount,
                                                      File stockDataFile) {
@@ -68,9 +68,9 @@ public class NewGameController {
    * @param stockDataFile the file containing stock data
    */
   public void handleStartGame(
-          String username,
-          BigDecimal startingMoney,
-          File stockDataFile
+      String username,
+      BigDecimal startingMoney,
+      File stockDataFile
   ) throws IOException {
     AppLogger.fine("Username: " + username);
     AppLogger.fine("Starting Money: " + startingMoney);
@@ -78,20 +78,27 @@ public class NewGameController {
 
     // Initialize player
     GameSession.setPlayer(
-            new Player(username, startingMoney)
+        new Player(username, startingMoney)
     );
 
     // Initialize exchange
     StockReader reader = new StockReader();
+    String exchangeName =
+        stockDataFile.getName().substring(0, stockDataFile.getName().lastIndexOf("."));
     GameSession.setExchange(
-            new Exchange("Temporary placeholder", reader.read(stockDataFile.toPath().toString()))
+        new Exchange(exchangeName, reader.read(stockDataFile.toPath().toString()))
+    );
+
+    // Add portfolio as listener to the exchange
+    GameSession.getExchange().addWeekAdvanceListener(
+        GameSession.getPlayer().getPortfolio()
     );
     router.navigate(Route.PORTFOLIO);
   }
 
   private NewGameValidationState validateUsername(String username) {
     return username.isBlank() ? NewGameValidationState.EMPTY_USERNAME :
-            NewGameValidationState.VALID;
+        NewGameValidationState.VALID;
   }
 
   private NewGameValidationState validateAmount(String amount) {
@@ -110,6 +117,6 @@ public class NewGameController {
 
   private NewGameValidationState validateFileChosen(File stockDataFile) {
     return stockDataFile == null ? NewGameValidationState.NO_FILE_CHOSEN :
-            NewGameValidationState.VALID;
+        NewGameValidationState.VALID;
   }
 }

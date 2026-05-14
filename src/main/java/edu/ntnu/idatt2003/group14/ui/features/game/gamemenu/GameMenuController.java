@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.gamemenu;
 
+import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import edu.ntnu.idatt2003.group14.ui.app.Route;
 
@@ -33,6 +34,11 @@ public class GameMenuController {
    */
   public void handleSaveAndQuit() {
     // TODO: implement saving
+    // Clean up
+    GameSession.clearPlayer();
+    GameSession.clearPlayer();
+    router.clearCache();
+
     router.navigate(Route.MAIN_MENU);
   }
 

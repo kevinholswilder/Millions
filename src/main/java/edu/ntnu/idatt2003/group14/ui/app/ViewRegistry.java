@@ -54,7 +54,7 @@ public class ViewRegistry {
    * @return a new {@link MainMenuView}
    */
 
-  public View getMainMenuView(AppRouter router) {
+  View getMainMenuView(AppRouter router) {
     return new MainMenuView(new MainMenuController(appController, router), audioManager);
   }
 
@@ -67,7 +67,7 @@ public class ViewRegistry {
    * @return a new {@link OptionsView}
    */
 
-  public View getOptionsView(AppRouter router) {
+  View getOptionsView(AppRouter router) {
     return new OptionsView(
         new OptionsController(appController, router, audioManager), audioManager);
   }
@@ -81,7 +81,7 @@ public class ViewRegistry {
    * @return a new {@link NewGameView}
    */
 
-  public View getNewGameView(AppRouter router) {
+  View getNewGameView(AppRouter router) {
     return new NewGameView(
         new NewGameController(router), appController, audioManager);
   }
@@ -93,7 +93,7 @@ public class ViewRegistry {
    *
    * @return the cached {@link PortfolioView}
    */
-  public View getPortfolioView() {
+  View getPortfolioView() {
     return viewCache.computeIfAbsent(Route.PORTFOLIO,
         _ -> new PortfolioView(new PortfolioController()));
   }
@@ -105,7 +105,7 @@ public class ViewRegistry {
    *
    * @return the cached {@link ExchangeView}
    */
-  public View getExchangeView(AppRouter router) {
+  View getExchangeView(AppRouter router) {
     return viewCache.computeIfAbsent(Route.EXCHANGE,
         _ -> new ExchangeView(new ExchangeController(router)));
   }
@@ -117,7 +117,7 @@ public class ViewRegistry {
    *
    * @return the cached {@link TransactionArchiveView}
    */
-  public View getTransactionArchiveView() {
+  View getTransactionArchiveView() {
     return viewCache.computeIfAbsent(Route.TRANSACTION_ARCHIVE,
         _ -> new TransactionArchiveView(new TransactionArchiveController()));
   }
@@ -131,7 +131,7 @@ public class ViewRegistry {
    * @return a new {@link GameMenuView}
    */
 
-  public View getGameMenuView(AppRouter router) {
+  View getGameMenuView(AppRouter router) {
     return new GameMenuView(audioManager, new GameMenuController(router));
   }
 
@@ -142,7 +142,7 @@ public class ViewRegistry {
    *
    * @return a new {@link PurchaseStockView}
    */
-  public View getPurchaseStockView(AppRouter router) {
+  View getPurchaseStockView(AppRouter router) {
     return new PurchaseStockView(router);
   }
 
@@ -153,8 +153,14 @@ public class ViewRegistry {
    *
    * @return a new {@link TransactionReceiptView}
    */
-  public View getTransactionReceiptView(AppRouter router) {
+  View getTransactionReceiptView(AppRouter router) {
     return new TransactionReceiptView(router);
   }
 
+  /**
+   * Clears the cache of all stored views.
+   */
+  void clearCache() {
+    this.viewCache.clear();
+  }
 }

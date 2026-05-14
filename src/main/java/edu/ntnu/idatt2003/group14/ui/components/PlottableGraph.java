@@ -15,8 +15,9 @@ import javafx.scene.chart.NumberAxis;
  * @since 0.0.1
  */
 public class PlottableGraph extends AreaChart<Number, Number> implements PlottableChangeListener {
+  private static final int MAX_WEEKS = 20;
   private final Series<Number, Number> series;
-  private int weekCounter = 1;
+  private final Plottable plottable;
 
   /**
    * Instantiates a new PlottableGraph for the given plottable.
@@ -25,43 +26,54 @@ public class PlottableGraph extends AreaChart<Number, Number> implements Plottab
    */
   public PlottableGraph(Plottable plottable) {
     super(createXAxis(), new NumberAxis());
+    this.plottable = plottable;
     this.setLegendVisible(false);
     this.setAnimated(false);
+    this.setCreateSymbols(false);
 
     this.series = new Series<>();
     this.getData().add(series);
 
-    plottable.addListener(this);
     populateChart(plottable);
+    plottable.addListener(this);
   }
 
   private static NumberAxis createXAxis() {
     NumberAxis axis = new NumberAxis();
     axis.setAutoRanging(false);
     axis.setLowerBound(1);
-    axis.setUpperBound(5);
+    axis.setUpperBound(MAX_WEEKS);
     axis.setTickUnit(1);
-    axis.setTickLabelsVisible(false);
     axis.setTickMarkVisible(false);
+    axis.setMinorTickVisible(false);
+
     return axis;
   }
 
   private void populateChart(Plottable plottable) {
-    int numberOfWeeks = plottable.getWeek();
+    int currentWeek = plottable.getWeek();
+    int startWeek = Math.max(0, currentWeek - MAX_WEEKS + 1);
 
-    for (int i = 0; i < numberOfWeeks; i++) {
-      addDataPoint(plottable.getValueForWeek(i));
+    for (int i = startWeek; i <= currentWeek; i++) {
+      addDataPoint(i + 1, plottable.getValueForWeek(i));
     }
   }
 
-  private void addDataPoint(BigDecimal value) {
-    series.getData().add(new Data<>(weekCounter, value.doubleValue()));
-    ((NumberAxis) getXAxis()).setUpperBound(weekCounter);
-    weekCounter++;
+  private void addDataPoint(int week, BigDecimal value) {
+    series.getData().add(new Data<>(week, value.doubleValue()));
+
+    if (series.getData().size() > MAX_WEEKS) {
+      series.getData().remove(0);
+    }
+
+    NumberAxis axis = (NumberAxis) getXAxis();
+    axis.setUpperBound(Math.max(MAX_WEEKS, week));
+    axis.setLowerBound(Math.max(1, week - MAX_WEEKS + 1));
   }
 
   @Override
   public void plottableChanged(BigDecimal value) {
-    addDataPoint(value);
+    int week = this.plottable.getWeek() + 1;
+    addDataPoint(week, value);
   }
 }

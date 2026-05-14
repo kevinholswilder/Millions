@@ -17,6 +17,7 @@ import java.util.function.Supplier;
 public class AppRouter {
   private final Map<Route, Supplier<View>> routes = new HashMap<>();
   private final AppNavigator navigator;
+  private final ViewRegistry viewRegistry;
   private Route previousRoute;
   private Route currentRoute;
   private boolean activePopup;
@@ -29,6 +30,7 @@ public class AppRouter {
    */
   public AppRouter(ViewRegistry viewRegistry, AppNavigator navigator) {
     this.navigator = navigator;
+    this.viewRegistry = viewRegistry;
 
     // Menu views
     routes.put(Route.MAIN_MENU, () -> viewRegistry.getMainMenuView(this));
@@ -94,5 +96,16 @@ public class AppRouter {
     } else {
       navigate(Route.GAME_MENU);
     }
+  }
+
+  /**
+   * Clears the cache of all stored views by calling viewRegistry to clear its cache and
+   * resets the routing.
+   */
+  public void clearCache() {
+    this.hidePopup();
+    this.previousRoute = null;
+    this.activePopup = false;
+    this.viewRegistry.clearCache();
   }
 }

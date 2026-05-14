@@ -36,7 +36,7 @@ public class Exchange extends Plottable {
    */
   public Exchange(String name, List<Stock> stocks) {
     this.name = name;
-    this.week = 1;
+    this.week = 0;
     this.random = new Random();
     this.stockMap = new HashMap<>();
 

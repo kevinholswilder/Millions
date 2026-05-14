@@ -1,0 +1,84 @@
+.portfolio-top-bar {
+    -fx-alignment: center-left;
+    -fx-spacing: 60;
+    -fx-padding: 20 40 20 40;
+    -fx-background-color: #f8f9fa;
+}
+
+.portfolio-top-bar .label {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+/* Overall graph container */
+.portfolio-graph {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 10;
+}
+
+/* The line and the shaded area underneath */
+.portfolio-graph .chart-series-area-line {
+    -fx-stroke: #00c853;
+    -fx-stroke-width: 3px;
+}
+
+.portfolio-graph .chart-series-area-fill {
+    -fx-fill: rgba(0, 200, 83, 0.15);
+}
+
+/* Hide all background plot lines and boxes */
+.portfolio-graph .chart-plot-background,
+.portfolio-graph .chart-vertical-grid-lines,
+.portfolio-graph .chart-horizontal-grid-lines {
+    -fx-background-color: transparent;
+    -fx-stroke: transparent;
+}
+
+/* Style labels and hide axis lines/ticks */
+.portfolio-graph .axis {
+    -fx-border-color: transparent;
+    -fx-tick-label-fill: #66667a;
+    -fx-tick-label-font-size: 11px;
+}
+
+.portfolio-graph .axis-tick-mark,
+.portfolio-graph .axis-minor-tick-mark {
+    -fx-stroke: transparent;
+}
+
+/* Hide legend if present */
+.portfolio-graph .chart-legend {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* ----- Stock Movers Component ------ */
+.movers-component {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+
+    -fx-min-width: 280px;
+    -fx-min-height: 200px;
+
+    -fx-padding: 20;
+}
+
+.green-movers-arrow {
+    -fx-text-fill: #00c853;
+    -fx-font-size: 14px;
+}
+
+.red-movers-arrow {
+    -fx-text-fill: #c80000;
+    -fx-font-size: 14px;
+}
+
+.movers-symbol, .movers-percent {
+    -fx-text-fill: #141414;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}

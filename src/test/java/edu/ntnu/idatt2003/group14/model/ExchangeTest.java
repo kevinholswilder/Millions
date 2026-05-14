@@ -46,7 +46,7 @@ public class ExchangeTest {
 
   @Test
   public void verify_week_of_exchange() {
-    assertEquals(1, exchange.getWeek());
+    assertEquals(0, exchange.getWeek());
   }
 
   @Test
@@ -128,12 +128,12 @@ public class ExchangeTest {
 
   @Test
   void varify_proceed_to_next_week() {
-    assertEquals(1, exchange.getWeek());
+    assertEquals(0, exchange.getWeek());
     assertEquals(5, exchange.getStock("NOCH").getHistoricalPrices().size());
 
     exchange.advance();
 
-    assertEquals(2, exchange.getWeek());
+    assertEquals(1, exchange.getWeek());
     assertEquals(6, exchange.getStock("NOCH").getHistoricalPrices().size());
   }
 
