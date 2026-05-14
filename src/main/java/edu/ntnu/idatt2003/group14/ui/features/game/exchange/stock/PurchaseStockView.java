@@ -1,10 +1,10 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.exchange.stock;
 
 import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
-import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Stock;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
+import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import edu.ntnu.idatt2003.group14.ui.app.Route;
 import edu.ntnu.idatt2003.group14.ui.app.View;
@@ -40,13 +40,15 @@ import javafx.scene.layout.VBox;
 public class PurchaseStockView implements View {
   private final BorderPane root;
   private final AppRouter router;
+  private final GameService gameService;
 
   /**
    * Creates a new purchase stock view.
    *
    * @param router the application router used for navigation
    */
-  public PurchaseStockView(AppRouter router) {
+  public PurchaseStockView(AppRouter router, GameService gameService) {
+    this.gameService = gameService;
     this.root = new BorderPane();
     this.router = router;
     VBox center = centerMenu(PurchaseStockController.getInstance().getStock());
@@ -116,10 +118,10 @@ public class PurchaseStockView implements View {
       try {
         errorLabel.setText("");
 
-        transaction.set(GameSession.getExchange().purchase(
+        transaction.set(gameService.getExchange().purchase(
             stock.getSymbol(),
             quantity,
-            GameSession.getPlayer(),
+            gameService.getPlayer(),
             false
         ));
 
@@ -160,7 +162,7 @@ public class PurchaseStockView implements View {
           return;
         }
 
-        transaction.get().commit(GameSession.getPlayer());
+        transaction.get().commit(gameService.getPlayer());
 
         TransactionReceiptController.getInstance().setTransaction(transaction.get());
 

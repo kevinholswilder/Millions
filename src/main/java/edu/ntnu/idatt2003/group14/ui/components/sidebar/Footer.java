@@ -1,7 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.components.sidebar;
 
 import edu.ntnu.idatt2003.group14.model.Exchange;
-import edu.ntnu.idatt2003.group14.model.GameSession;
+import edu.ntnu.idatt2003.group14.service.GameService;
 import javafx.scene.control.Button;
 
 /**
@@ -15,13 +15,13 @@ public class Footer extends Button {
   /**
    * Creates a new footer button with predefined styling and layout settings.
    */
-  public Footer() {
+  public Footer(GameService gameService) {
     this.setText("Advance");
     this.setMaxWidth(Double.MAX_VALUE);
     this.setPrefHeight(100.0);
 
     this.setOnAction(_ -> {
-      Exchange exchange = GameSession.getExchange();
+      Exchange exchange = gameService.getExchange();
       exchange.advance();
     });
   }

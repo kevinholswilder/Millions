@@ -1,10 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
-import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
-import edu.ntnu.idatt2003.group14.model.Exchange;
-import edu.ntnu.idatt2003.group14.model.GameSession;
-import edu.ntnu.idatt2003.group14.model.Player;
+import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import edu.ntnu.idatt2003.group14.ui.app.Route;
 import java.io.File;
@@ -19,6 +16,7 @@ import java.math.BigDecimal;
  */
 public class NewGameController {
   private final AppRouter router;
+  private final GameService gameService;
 
   /**
    * Initializes a new NewGameController.
@@ -26,8 +24,9 @@ public class NewGameController {
    * @param router the application router
    */
 
-  public NewGameController(AppRouter router) {
+  public NewGameController(AppRouter router, GameService gameService) {
     this.router = router;
+    this.gameService = gameService;
   }
 
   /**
@@ -76,24 +75,8 @@ public class NewGameController {
     AppLogger.fine("Starting Money: " + startingMoney);
     AppLogger.fine("Stock data file: " + stockDataFile.getName());
 
-    // Initialize player
-    GameSession.setPlayer(
-        new Player(username, startingMoney)
-    );
-
-    // Initialize exchange
-    StockReader reader = new StockReader();
-    String exchangeName =
-        stockDataFile.getName().substring(0, stockDataFile.getName().lastIndexOf("."));
-    GameSession.setExchange(
-        new Exchange(exchangeName, reader.read(stockDataFile.toPath().toString()))
-    );
-
-    // Add portfolio as listener to the exchange
-    GameSession.getExchange().addWeekAdvanceListener(
-        GameSession.getPlayer().getPortfolio()
-    );
-    router.navigate(Route.PORTFOLIO);
+    gameService.startGame(username, startingMoney, stockDataFile);
+    router.navigate(Route.EXCHANGE);
   }
 
   private NewGameValidationState validateUsername(String username) {

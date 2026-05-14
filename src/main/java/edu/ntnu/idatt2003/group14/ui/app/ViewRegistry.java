@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
 import edu.ntnu.idatt2003.group14.service.AudioManager;
+import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.features.game.exchange.ExchangeController;
 import edu.ntnu.idatt2003.group14.ui.features.game.exchange.ExchangeView;
 import edu.ntnu.idatt2003.group14.ui.features.game.exchange.stock.PurchaseStockView;
@@ -31,6 +32,7 @@ import java.util.Map;
 public class ViewRegistry {
   private final AppController appController;
   private final AudioManager audioManager;
+  private final GameService gameService;
   private final Map<Route, View> viewCache;
 
   /**
@@ -39,9 +41,11 @@ public class ViewRegistry {
    * @param appController to interact with the application
    * @param audioManager  to interact with the application audio
    */
-  public ViewRegistry(AppController appController, AudioManager audioManager) {
+  public ViewRegistry(AppController appController, AudioManager audioManager,
+                      GameService gameService) {
     this.appController = appController;
     this.audioManager = audioManager;
+    this.gameService = gameService;
     viewCache = new HashMap<>();
   }
 
@@ -80,10 +84,9 @@ public class ViewRegistry {
    * @param router the application router
    * @return a new {@link NewGameView}
    */
-
   View getNewGameView(AppRouter router) {
     return new NewGameView(
-        new NewGameController(router), appController, audioManager);
+        new NewGameController(router, gameService), appController, audioManager);
   }
 
   /**
@@ -95,7 +98,7 @@ public class ViewRegistry {
    */
   View getPortfolioView() {
     return viewCache.computeIfAbsent(Route.PORTFOLIO,
-        _ -> new PortfolioView(new PortfolioController()));
+        _ -> new PortfolioView(new PortfolioController(gameService)));
   }
 
   /**
@@ -107,7 +110,7 @@ public class ViewRegistry {
    */
   View getExchangeView(AppRouter router) {
     return viewCache.computeIfAbsent(Route.EXCHANGE,
-        _ -> new ExchangeView(new ExchangeController(router)));
+        _ -> new ExchangeView(gameService, new ExchangeController(router)));
   }
 
   /**
@@ -119,7 +122,7 @@ public class ViewRegistry {
    */
   View getTransactionArchiveView() {
     return viewCache.computeIfAbsent(Route.TRANSACTION_ARCHIVE,
-        _ -> new TransactionArchiveView(new TransactionArchiveController()));
+        _ -> new TransactionArchiveView(gameService, new TransactionArchiveController()));
   }
 
   /**
@@ -132,7 +135,7 @@ public class ViewRegistry {
    */
 
   View getGameMenuView(AppRouter router) {
-    return new GameMenuView(audioManager, new GameMenuController(router));
+    return new GameMenuView(audioManager, new GameMenuController(router, gameService));
   }
 
   /**
@@ -143,7 +146,7 @@ public class ViewRegistry {
    * @return a new {@link PurchaseStockView}
    */
   View getPurchaseStockView(AppRouter router) {
-    return new PurchaseStockView(router);
+    return new PurchaseStockView(router, gameService);
   }
 
   /**

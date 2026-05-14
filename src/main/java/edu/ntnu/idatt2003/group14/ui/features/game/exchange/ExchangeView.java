@@ -1,8 +1,8 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.exchange;
 
 import edu.ntnu.idatt2003.group14.model.Exchange;
-import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Stock;
+import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import java.util.List;
 import java.util.Objects;
@@ -36,7 +36,7 @@ public class ExchangeView implements View {
    *
    * @param controller the controller used to manage stock filtering, sorting, and row creation
    */
-  public ExchangeView(ExchangeController controller) {
+  public ExchangeView(GameService gameService, ExchangeController controller) {
     this.root = new BorderPane();
 
     this.controller = controller;
@@ -58,7 +58,7 @@ public class ExchangeView implements View {
     this.setupStockListView();
     this.root.setCenter(this.stockListView);
 
-    Exchange exchange = GameSession.getExchange();
+    Exchange exchange = gameService.getExchange();
     exchange.addWeekAdvanceListener(_ -> this.refreshStocks());
     this.setStocks(exchange.getStocks());
   }

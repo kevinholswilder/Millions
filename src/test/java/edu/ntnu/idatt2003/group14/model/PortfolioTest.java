@@ -114,6 +114,7 @@ public class PortfolioTest {
 
   @Test
   void verify_getWeeks() {
+    portfolio.onWeekAdvanced(4);
     assertEquals(4, portfolio.getWeek());
     assertEquals(0, new Portfolio().getWeek());
   }

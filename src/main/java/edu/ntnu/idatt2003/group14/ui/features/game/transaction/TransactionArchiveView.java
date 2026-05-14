@@ -1,9 +1,9 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.transaction;
 
-import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
 import edu.ntnu.idatt2003.group14.model.transaction.TransactionArchive;
+import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +29,7 @@ import javafx.scene.layout.VBox;
  * @since 0.0.1
  */
 public class TransactionArchiveView implements View {
+  private final GameService gameService;
   private final BorderPane root;
   private final TransactionArchiveController controller;
 
@@ -37,7 +38,8 @@ public class TransactionArchiveView implements View {
    *
    * @param controller the controller used to create transaction rows
    */
-  public TransactionArchiveView(TransactionArchiveController controller) {
+  public TransactionArchiveView(GameService gameService, TransactionArchiveController controller) {
+    this.gameService = gameService;
     this.root = new BorderPane();
     this.controller = controller;
 
@@ -178,8 +180,7 @@ public class TransactionArchiveView implements View {
 
   @Override
   public Parent getRoot() {
-    this.setTransactions(GameSession.getPlayer().getTransactionArchive().getTransactions());
+    this.setTransactions(gameService.getPlayer().getTransactionArchive().getTransactions());
     return root;
   }
-
 }

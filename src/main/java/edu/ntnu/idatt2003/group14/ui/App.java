@@ -2,17 +2,15 @@ package edu.ntnu.idatt2003.group14.ui;
 
 import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
-import edu.ntnu.idatt2003.group14.model.Exchange;
-import edu.ntnu.idatt2003.group14.model.GameSession;
-import edu.ntnu.idatt2003.group14.model.Player;
-import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
+import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.app.AppNavigator;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import edu.ntnu.idatt2003.group14.ui.app.Route;
 import edu.ntnu.idatt2003.group14.ui.app.ViewRegistry;
 import edu.ntnu.idatt2003.group14.utils.AppDataPathUtil;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -55,41 +53,25 @@ public final class App extends Application {
     audioManager.playOfficeNoice();
 
     AppController appController = new AppController(stage);
-    ViewRegistry registry = new ViewRegistry(appController, audioManager);
-    AppNavigator navigator = new AppNavigator(stage);
+    GameService gameService = new GameService(new StockReader());
+    ViewRegistry registry = new ViewRegistry(appController, audioManager, gameService);
+    AppNavigator navigator = new AppNavigator(stage, gameService);
     AppRouter router = new AppRouter(registry, navigator);
 
     if (skipMenu) {
-      skipMenu(router);
+      skipMenu(router, gameService);
     } else {
       router.navigate(Route.MAIN_MENU);
     }
     stage.show();
   }
 
-  private void skipMenu(AppRouter router) {
+  private void skipMenu(AppRouter router, GameService gameService) {
     // enable by running with:
     // javafx:run -Djavafx.args=--skipMenu
     // java -Djavafx.args="--skipMenu" -jar Millions.jar
     try {
-      GameSession.setPlayer(new Player("TestPlayer", new BigDecimal("100000")));
-      Exchange exchange = new Exchange(
-          "sp500",
-          new StockReader().read("sp500.csv")
-      );
-
-
-      GameSession.setExchange(exchange);
-      GameSession.getPlayer().getPortfolio().addShare(
-          new Share(
-              GameSession.getExchange().getStock("NVDA"),
-              BigDecimal.ONE,
-              BigDecimal.TEN
-          )
-      );
-      GameSession.getExchange().addWeekAdvanceListener(
-          GameSession.getPlayer().getPortfolio()
-      );
+      gameService.startGame("TestPlayer", new BigDecimal("10000"), new File("sp500.csv"));
     } catch (IOException e) {
       AppLogger.error("Could not load /resources/sp500.csv", e);
       throw new RuntimeException(e);
