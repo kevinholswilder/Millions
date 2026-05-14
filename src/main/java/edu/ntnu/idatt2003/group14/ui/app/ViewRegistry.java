@@ -9,6 +9,7 @@ import edu.ntnu.idatt2003.group14.ui.features.game.gamemenu.GameMenuController;
 import edu.ntnu.idatt2003.group14.ui.features.game.gamemenu.GameMenuView;
 import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioController;
 import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.PortfolioView;
+import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.stock.SellShareView;
 import edu.ntnu.idatt2003.group14.ui.features.game.transaction.TransactionArchiveController;
 import edu.ntnu.idatt2003.group14.ui.features.game.transaction.TransactionArchiveView;
 import edu.ntnu.idatt2003.group14.ui.features.game.transaction.receipt.TransactionReceiptView;
@@ -27,6 +28,7 @@ import java.util.Map;
  * <p>Centralizes caching for the application's views. Stateless views does not need caching.
  *
  * @author Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public class ViewRegistry {
@@ -96,9 +98,9 @@ public class ViewRegistry {
    *
    * @return the cached {@link PortfolioView}
    */
-  View getPortfolioView() {
+  View getPortfolioView(AppRouter router) {
     return viewCache.computeIfAbsent(Route.PORTFOLIO,
-        _ -> new PortfolioView(new PortfolioController(gameService)));
+        _ -> new PortfolioView(new PortfolioController(gameService, router)));
   }
 
   /**
@@ -147,6 +149,17 @@ public class ViewRegistry {
    */
   View getPurchaseStockView(AppRouter router) {
     return new PurchaseStockView(router, gameService);
+  }
+
+  /**
+   * Returns a new instance of the Sell Stock Menu.
+   *
+   * <p>Reconstructed on every call.</p>
+   *
+   * @return a new {@link SellShareView}
+   */
+  public View getSellStockView(AppRouter router) {
+    return new SellShareView(router, gameService);
   }
 
   /**

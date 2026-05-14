@@ -8,6 +8,10 @@ import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.model.Stock;
 import edu.ntnu.idatt2003.group14.model.plottable.PlottableChangeListener;
 import edu.ntnu.idatt2003.group14.service.GameService;
+import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
+import edu.ntnu.idatt2003.group14.ui.app.Route;
+import edu.ntnu.idatt2003.group14.ui.features.game.exchange.stock.PurchaseStockController;
+import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.stock.SellShareController;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -25,10 +29,12 @@ import javafx.scene.image.ImageView;
  * {@link Player}s portfolio when a player is assigned.</p>
  *
  * @author Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public class PortfolioController implements PlottableChangeListener {
   private final GameService gameService;
+  private final AppRouter appRouter;
   private final ObservableList<Share> shares = FXCollections.observableArrayList();
   private final Portfolio portfolio;
 
@@ -41,10 +47,14 @@ public class PortfolioController implements PlottableChangeListener {
 
   /**
    * Initiates a new PortfolioController.
+   *
+   * @param gameService the game service providing player and portfolio data
+   * @param appRouter the application router used for navigation
    */
-  public PortfolioController(GameService gameService) {
+  public PortfolioController(GameService gameService, AppRouter appRouter) {
     this.gameService = gameService;
     this.portfolio = gameService.getPlayer().getPortfolio();
+    this.appRouter = appRouter;
     this.portfolio.addListener(this);
     this.plottableChanged(null);
     this.previousStatus = gameService.getPlayer().getStatus();
@@ -137,5 +147,25 @@ public class PortfolioController implements PlottableChangeListener {
     } else {
       AppLogger.error("Could not find image: " + path);
     }
+  }
+
+  /**
+   * Opens the purchase stock dialog.
+   *
+   * @param stock the stock to purchase
+   */
+  public void buyStock(Stock stock) {
+    PurchaseStockController.getInstance().setStock(stock);
+    appRouter.navigate(Route.PURCHASE_STOCK);
+  }
+
+  /**
+   * Opens the sell share dialog.
+   *
+   * @param share the share to sell
+   */
+  public void sellShare(Share share) {
+    SellShareController.getInstance().setShare(share);
+    appRouter.navigate(Route.SELL_STOCK);
   }
 }

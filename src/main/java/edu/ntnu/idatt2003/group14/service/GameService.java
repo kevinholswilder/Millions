@@ -4,6 +4,7 @@ import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
 import edu.ntnu.idatt2003.group14.model.Exchange;
 import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Player;
+import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
  * to the current game session.</p>
  *
  * @author Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public class GameService {
@@ -55,9 +57,10 @@ public class GameService {
   /**
    * Ends the current game session and clears the state.
    */
-  public void quitGame() {
+  public void quitGame(AppRouter router) {
     // TODO: implement game saving
     this.currentSession = null;
+    router.clearCache();
   }
 
   /**

@@ -8,6 +8,7 @@ import edu.ntnu.idatt2003.group14.ui.app.Route;
  * Controller class for handling user input from the Game Menu scene.
  *
  * @author Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public class GameMenuController {
@@ -35,7 +36,7 @@ public class GameMenuController {
    * User requests to save and quit to main menu.
    */
   public void handleSaveAndQuit() {
-    gameService.quitGame();
+    gameService.quitGame(router);
     router.navigate(Route.MAIN_MENU);
   }
 

@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.transaction;
 
+import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.model.Stock;
 import edu.ntnu.idatt2003.group14.model.transaction.Purchase;
@@ -18,7 +19,8 @@ import javafx.scene.layout.VBox;
  * <p>This controller generates visual rows representing transactions,
  * including its transaction type, quantity, price, total value, and week.</p>
  *
- * @author Kevin Holswilder
+ * @author Kevin Holswilder, Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public class TransactionArchiveController {
@@ -44,7 +46,7 @@ public class TransactionArchiveController {
 
     BigDecimal quantity = share.getQuantity();
     BigDecimal price = share.getPurchasePrice();
-    BigDecimal total = quantity.multiply(price);
+    BigDecimal total = transaction.getCalculator().calculateTotal();
 
     VBox typeBox = this.createInfoBox(
         transactionType,
@@ -58,17 +60,17 @@ public class TransactionArchiveController {
 
     VBox priceBox = this.createInfoBox(
         "Price",
-        "$" + price.toPlainString()
+        "$" + Money.normalize(price).toPlainString()
     );
 
     VBox totalBox = this.createInfoBox(
         "Total",
-        "$" + total.toPlainString()
+        "$" + Money.normalize(total).toPlainString()
     );
 
     VBox weekBox = this.createInfoBox(
         "Week",
-        String.valueOf(transaction.getWeek())
+        String.valueOf(transaction.getWeek() + 1)
     );
 
     HBox row = new HBox(40);
