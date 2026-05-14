@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.options;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.MenuButtonFactory;
@@ -8,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.GaussianBlur;
@@ -85,7 +87,28 @@ public class OptionsView implements View {
         (_, _, newVal) -> controller.handleSoundEffectVolume(newVal.doubleValue())
     );
     StackPane effects = createLabeledSlider(effectsSlider, "Sound Effects");
+    // Language option
+    ComboBox<String> languageBox = new ComboBox<>();
+    languageBox.getStyleClass().add("menu-button");
 
+    languageBox.getItems().addAll(
+            "English",
+            "Norwegian",
+            "Dutch"
+    );
+
+    languageBox.setValue(LangConfig.getCurrentLanguage());
+    languageBox.setOnAction(_ -> {
+      String selected = languageBox.getValue();
+
+      switch (selected) {
+        case "English" -> LangConfig.getInstance().load("/lang/en_us.json");
+      }
+
+      LangConfig.setLanguage(selected);
+
+      controller.refresh();
+    });
 
     Button fullScreenBtn = buttonFactory
         .createMenuButton("Toggle Full Screen", controller::handleFullScreen);
