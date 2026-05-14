@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.app;
 
+import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.features.game.GameLayout;
 import java.util.Objects;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ public class AppNavigator {
   private static final int DEFAULT_WIDTH = 1280;
   private static final int DEFAULT_HEIGHT = 720;
   private final Stage stage;
+  private final GameService gameService;
 
   private GameLayout gameLayout;
 
@@ -25,8 +27,9 @@ public class AppNavigator {
    *
    * @param stage the primary stage
    */
-  public AppNavigator(Stage stage) {
+  public AppNavigator(Stage stage, GameService gameService) {
     this.stage = stage;
+    this.gameService = gameService;
   }
 
   /**
@@ -37,7 +40,7 @@ public class AppNavigator {
    */
   private GameLayout getGameLayout(AppRouter router) {
     if (gameLayout == null) {
-      gameLayout = new GameLayout(router);
+      gameLayout = new GameLayout(gameService, router);
     }
     return gameLayout;
   }

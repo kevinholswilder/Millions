@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.game;
 
+import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.sidebar.SideBar;
@@ -31,11 +32,11 @@ public class GameLayout implements View {
    *
    * @param router the application router
    */
-  public GameLayout(AppRouter router) {
+  public GameLayout(GameService gameService, AppRouter router) {
     this.router = router;
     this.layout = new BorderPane();
     this.root = new StackPane(this.layout);
-    SideBar navigation = new SideBar(new SideBarController(router));
+    SideBar navigation = new SideBar(new SideBarController(router), gameService);
     this.layout.setLeft(navigation);
 
     String mainStyle =

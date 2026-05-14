@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.gamemenu;
 
-import edu.ntnu.idatt2003.group14.model.GameSession;
+import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import edu.ntnu.idatt2003.group14.ui.app.Route;
 
@@ -12,14 +12,16 @@ import edu.ntnu.idatt2003.group14.ui.app.Route;
  */
 public class GameMenuController {
   private final AppRouter router;
+  private final GameService gameService;
 
   /**
    * Initializes a new GameMenuController.
    *
    * @param router the application view router
    */
-  public GameMenuController(AppRouter router) {
+  public GameMenuController(AppRouter router, GameService gameService) {
     this.router = router;
+    this.gameService = gameService;
   }
 
   /**
@@ -33,12 +35,7 @@ public class GameMenuController {
    * User requests to save and quit to main menu.
    */
   public void handleSaveAndQuit() {
-    // TODO: implement saving
-    // Clean up
-    GameSession.clearPlayer();
-    GameSession.clearPlayer();
-    router.clearCache();
-
+    gameService.quitGame();
     router.navigate(Route.MAIN_MENU);
   }
 

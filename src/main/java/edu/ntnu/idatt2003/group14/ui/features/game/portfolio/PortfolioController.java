@@ -1,13 +1,13 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.portfolio;
 
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
-import edu.ntnu.idatt2003.group14.model.GameSession;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.PlayerStatus;
 import edu.ntnu.idatt2003.group14.model.Portfolio;
 import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.model.Stock;
 import edu.ntnu.idatt2003.group14.model.plottable.PlottableChangeListener;
+import edu.ntnu.idatt2003.group14.service.GameService;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -28,6 +28,7 @@ import javafx.scene.image.ImageView;
  * @since 0.0.1
  */
 public class PortfolioController implements PlottableChangeListener {
+  private final GameService gameService;
   private final ObservableList<Share> shares = FXCollections.observableArrayList();
   private final Portfolio portfolio;
 
@@ -36,15 +37,17 @@ public class PortfolioController implements PlottableChangeListener {
   private Label cashLabel;
   private Label portfolioValueLabel;
 
-  private PlayerStatus previousStatus = GameSession.getPlayer().getStatus();
+  private PlayerStatus previousStatus;
 
   /**
    * Initiates a new PortfolioController.
    */
-  public PortfolioController() {
-    this.portfolio = GameSession.getPlayer().getPortfolio();
+  public PortfolioController(GameService gameService) {
+    this.gameService = gameService;
+    this.portfolio = gameService.getPlayer().getPortfolio();
     this.portfolio.addListener(this);
     this.plottableChanged(null);
+    this.previousStatus = gameService.getPlayer().getStatus();
   }
 
   @Override
@@ -52,12 +55,12 @@ public class PortfolioController implements PlottableChangeListener {
     Platform.runLater(() -> {
       shares.setAll(List.copyOf(portfolio.getShares()));
 
-      BigDecimal cash = GameSession.getPlayer().getMoney();
+      BigDecimal cash = gameService.getPlayer().getMoney();
       BigDecimal portfolioValue = portfolio.getValueForWeek(portfolio.getWeek());
       BigDecimal netWorth = cash.add(portfolioValue);
 
-      if (GameSession.getPlayer().getStatus() != this.previousStatus) {
-        this.previousStatus = GameSession.getPlayer().getStatus();
+      if (gameService.getPlayer().getStatus() != this.previousStatus) {
+        this.previousStatus = gameService.getPlayer().getStatus();
         updateStatusImage();
       }
 
@@ -126,7 +129,7 @@ public class PortfolioController implements PlottableChangeListener {
       return;
     }
     // Image naming must match NOVICE.png, INVESTOR.png, SPECULATOR.png
-    String path = "/images/icons/" + GameSession.getPlayer().getStatus().name() + ".png";
+    String path = "/images/icons/" + gameService.getPlayer().getStatus().name() + ".png";
 
     var resource = getClass().getResourceAsStream(path);
     if (resource != null) {

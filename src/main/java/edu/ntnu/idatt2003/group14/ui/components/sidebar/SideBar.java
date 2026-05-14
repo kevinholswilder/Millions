@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.components.sidebar;
 
+import edu.ntnu.idatt2003.group14.service.GameService;
 import java.util.Objects;
 import javafx.scene.layout.BorderPane;
 
@@ -16,9 +17,9 @@ public class SideBar extends BorderPane {
    *
    * @param controller controller used for sidebar navigation
    */
-  public SideBar(SideBarController controller) {
+  public SideBar(SideBarController controller, GameService gameService) {
     Header header = new Header(controller);
-    Footer footer = new Footer();
+    Footer footer = new Footer(gameService);
 
     this.getStylesheets().add(
         Objects.requireNonNull(getClass().getResource("/css/sidebar/sidebar.css")).toExternalForm()
@@ -29,8 +30,7 @@ public class SideBar extends BorderPane {
     this.setBottom(footer);
     this.setTop(header);
 
-    sceneProperty().addListener((_, _, newScene) -> {
-      prefWidthProperty().bind(newScene.widthProperty().multiply(0.15));
-    });
+    sceneProperty().addListener(
+        (_, _, newScene) -> prefWidthProperty().bind(newScene.widthProperty().multiply(0.15)));
   }
 }

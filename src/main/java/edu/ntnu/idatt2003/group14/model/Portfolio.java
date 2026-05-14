@@ -16,12 +16,14 @@ import java.util.List;
  */
 public class Portfolio extends Plottable implements WeekAdvanceListener {
   private final List<Share> shares;
+  private int currentWeek;
 
   /**
    * Instantiates a new portfolio.
    */
   public Portfolio() {
     this.shares = new ArrayList<>();
+    this.currentWeek = 0;
   }
 
   /**
@@ -102,14 +104,12 @@ public class Portfolio extends Plottable implements WeekAdvanceListener {
 
   @Override
   public int getWeek() {
-    if (this.shares.isEmpty()) {
-      return 0;
-    }
-    return this.shares.getFirst().getStock().getWeek();
+    return this.currentWeek;
   }
 
   @Override
   public void onWeekAdvanced(int week) {
+    this.currentWeek = week;
     try {
       notifyNetWorthListeners(getValueForWeek(this.getWeek()));
     } catch (Exception e) {
