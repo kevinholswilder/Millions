@@ -79,9 +79,19 @@ public class AppLogger {
    * Logging a severe error. Usually an unhandled exception.
    *
    * @param msg the associated message
-   * @param e a throwable
+   * @param e   a throwable
    */
   public static void error(String msg, Throwable e) {
     LOGGER.log(Level.SEVERE, msg, e);
+  }
+
+  /**
+   * Silences the file logger.
+   * Useful for tests to avoid cluttering the log file.
+   */
+  public static void silence() {
+    for (var handler : AppLogger.LOGGER.getHandlers()) {
+      handler.close();
+    }
   }
 }
