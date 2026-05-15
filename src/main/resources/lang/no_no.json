@@ -102,5 +102,6 @@
   "sidebar-header.portfolio": "Portefølje",
   "sidebar-header.transactions": "Transaksjoner",
   "sidebar-header.exchange": "Børs",
-  "sidebar-footer.advance": "Neste"
+  "sidebar-footer.advance": "Neste",
+  "sidebar-footer.menu": "Meny"
 }

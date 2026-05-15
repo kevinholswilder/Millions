@@ -100,5 +100,6 @@
   "sidebar-header.portfolio": "Portfolio",
   "sidebar-header.transactions": "Transacties",
   "sidebar-header.exchange": "Beurs",
-  "sidebar-footer.advance": "Volgende"
+  "sidebar-footer.advance": "Volgende",
+  "sidebar-footer.menu": "Menu"
 }

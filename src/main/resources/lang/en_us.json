@@ -102,5 +102,6 @@
   "sidebar-header.portfolio": "Portfolio",
   "sidebar-header.transactions": "Transactions",
   "sidebar-header.exchange": "Exchange",
-  "sidebar-footer.advance": "Advance"
+  "sidebar-footer.advance": "Advance",
+  "sidebar-footer.menu": "Menu"
 }
