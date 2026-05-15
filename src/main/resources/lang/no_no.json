@@ -7,6 +7,7 @@
 
   "options-menu.music": "Musikk",
   "options-menu.sound_effects": "Lydeffekter",
+  "options-menu.off": "AV",
   "options-menu.toggle_full_screen": "Slå fullskjerm av/på",
   "options-menu.return": "Tilbake",
 
@@ -24,7 +25,11 @@
   "new-game-menu.error.balance.empty": "Kapital må være et heltall",
   "new-game-menu.error.balance.negative": "Kapital må være høyere enn 0",
   "new-game-menu.error.csv.empty": "Ingen aksjedatafil er valgt",
-  "new-game-menu.error.csv.invalid": "Den valgte aksjedatafilen er ugyldig og/eller kan ikke leses",
+  "new-game-menu.error.csv.read_fail": "Kunne ikke lese CSV fil; se millions.log",
+  "new-game-menu.error.csv.not_found": "Fant ikke CSV fil; se millions.log",
+  "new-game-menu.error.csv.empty_file": "Fant ingen aksjer i CSV fil",
+  "new-game-menu.error.csv.parsing_fail": "Klarte ikke lese linje {line_number}: {line_string}",
+  "new-game-menu.error.csv.unexpected": "Uventet feil oppsto under CSV lesing; se millions.log",
 
   "portfolio-menu.net_worth": "Nettoformue: $",
   "portfolio-menu.cash": "Kontanter: $",

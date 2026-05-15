@@ -7,6 +7,7 @@
 
   "options-menu.music": "Muziek",
   "options-menu.sound_effects": "Geluidseffecten",
+  "options-menu.off": "UIT",
   "options-menu.toggle_full_screen": "Volledig scherm",
   "options-menu.return": "Terug",
 
@@ -24,7 +25,11 @@
   "new-game-menu.error.balance.empty": "Kapitaal moet een geheel getal zijn",
   "new-game-menu.error.balance.negative": "Kapitaal moet groter zijn dan 0",
   "new-game-menu.error.csv.empty": "Er is geen aandelenbestand geselecteerd",
-  "new-game-menu.error.csv.invalid": "Het geselecteerde aandelenbestand is ongeldig en/of kan niet worden gelezen",
+  "new-game-menu.error.csv.read_fail": "Het lezen van het CSV-bestand is mislukt; zie millions.log",
+  "new-game-menu.error.csv.not_found": "CSV-bestand niet gevonden; zie millions.log",
+  "new-game-menu.error.csv.empty_file": "Het CSV-bestand bevat geen aandelen",
+  "new-game-menu.error.csv.parsing_fail": "Kon regel {line_number} niet parseren: {line_string}",
+  "new-game-menu.error.csv.unexpected": "Onverwachte fout bij het parseren van het CSV-bestand; zie millions.log",
 
   "portfolio-menu.net_worth": "Netto waarde: $",
   "portfolio-menu.cash": "Contant geld: $",
@@ -34,7 +39,6 @@
   "portfolio-menu.portfolio.row.label.total_value": "Totale waarde",
   "portfolio-menu.portfolio.row.button.buy": "Kopen",
   "portfolio-menu.portfolio.row.button.sell": "Verkopen",
-
   "transactions-menu.header.text_field.search": "Transacties zoeken...",
   "transactions-menu.header.button.filter.all": "Alles",
   "transactions-menu.header.button.filter.purchases": "Aankopen",
@@ -93,7 +97,6 @@
   "receipt-menu.label.total": "Totaal:",
   "receipt-menu.label.status": "Status: Afgewikkeld",
   "receipt-menu.button.close": "Sluiten:",
-
   "sidebar-header.portfolio": "Portfolio",
   "sidebar-header.transactions": "Transacties",
   "sidebar-header.exchange": "Beurs",

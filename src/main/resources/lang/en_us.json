@@ -7,6 +7,7 @@
 
   "options-menu.music": "Music",
   "options-menu.sound_effects": "Sound Effects",
+  "options-menu.off": "OFF",
   "options-menu.toggle_full_screen": "Toggle Full Screen",
   "options-menu.return": "Return",
 
@@ -24,7 +25,11 @@
   "new-game-menu.error.balance.empty": "Capital has to be a integer",
   "new-game-menu.error.balance.negative": "Capital has to be higher than 0",
   "new-game-menu.error.csv.empty": "No stock data file has been selected",
-  "new-game-menu.error.csv.invalid": "The selected stock data file is invalid and/or cannot be read",
+  "new-game-menu.error.csv.read_fail": "The reading of the CSV file failed; see millions.log",
+  "new-game-menu.error.csv.not_found": "CSV file not found; see millions.log",
+  "new-game-menu.error.csv.empty_file": "The CSV file does not contain any stocks",
+  "new-game-menu.error.csv.parsing_fail": "Could not parse line {line_number}: {line_string}",
+  "new-game-menu.error.csv.unexpected": "Unexpected error when parsing CSV file; view millions.log",
 
   "portfolio-menu.net_worth": "Net Worth: $",
   "portfolio-menu.cash": "Cash: $",

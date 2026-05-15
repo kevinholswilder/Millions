@@ -98,9 +98,9 @@ public class OptionsView implements View {
     languageBox.getStyleClass().add("menu-button");
 
     languageBox.getItems().addAll(
-            "English",
-            "Norwegian",
-            "Dutch"
+        "English",
+        "Norwegian",
+        "Dutch"
     );
 
     languageBox.setValue(LangConfig.getCurrentLanguage());
@@ -111,7 +111,7 @@ public class OptionsView implements View {
         case "English" -> LangConfig.getInstance().load("/lang/en_us.json");
         case "Dutch" -> LangConfig.getInstance().load("/lang/nl_nl.json");
         case "Norwegian" -> LangConfig.getInstance().load("/lang/no_no.json");
-        default ->  LangConfig.getInstance().load("/lang/en_us.json");
+        default -> LangConfig.getInstance().load("/lang/en_us.json");
       }
 
       LangConfig.setLanguage(selected);
@@ -125,10 +125,10 @@ public class OptionsView implements View {
             controller::handleFullScreen
         );
     Button doneBtn = buttonFactory
-            .createMenuButton(
-                LangConfig.getInstance().lang("options-menu.return"),
-                controller::handleReturnToMainMenu
-            );
+        .createMenuButton(
+            LangConfig.getInstance().lang("options-menu.return"),
+            controller::handleReturnToMainMenu
+        );
 
     btnBox.getChildren().addAll(ambiance, effects, languageBox, fullScreenBtn, doneBtn);
     centerMenu.getChildren().add(btnBox);
@@ -145,7 +145,8 @@ public class OptionsView implements View {
         slider.valueProperty().asObject()
             .map(v -> {
               int val = (int) Math.round(v);
-              return label + ": " + (val == 0 ? "OFF" : String.format("%3d", val) + "%");
+              return label + ": " + (val == 0 ? LangConfig.getInstance().lang("options-menu.off") :
+                  String.format("%3d", val) + "%");
             })
     );
 

@@ -1,8 +1,7 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
-import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
 import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
-import edu.ntnu.idatt2003.group14.logging.AppLogger;
+import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.app.View;
@@ -118,7 +117,7 @@ public class NewGameView implements View {
     );
     Button mainMenu = buttonFactory.createMenuButton(
         LangConfig.getInstance().lang("new-game-menu.return"),
-            controller::handleMainMenu
+        controller::handleMainMenu
     );
 
     centerMenu.getChildren().addAll(
@@ -159,15 +158,23 @@ public class NewGameView implements View {
         } catch (CSVReadException e) {
           switch (e.getError()) {
             case READ_FAILED ->
-                showError("The reading of the CSV file failed; see millions.log", fileChooserBtn);
+                showError(LangConfig.getInstance().lang("new-game-menu.error.csv.read_fail"),
+                    fileChooserBtn);
             case FILE_NOT_FOUND ->
-                showError("CSV file not found; see millions.log", fileChooserBtn);
+                showError(LangConfig.getInstance().lang("new-game-menu.error.csv.not_found"),
+                    fileChooserBtn);
             case EMPTY_FILE ->
-                showError("The CSV file does not contain any stocks", fileChooserBtn);
+                showError(LangConfig.getInstance().lang("new-game-menu.error.csv.empty_file"),
+                    fileChooserBtn);
             case PARSING -> showError(
-                "Could not parse line " + e.getParsingError().errorLineNumber() + ": " + "\""
-                    + e.getParsingError().errorLineString() + "\"", fileChooserBtn);
-            default -> showError("Unexpected error when parsing CSV file; view millions.log",
+                LangConfig.getInstance().lang("new-game-menu.error.csv.parsing_fail"
+                ).replace(
+                    "{line_number}", String.valueOf(e.getParsingError().errorLineNumber())
+                ).replace(
+                    "{line_string}", e.getParsingError().errorLineString()
+                ), fileChooserBtn);
+            default -> showError(
+                LangConfig.getInstance().lang("new-game-menu.error.csv.unexpected"),
                 fileChooserBtn);
           }
         }
