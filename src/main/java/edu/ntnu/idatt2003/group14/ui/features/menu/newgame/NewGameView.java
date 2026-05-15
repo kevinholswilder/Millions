@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
+import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
 import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
@@ -7,7 +8,6 @@ import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.MenuButtonFactory;
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Objects;
 import javafx.geometry.Pos;
@@ -156,12 +156,20 @@ public class NewGameView implements View {
               new BigDecimal(amount),
               this.stockDataFile
           );
-        } catch (IOException e) {
-          AppLogger.error("The selected file is invalid and/or cannot be read.", e);
-          showError(
-              LangConfig.getInstance().lang("new-game-menu.error.csv.invalid"),
-              fileChooserBtn
-          );
+        } catch (CSVReadException e) {
+          switch (e.getError()) {
+            case READ_FAILED ->
+                showError("The reading of the CSV file failed; see millions.log", fileChooserBtn);
+            case FILE_NOT_FOUND ->
+                showError("CSV file not found; see millions.log", fileChooserBtn);
+            case EMPTY_FILE ->
+                showError("The CSV file does not contain any stocks", fileChooserBtn);
+            case PARSING -> showError(
+                "Could not parse line " + e.getParsingError().errorLineNumber() + ": " + "\""
+                    + e.getParsingError().errorLineString() + "\"", fileChooserBtn);
+            default -> showError("Unexpected error when parsing CSV file; view millions.log",
+                fileChooserBtn);
+          }
         }
       }
       case NEGATIVE_AMOUNT -> showError(
@@ -176,11 +184,14 @@ public class NewGameView implements View {
           LangConfig.getInstance().lang("new-game-menu.error.empty_username"),
           usernameField
       );
-      case NO_FILE_CHOSEN -> showError(
-          LangConfig.getInstance().lang("new-game-menu.error.csv.empty"),
-          fileChooserBtn
-      );
-      default -> throw new  IllegalStateException("Unexpected value: " + result);
+      case NO_FILE_CHOSEN -> {
+        showError(
+            LangConfig.getInstance().lang("new-game-menu.error.csv.empty"),
+            fileChooserBtn
+        );
+        this.fileChooserBtn.setText("Pick CSV stock data file");
+      }
+      default -> throw new IllegalStateException("Unexpected startingMoney: " + result);
     }
   }
 
