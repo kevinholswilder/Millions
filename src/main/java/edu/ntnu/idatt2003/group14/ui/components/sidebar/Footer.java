@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.components.sidebar;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.model.Exchange;
 import edu.ntnu.idatt2003.group14.service.GameService;
 import javafx.scene.control.Button;
@@ -16,7 +17,7 @@ public class Footer extends Button {
    * Creates a new footer button with predefined styling and layout settings.
    */
   public Footer(GameService gameService) {
-    this.setText("Advance");
+    this.setText(LangConfig.getInstance().lang("sidebar-footer.advance"));
     this.setMaxWidth(Double.MAX_VALUE);
     this.setPrefHeight(100.0);
 

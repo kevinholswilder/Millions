@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2003.group14.logging;
 
-import edu.ntnu.idatt2003.group14.GameConfig;
+import edu.ntnu.idatt2003.group14.config.GameConfig;
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;

@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
 import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
@@ -37,6 +38,8 @@ public final class App extends Application {
       AppLogger.error("Failed to initialize data directory.", e);
       throw new RuntimeException("Cannot start application.", e);
     }
+
+    LangConfig.getInstance().load("/lang/en_us.json");
 
     Parameters params = getParameters();
     List<String> raw = params.getRaw();

@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
@@ -26,7 +27,6 @@ import javafx.scene.layout.VBox;
  * and stock file and lets them start the game.</p>
  *
  * @author Elias Haugsbakk
- * @version 1.0.0
  * @since 0.0.1
  */
 public class NewGameView implements View {
@@ -100,23 +100,25 @@ public class NewGameView implements View {
     this.errorLabel = new Label();
     this.errorLabel.getStyleClass().add("error-message");
 
-    this.usernameField = new TextField("Username");
+    this.usernameField = new TextField(LangConfig.getInstance().lang("new-game-menu.username"));
     this.usernameField.getStyleClass().add("menu-text-field");
 
     this.startingMoneyField = new TextField();
-    this.startingMoneyField.setPromptText("Insert Starting money");
+    this.startingMoneyField.setPromptText(LangConfig.getInstance().lang("new-game-menu.capital"));
     this.startingMoneyField.getStyleClass().add("menu-text-field");
 
     this.fileChooserBtn = buttonFactory.createMenuButton(
-        "Pick CSV stock data file",
+        LangConfig.getInstance().lang("new-game-menu.csv_data"),
         this::pickFile
     );
     Button startNewGame = buttonFactory.createMenuButton(
-        "Start New Game",
+        LangConfig.getInstance().lang("new-game-menu.new_game"),
         this::startGame
     );
     Button mainMenu = buttonFactory.createMenuButton(
-        "Main Menu", controller::handleMainMenu);
+        LangConfig.getInstance().lang("new-game-menu.return"),
+        controller::handleMainMenu
+    );
 
     centerMenu.getChildren().addAll(
         errorLabel,
@@ -156,35 +158,42 @@ public class NewGameView implements View {
         } catch (CSVReadException e) {
           switch (e.getError()) {
             case READ_FAILED ->
-                showError("The reading of the CSV file failed; see millions.log", fileChooserBtn);
+                showError(LangConfig.getInstance().lang("new-game-menu.error.csv.read_fail"),
+                    fileChooserBtn);
             case FILE_NOT_FOUND ->
-                showError("CSV file not found; see millions.log", fileChooserBtn);
+                showError(LangConfig.getInstance().lang("new-game-menu.error.csv.not_found"),
+                    fileChooserBtn);
             case EMPTY_FILE ->
-                showError("The CSV file does not contain any stocks", fileChooserBtn);
+                showError(LangConfig.getInstance().lang("new-game-menu.error.csv.empty_file"),
+                    fileChooserBtn);
             case PARSING -> showError(
-                "Could not parse line " + e.getParsingError().errorLineNumber() + ": " + "\""
-                    + e.getParsingError().errorLineString() + "\"", fileChooserBtn);
-            default -> showError("Unexpected error when parsing CSV file; view millions.log",
+                LangConfig.getInstance().lang("new-game-menu.error.csv.parsing_fail"
+                ).replace(
+                    "{line_number}", String.valueOf(e.getParsingError().errorLineNumber())
+                ).replace(
+                    "{line_string}", e.getParsingError().errorLineString()
+                ), fileChooserBtn);
+            default -> showError(
+                LangConfig.getInstance().lang("new-game-menu.error.csv.unexpected"),
                 fileChooserBtn);
           }
         }
       }
-
       case NEGATIVE_AMOUNT -> showError(
-          "Starting Money must be positive",
+          LangConfig.getInstance().lang("new-game-menu.error.balance.negative"),
           startingMoneyField
       );
       case NOT_A_NUMBER -> showError(
-          "Starting Money must be a number",
+          LangConfig.getInstance().lang("new-game-menu.error.balance.empty"),
           startingMoneyField
       );
       case EMPTY_USERNAME -> showError(
-          "Username cannot be empty",
+          LangConfig.getInstance().lang("new-game-menu.error.empty_username"),
           usernameField
       );
       case NO_FILE_CHOSEN -> {
         showError(
-            "No stock data file has been selected",
+            LangConfig.getInstance().lang("new-game-menu.error.csv.empty"),
             fileChooserBtn
         );
         this.fileChooserBtn.setText("Pick CSV stock data file");

@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.exchange;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Stock;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
@@ -61,28 +62,28 @@ public class ExchangeController {
     );
 
     VBox priceBox = this.createInfoBox(
-            "Price",
+            LangConfig.getInstance().lang("exchange-menu.row.label.price"),
             "$" + Money.normalize(latestPrice).toPlainString()
     );
 
     VBox changeBox = this.createInfoBox(
-            "Change",
+            LangConfig.getInstance().lang("exchange-menu.row.label.change"),
             (priceChange.compareTo(BigDecimal.ZERO) >= 0 ? "+$" : "-$")
                     + Money.normalize(priceChange).abs().toPlainString()
     );
 
     VBox highestBox = this.createInfoBox(
-            "High",
+            LangConfig.getInstance().lang("exchange-menu.row.label.high"),
             "$" + Money.normalize(highestPrice).toPlainString()
     );
 
     VBox lowestBox = this.createInfoBox(
-            "Low",
+            LangConfig.getInstance().lang("exchange-menu.row.label.low"),
             "$" + Money.normalize(lowestPrice).toPlainString()
     );
 
     VBox weeksBox = this.createInfoBox(
-            "Week",
+            LangConfig.getInstance().lang("exchange-menu.row.label.week"),
             String.valueOf(stock.getWeek() + 1)
     );
 
@@ -143,7 +144,7 @@ public class ExchangeController {
    * @return a styled {@link Button} for purchasing the stock
    */
   private Button createPurchaseButton(Stock stock, AppRouter router) {
-    Button button = new Button("Purchase");
+    Button button = new Button(LangConfig.getInstance().lang("exchange-menu.row.button.purchase"));
 
     button.getStyleClass().add("purchase-button");
 
@@ -209,16 +210,27 @@ public class ExchangeController {
    * @return a negative value, zero, or a positive value depending on the sort order
    */
   private int compare(Stock a, Stock b) {
-    int result = switch (currentSort) {
-      case "Price" -> a.getSalesPrice()
+    String sortPrice = LangConfig.getInstance()
+            .lang("exchange-menu.header.label.price");
+
+    String sortAZ = LangConfig.getInstance()
+            .lang("exchange-menu.header.label.a_z");
+
+    int result;
+
+    if (this.currentSort.equals(sortPrice)) {
+      result = a.getSalesPrice()
               .compareTo(b.getSalesPrice());
 
-      case "A-Z" -> a.getSymbol()
+    } else if (this.currentSort.equals(sortAZ)) {
+      result = a.getSymbol()
               .compareToIgnoreCase(b.getSymbol());
 
-      default -> Integer.compare(a.getWeek(), b.getWeek());
-    };
-    return ascending ? result : -result;
+    } else {
+      result = Integer.compare(a.getWeek(), b.getWeek());
+    }
+
+    return this.ascending ? result : -result;
   }
 
   /**

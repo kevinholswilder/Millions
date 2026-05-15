@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.gamemenu;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.MenuButtonFactory;
@@ -51,16 +52,25 @@ public class GameMenuView implements View {
     centerMenu.setAlignment(Pos.CENTER);
     centerMenu.setPadding(new Insets(100, 0, 0, 0));
 
-    Label title = new Label("Options");
+    Label title = new Label(LangConfig.getInstance().lang("game-menu.title"));
     title.getStyleClass().add("menu-title");
 
     VBox btnBox = new VBox(15);
     btnBox.setAlignment(Pos.CENTER);
 
-    Button resumeBtn = buttonFactory.createMenuButton("Resume Game", controller::resumeGame);
-    Button optionsBtn = buttonFactory.createMenuButton("Options", controller::showOptions);
+    Button resumeBtn = buttonFactory.createMenuButton(
+        LangConfig.getInstance().lang("game-menu.resume"),
+        controller::resumeGame
+    );
+    Button optionsBtn = buttonFactory.createMenuButton(
+        LangConfig.getInstance().lang("game-menu.options"),
+        controller::showOptions
+    );
     Button exitBtn =
-        buttonFactory.createMenuButton("Quit without Saving", controller::handleSaveAndQuit);
+        buttonFactory.createMenuButton(
+            LangConfig.getInstance().lang("game-menu.quit"),
+            controller::handleSaveAndQuit
+        );
 
     btnBox.getChildren().addAll(resumeBtn, optionsBtn, exitBtn);
     centerMenu.getChildren().addAll(
