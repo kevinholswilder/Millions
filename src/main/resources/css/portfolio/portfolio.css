@@ -25,7 +25,11 @@
 }
 
 .portfolio-graph .chart-series-area-fill {
-    -fx-fill: rgba(0, 200, 83, 0.15);
+    -fx-fill: image-pattern("images/chart_background.png", 0, 0, 1, 1, true);
+}
+
+.portfolio-graph .chart-series-area-fill {
+    -fx-fill: image-pattern("images/chart_background.png", 0, 0, 1982, 792, false);
 }
 
 /* Hide all background plot lines and boxes */
