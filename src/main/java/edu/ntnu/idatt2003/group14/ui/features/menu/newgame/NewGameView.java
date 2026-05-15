@@ -16,6 +16,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -27,6 +28,7 @@ import javafx.scene.layout.VBox;
  * and stock file and lets them start the game.</p>
  *
  * @author Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public class NewGameView implements View {
@@ -61,6 +63,12 @@ public class NewGameView implements View {
         Objects.requireNonNull(getClass().getResource("/css/menu.css")).toExternalForm()
     );
     this.root.getChildren().addAll(backgroundView(), centerMenu());
+
+    this.root.setOnKeyPressed(e -> {
+      if (e.getCode() == KeyCode.ESCAPE) {
+        controller.handleMainMenu();
+      }
+    });
   }
 
   private Region backgroundView() {

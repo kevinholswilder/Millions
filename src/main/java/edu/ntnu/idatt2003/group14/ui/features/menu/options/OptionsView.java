@@ -13,6 +13,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -21,6 +22,7 @@ import javafx.scene.layout.VBox;
  * JavaFX scene for the Options screen of the application.
  *
  * @author Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public class OptionsView implements View {
@@ -49,6 +51,12 @@ public class OptionsView implements View {
     this.root.sceneProperty().addListener((_, _, newScene) -> {
       if (newScene != null) {
         this.root.requestFocus();
+      }
+    });
+
+    this.root.setOnKeyPressed(e -> {
+      if (e.getCode() == KeyCode.ESCAPE) {
+        controller.handleReturnToMainMenu();
       }
     });
   }
