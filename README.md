@@ -1,5 +1,16 @@
 # Millions
 
+## Table of Contents
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [App data](#app-data)
+5. [Build](#build)
+6. [Steps to run](#steps-to-run)
+7. [Testing](#testing)
+8. [Contributing](#contributing)
+9. [License](#license)
+
 ## Overview
 Millions is a stock market simulation game developed as a part of the course assignment given in _Programming 2 IDATT2003_ at the Norwegian University of Science and Technology in Trondheim. The application allows users to manage a virtual portfolio using a configurable starting capital and stock market data loaded from a chosen file. Players can buy and sell shares, track the market's history, manage their transactions and financial progress over time.
 
