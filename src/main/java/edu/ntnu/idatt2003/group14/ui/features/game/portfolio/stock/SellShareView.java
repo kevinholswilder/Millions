@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -80,6 +81,13 @@ public class SellShareView implements View {
     );
     title.getStyleClass().add("purchase-title");
 
+    Button exitBtn = new Button(LangConfig.getInstance().lang("stock-menu.exit"));
+    exitBtn.setOnAction(_ -> this.router.handleEscape());
+
+    StackPane topBox = new StackPane(title, exitBtn);
+    StackPane.setAlignment(title, Pos.CENTER);
+    StackPane.setAlignment(exitBtn, Pos.CENTER_RIGHT);
+
     Label errorLabel = new Label("");
     errorLabel.getStyleClass().add("purchase-error-label");
 
@@ -96,23 +104,23 @@ public class SellShareView implements View {
     stockAmount.getStyleClass().add("purchase-comission-label");
 
     Label comissionLabel = new Label(
-            LangConfig.getInstance().lang("sell-stock-menu.label.commission")
-                + " "
-                + Money.normalize(commission).toPlainString()
+        LangConfig.getInstance().lang("sell-stock-menu.label.commission")
+            + " "
+            + Money.normalize(commission).toPlainString()
     );
     comissionLabel.getStyleClass().add("purchase-comission-label");
 
     Label taxLabel = new Label(
-            LangConfig.getInstance().lang("sell-stock-menu.label.tax")
-                + " "
-                + Money.normalize(tax).toPlainString()
+        LangConfig.getInstance().lang("sell-stock-menu.label.tax")
+            + " "
+            + Money.normalize(tax).toPlainString()
     );
     taxLabel.getStyleClass().add("purchase-comission-label");
 
     Label totalLabel = new Label(
-            LangConfig.getInstance().lang("sell-stock-menu.label.total")
-                + " "
-                + Money.normalize(total).toPlainString()
+        LangConfig.getInstance().lang("sell-stock-menu.label.total")
+            + " "
+            + Money.normalize(total).toPlainString()
     );
     totalLabel.getStyleClass().add("purchase-total-label");
 
@@ -136,7 +144,7 @@ public class SellShareView implements View {
     });
 
     menu.getChildren().addAll(
-        title,
+        topBox,
         graph,
         errorLabel,
         stockAmount,
