@@ -97,8 +97,10 @@ public class Portfolio extends Plottable implements WeekAdvanceListener {
   @Override
   public BigDecimal getValueForWeek(int week) {
     return this.shares.stream()
-        .map(Share::getStock)
-        .map(stock -> stock.getValueForWeek(week))
+        .map(share ->
+            share.getStock()
+                .getValueForWeek(week)
+                .multiply(share.getQuantity()))
         .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 
