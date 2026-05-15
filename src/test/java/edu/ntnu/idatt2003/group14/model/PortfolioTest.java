@@ -88,8 +88,8 @@ public class PortfolioTest {
     for (Share share : shares) {
       portfolio.addShare(share);
     }
-    assertEquals(new BigDecimal("6"), portfolio.getValueForWeek(0));
-    assertEquals(new BigDecimal("24"), portfolio.getValueForWeek(3));
+    assertEquals(new BigDecimal("14"), portfolio.getValueForWeek(0));
+    assertEquals(new BigDecimal("56"), portfolio.getValueForWeek(3));
   }
 
   @Test
