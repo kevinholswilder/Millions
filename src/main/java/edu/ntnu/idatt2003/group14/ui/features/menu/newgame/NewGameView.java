@@ -180,6 +180,7 @@ public class NewGameView implements View {
           LangConfig.getInstance().lang("new-game-menu.error.csv.empty"),
           fileChooserBtn
       );
+      default -> throw new  IllegalStateException("Unexpected value: " + result);
     }
   }
 

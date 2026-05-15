@@ -58,10 +58,19 @@ public class GameMenuView implements View {
     VBox btnBox = new VBox(15);
     btnBox.setAlignment(Pos.CENTER);
 
-    Button resumeBtn = buttonFactory.createMenuButton(LangConfig.getInstance().lang("game-menu.resume"), controller::resumeGame);
-    Button optionsBtn = buttonFactory.createMenuButton(LangConfig.getInstance().lang("game-menu.options"), controller::showOptions);
+    Button resumeBtn = buttonFactory.createMenuButton(
+        LangConfig.getInstance().lang("game-menu.resume"),
+        controller::resumeGame
+    );
+    Button optionsBtn = buttonFactory.createMenuButton(
+        LangConfig.getInstance().lang("game-menu.options"),
+        controller::showOptions
+    );
     Button exitBtn =
-        buttonFactory.createMenuButton(LangConfig.getInstance().lang("game-menu.quit"), controller::handleSaveAndQuit);
+        buttonFactory.createMenuButton(
+            LangConfig.getInstance().lang("game-menu.quit"),
+            controller::handleSaveAndQuit
+        );
 
     btnBox.getChildren().addAll(resumeBtn, optionsBtn, exitBtn);
     centerMenu.getChildren().addAll(

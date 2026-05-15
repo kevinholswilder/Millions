@@ -58,7 +58,9 @@ public class TransactionArchiveController {
 
     VBox quantityBox = this.createInfoBox(
             LangConfig.getInstance().lang("transactions-menu.row.label.quantity"),
-        quantity.toPlainString() + " " + LangConfig.getInstance().lang("transactions-menu.row.label.quantity.shares")
+        quantity.toPlainString()
+            + " "
+            + LangConfig.getInstance().lang("transactions-menu.row.label.quantity.shares")
     );
 
     VBox priceBox = this.createInfoBox(

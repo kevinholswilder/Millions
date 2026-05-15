@@ -2,7 +2,12 @@ package edu.ntnu.idatt2003.group14.ui.features.game.portfolio;
 
 import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
-import edu.ntnu.idatt2003.group14.model.*;
+import edu.ntnu.idatt2003.group14.model.Money;
+import edu.ntnu.idatt2003.group14.model.Player;
+import edu.ntnu.idatt2003.group14.model.PlayerStatus;
+import edu.ntnu.idatt2003.group14.model.Portfolio;
+import edu.ntnu.idatt2003.group14.model.Share;
+import edu.ntnu.idatt2003.group14.model.Stock;
 import edu.ntnu.idatt2003.group14.model.plottable.PlottableChangeListener;
 import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
@@ -71,9 +76,15 @@ public class PortfolioController implements PlottableChangeListener {
       }
 
       if (netWorthLabel != null) {
-        netWorthLabel.setText(LangConfig.getInstance().lang("portfolio-menu.net_worth") + Money.normalize(netWorth));
-        cashLabel.setText(LangConfig.getInstance().lang("portfolio-menu.cash") + Money.normalize(cash));
-        portfolioValueLabel.setText(LangConfig.getInstance().lang("portfolio-menu.portfolio") + Money.normalize(cash));
+        netWorthLabel.setText(
+            LangConfig.getInstance().lang("portfolio-menu.net_worth") + Money.normalize(netWorth)
+        );
+        cashLabel.setText(
+            LangConfig.getInstance().lang("portfolio-menu.cash") + Money.normalize(cash)
+        );
+        portfolioValueLabel.setText(
+            LangConfig.getInstance().lang("portfolio-menu.portfolio") + Money.normalize(cash)
+        );
       }
     });
   }

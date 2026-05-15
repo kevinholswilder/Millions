@@ -164,7 +164,10 @@ public class PortfolioView implements View {
     VBox assetBox = createInfoBox(share.getStock().getSymbol(), share.getStock().getCompany());
 
     // Position
-    VBox posBox = createInfoBox(LangConfig.getInstance().lang("portfolio-menu.portfolio.row.label.quantity"), String.valueOf(share.getQuantity()));
+    VBox posBox = createInfoBox(
+        LangConfig.getInstance().lang("portfolio-menu.portfolio.row.label.quantity"),
+        String.valueOf(share.getQuantity())
+    );
 
     // Total Value
     VBox valueBox = createInfoBox(
@@ -174,11 +177,15 @@ public class PortfolioView implements View {
 
     // Buttons
     HBox actions = new HBox(10);
-    Button buyMore = new Button(LangConfig.getInstance().lang("portfolio-menu.portfolio.row.button.buy"));
+    Button buyMore = new Button(
+        LangConfig.getInstance().lang("portfolio-menu.portfolio.row.button.buy")
+    );
     buyMore.setOnAction(
         _ -> controller.buyStock(share.getStock())
     );
-    Button sellAll = new Button(LangConfig.getInstance().lang("portfolio-menu.portfolio.row.button.sell"));
+    Button sellAll = new Button(
+        LangConfig.getInstance().lang("portfolio-menu.portfolio.row.button.sell")
+    );
     sellAll.setOnAction(
         _ -> controller.sellShare(share)
     );

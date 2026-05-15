@@ -63,7 +63,7 @@ public class OptionsController {
   }
 
   /**
-   * Refreshes the view cache
+   * Refreshes the view cache.
    */
   public void refresh() {
     router.clearViewCache();

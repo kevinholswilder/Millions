@@ -34,9 +34,9 @@ public final class App extends Application {
       throw new RuntimeException("Cannot start application.", e);
     }
 
-      LangConfig.getInstance().load("/lang/en_us.json");
+    LangConfig.getInstance().load("/lang/en_us.json");
 
-      Parameters params = getParameters();
+    Parameters params = getParameters();
     List<String> raw = params.getRaw();
     skipMenu = raw.contains("--skipMenu");
 

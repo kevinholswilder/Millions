@@ -74,7 +74,9 @@ public class SellShareView implements View {
     menu.setPadding(new Insets(20));
 
     Label title = new Label(
-        LangConfig.getInstance().lang("sell-stock-menu.title") + " " + share.getStock().getCompany() + " | " + share.getStock().getSymbol()
+        LangConfig.getInstance().lang("sell-stock-menu.title")
+            + " " + share.getStock().getCompany()
+            + " | " + share.getStock().getSymbol()
     );
     title.getStyleClass().add("purchase-title");
 
@@ -86,21 +88,31 @@ public class SellShareView implements View {
     BigDecimal tax = sale.getCalculator().calculateTax();
     BigDecimal total = sale.getCalculator().calculateTotal();
 
-    Label stockAmount = new Label(LangConfig.getInstance().lang("sell-stock-menu.label.amount") + " " + share.getQuantity());
+    Label stockAmount = new Label(
+        LangConfig.getInstance().lang("sell-stock-menu.label.amount")
+            + " "
+            + share.getQuantity()
+    );
     stockAmount.getStyleClass().add("purchase-comission-label");
 
     Label comissionLabel = new Label(
-            LangConfig.getInstance().lang("sell-stock-menu.label.commission") + " " + Money.normalize(commission).toPlainString()
+            LangConfig.getInstance().lang("sell-stock-menu.label.commission")
+                + " "
+                + Money.normalize(commission).toPlainString()
     );
     comissionLabel.getStyleClass().add("purchase-comission-label");
 
     Label taxLabel = new Label(
-            LangConfig.getInstance().lang("sell-stock-menu.label.tax") + " " + Money.normalize(tax).toPlainString()
+            LangConfig.getInstance().lang("sell-stock-menu.label.tax")
+                + " "
+                + Money.normalize(tax).toPlainString()
     );
     taxLabel.getStyleClass().add("purchase-comission-label");
 
     Label totalLabel = new Label(
-            LangConfig.getInstance().lang("sell-stock-menu.label.total") + " " + Money.normalize(total).toPlainString()
+            LangConfig.getInstance().lang("sell-stock-menu.label.total")
+                + " "
+                + Money.normalize(total).toPlainString()
     );
     totalLabel.getStyleClass().add("purchase-total-label");
 

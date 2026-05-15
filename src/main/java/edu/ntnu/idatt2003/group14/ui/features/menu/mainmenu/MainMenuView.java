@@ -71,11 +71,20 @@ public class MainMenuView implements View {
     btnBox.setAlignment(Pos.CENTER);
 
     Button startBtn = buttonFactory
-            .createMenuButton(LangConfig.getInstance().lang("main-menu.new_game"), controller::handleNewGame);
+            .createMenuButton(
+                LangConfig.getInstance().lang("main-menu.new_game"),
+                controller::handleNewGame
+            );
     Button optionsBtn = buttonFactory
-        .createMenuButton(LangConfig.getInstance().lang("main-menu.options"), controller::showOptions);
+        .createMenuButton(
+            LangConfig.getInstance().lang("main-menu.options"),
+            controller::showOptions
+        );
     Button exitBtn = buttonFactory
-            .createMenuButton(LangConfig.getInstance().lang("main-menu.exit"), controller::handleExitGame);
+            .createMenuButton(
+                LangConfig.getInstance().lang("main-menu.exit"),
+                controller::handleExitGame
+            );
 
     btnBox.getChildren().addAll(startBtn, optionsBtn, exitBtn);
     centerMenu.getChildren().addAll(
@@ -91,10 +100,14 @@ public class MainMenuView implements View {
     HBox bottomBar = new HBox();
     bottomBar.setPadding(new Insets(20));
 
-    Label leftLabel = new Label(LangConfig.getInstance().lang("main-menu.version") + " " + GameConfig.VERSION);
+    Label leftLabel = new Label(
+        LangConfig.getInstance().lang("main-menu.version") + " " + GameConfig.VERSION
+    );
     leftLabel.getStyleClass().add("menu-text");
 
-    Label rightLabel = new Label(LangConfig.getInstance().lang("main-menu.authors") +  " " + GameConfig.AUTHOR);
+    Label rightLabel = new Label(
+        LangConfig.getInstance().lang("main-menu.authors") +  " " + GameConfig.AUTHOR
+    );
     rightLabel.getStyleClass().add("menu-text");
 
     Region spacer = new Region();

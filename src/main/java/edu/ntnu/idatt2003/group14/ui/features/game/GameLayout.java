@@ -64,7 +64,7 @@ public class GameLayout implements View {
   }
 
   /**
-   * Reinstantiates the sidebar
+   * Reinstantiates the sidebar.
    */
   public void refreshSidebar() {
     SideBar navigation = new SideBar(new SideBarController(this.router), this.gameService);

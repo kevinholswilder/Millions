@@ -75,11 +75,15 @@ public class PurchaseStockView implements View {
     menu.setPadding(new Insets(20));
 
     Label title = new Label(
-        LangConfig.getInstance().lang("purchase-stock-menu.title") + stock.getCompany() + " | " + stock.getSymbol()
+        LangConfig.getInstance().lang("purchase-stock-menu.title")
+            + stock.getCompany()
+            + " | " + stock.getSymbol()
     );
     title.getStyleClass().add("purchase-title");
 
-    Label numericalLabel = new Label(LangConfig.getInstance().lang("purchase-stock-menu.text_field.quantity"));
+    Label numericalLabel = new Label(
+        LangConfig.getInstance().lang("purchase-stock-menu.text_field.quantity")
+    );
     numericalLabel.getStyleClass().add("purchase-numerical-label");
 
     TextField numericalField = new TextField();
@@ -88,7 +92,9 @@ public class PurchaseStockView implements View {
     Label errorLabel = new Label("");
     errorLabel.getStyleClass().add("purchase-error-label");
 
-    Label comissionLabel = new Label(LangConfig.getInstance().lang("purchase-stock-menu.label.commission"));
+    Label comissionLabel = new Label(
+        LangConfig.getInstance().lang("purchase-stock-menu.label.commission")
+    );
     comissionLabel.getStyleClass().add("purchase-comission-label");
 
     Label totalLabel = new Label(LangConfig.getInstance().lang("purchase-stock-menu.label.total"));
@@ -111,7 +117,9 @@ public class PurchaseStockView implements View {
 
       if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
         errorLabel.setText("");
-        comissionLabel.setText(LangConfig.getInstance().lang("purchase-stock-menu.label.commission"));
+        comissionLabel.setText(
+            LangConfig.getInstance().lang("purchase-stock-menu.label.commission")
+        );
         totalLabel.setText(LangConfig.getInstance().lang("purchase-stock-menu.label.total"));
         return;
       }
@@ -135,11 +143,13 @@ public class PurchaseStockView implements View {
             .calculateTotal();
 
         comissionLabel.setText(
-            LangConfig.getInstance().lang("purchase-stock-menu.label.commission") + Money.normalize(commission).toPlainString()
+            LangConfig.getInstance().lang("purchase-stock-menu.label.commission")
+                + Money.normalize(commission).toPlainString()
         );
 
         totalLabel.setText(
-            LangConfig.getInstance().lang("purchase-stock-menu.label.total") + Money.normalize(total).toPlainString()
+            LangConfig.getInstance().lang("purchase-stock-menu.label.total")
+                + Money.normalize(total).toPlainString()
         );
 
       } catch (InsufficientBalanceException e) {
@@ -149,7 +159,9 @@ public class PurchaseStockView implements View {
 
     PlottableGraph graph = new PlottableGraph(stock);
 
-    Button purchaseButton = new Button(LangConfig.getInstance().lang("purchase-stock-menu.button.purchase"));
+    Button purchaseButton = new Button(
+        LangConfig.getInstance().lang("purchase-stock-menu.button.purchase")
+    );
     purchaseButton.getStyleClass().add("purchase-button");
 
     purchaseButton.setOnAction(_ -> {
@@ -159,7 +171,9 @@ public class PurchaseStockView implements View {
             : new BigDecimal(numericalField.getText());
 
         if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
-          errorLabel.setText(LangConfig.getInstance().lang("purchase-stock-menu.error.negative_quantity"));
+          errorLabel.setText(
+              LangConfig.getInstance().lang("purchase-stock-menu.error.negative_quantity")
+          );
           return;
         }
 

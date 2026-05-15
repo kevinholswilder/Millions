@@ -113,7 +113,9 @@ public class ExchangeView implements View {
    */
   private Parent createTopBar() {
     TextField searchField = new TextField();
-    searchField.setPromptText(LangConfig.getInstance().lang("exchange-menu.header.text_field.search"));
+    searchField.setPromptText(
+        LangConfig.getInstance().lang("exchange-menu.header.text_field.search")
+    );
     searchField.getStyleClass().add("exchange-search-field");
 
     searchField.textProperty().addListener((_, _, query) -> {
@@ -121,7 +123,9 @@ public class ExchangeView implements View {
       this.refreshStocks();
     });
 
-    Label sortLabel = new Label(LangConfig.getInstance().lang("exchange-menu.header.label.sort_by"));
+    Label sortLabel = new Label(
+        LangConfig.getInstance().lang("exchange-menu.header.label.sort_by")
+    );
     sortLabel.getStyleClass().add("exchange-sort-label");
 
     Button directionButton = new Button("↑");
@@ -140,7 +144,9 @@ public class ExchangeView implements View {
     topBar.getChildren().addAll(
             searchField,
             sortLabel,
-            this.createSortButton(LangConfig.getInstance().lang("exchange-menu.header.label.price")),
+            this.createSortButton(
+                LangConfig.getInstance().lang("exchange-menu.header.label.price")
+            ),
             this.createSortButton(LangConfig.getInstance().lang("exchange-menu.header.label.a_z")),
             directionButton
     );

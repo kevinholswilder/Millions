@@ -71,19 +71,33 @@ public class TransactionReceiptView implements View {
     String type = transaction instanceof Purchase
             ? LangConfig.getInstance().lang("receipt-menu.type.purchase")
             : LangConfig.getInstance().lang("receipt-menu.type.sale");
-    Label title = new Label(LangConfig.getInstance().lang("receipt-menu.title").replace("{type}", type));
+    Label title = new Label(
+        LangConfig.getInstance().lang("receipt-menu.title").replace("{type}", type)
+    );
     title.getStyleClass().add("receipt-title-label");
 
-    Label stockLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.symbol") + " " + stock.getSymbol());
-    Label companyLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.company") + " " + stock.getCompany());
-    Label weekLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.week") + " " + (transaction.getWeek() + 1));
+    Label stockLabel = new Label(
+        LangConfig.getInstance().lang("receipt-menu.label.symbol") + " " + stock.getSymbol()
+    );
+    Label companyLabel = new Label(
+        LangConfig.getInstance().lang("receipt-menu.label.company") + " " + stock.getCompany()
+    );
+    Label weekLabel = new Label(
+        LangConfig.getInstance().lang("receipt-menu.label.week") + " " + (transaction.getWeek() + 1)
+    );
 
-    Label quantityLabel =
-        new Label(LangConfig.getInstance().lang("receipt-menu.label.quantity") + " " + Money.normalize(share.getQuantity()).toPlainString());
-    Label priceLabel =
-        new Label(LangConfig.getInstance().lang("receipt-menu.label.price") + " " + Money.normalize(share.getPurchasePrice()).toPlainString());
-    Label subtotalLabel =
-        new Label(LangConfig.getInstance().lang("receipt-menu.label.subtotal") + " " + Money.normalize(share.getTotal()).toPlainString());
+    Label quantityLabel = new Label(
+            LangConfig.getInstance().lang("receipt-menu.label.quantity")
+                + " "
+                + Money.normalize(share.getQuantity()).toPlainString());
+    Label priceLabel = new Label(
+            LangConfig.getInstance().lang("receipt-menu.label.price")
+                + " "
+                + Money.normalize(share.getPurchasePrice()).toPlainString());
+    Label subtotalLabel = new Label(
+            LangConfig.getInstance().lang("receipt-menu.label.subtotal")
+                + " "
+                + Money.normalize(share.getTotal()).toPlainString());
 
     TransactionCalculator calculator = transaction.getCalculator();
 
@@ -92,11 +106,21 @@ public class TransactionReceiptView implements View {
     BigDecimal gross = calculator.calculateGross();
     BigDecimal tax = calculator.calculateTax();
 
-    Label commissionLabel =
-        new Label(LangConfig.getInstance().lang("receipt-menu.label.commission") + " " + Money.normalize(commission).toPlainString());
-    Label grossLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.gross") + " " + Money.normalize(gross).toPlainString());
-    Label taxLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.tax") + " " + Money.normalize(tax).toPlainString());
-    Label totalLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.total") + " " + Money.normalize(total).toPlainString());
+    Label commissionLabel = new Label(
+        LangConfig.getInstance().lang("receipt-menu.label.commission")
+            + " "
+            + Money.normalize(commission).toPlainString());
+    Label grossLabel = new Label(
+        LangConfig.getInstance().lang("receipt-menu.label.gross")
+            + " "
+            + Money.normalize(gross).toPlainString());
+    Label taxLabel = new Label(
+        LangConfig.getInstance().lang(
+        "receipt-menu.label.tax") + " " + Money.normalize(tax).toPlainString());
+    Label totalLabel = new Label(
+        LangConfig.getInstance().lang("receipt-menu.label.total")
+            + " "
+            + Money.normalize(total).toPlainString());
 
     Label statusLabel = new Label(LangConfig.getInstance().lang("receipt-menu.label.status"));
 

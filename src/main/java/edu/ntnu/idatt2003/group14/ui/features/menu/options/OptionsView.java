@@ -78,14 +78,20 @@ public class OptionsView implements View {
     ambianceSlider.valueProperty().addListener(
         (_, _, newVal) -> controller.handleMusicVolume(newVal.doubleValue())
     );
-    StackPane ambiance = createLabeledSlider(ambianceSlider, LangConfig.getInstance().lang("options-menu.music"));
+    StackPane ambiance = createLabeledSlider(
+        ambianceSlider,
+        LangConfig.getInstance().lang("options-menu.music")
+    );
 
     Slider effectsSlider = new Slider(0, 100, audioManager.getSoundEffectVolume() * 100);
     effectsSlider.getStyleClass().add("menu-slider");
     effectsSlider.valueProperty().addListener(
         (_, _, newVal) -> controller.handleSoundEffectVolume(newVal.doubleValue())
     );
-    StackPane effects = createLabeledSlider(effectsSlider, LangConfig.getInstance().lang("options-menu.sound_effects"));
+    StackPane effects = createLabeledSlider(
+        effectsSlider,
+        LangConfig.getInstance().lang("options-menu.sound_effects")
+    );
 
     // Language option
     ComboBox<String> languageBox = new ComboBox<>();
@@ -105,6 +111,7 @@ public class OptionsView implements View {
         case "English" -> LangConfig.getInstance().load("/lang/en_us.json");
         case "Dutch" -> LangConfig.getInstance().load("/lang/nl_nl.json");
         case "Norwegian" -> LangConfig.getInstance().load("/lang/no_no.json");
+        default ->  LangConfig.getInstance().load("/lang/en_us.json");
       }
 
       LangConfig.setLanguage(selected);
@@ -113,9 +120,15 @@ public class OptionsView implements View {
     });
 
     Button fullScreenBtn = buttonFactory
-        .createMenuButton(LangConfig.getInstance().lang("options-menu.toggle_full_screen"), controller::handleFullScreen);
+        .createMenuButton(
+            LangConfig.getInstance().lang("options-menu.toggle_full_screen"),
+            controller::handleFullScreen
+        );
     Button doneBtn = buttonFactory
-            .createMenuButton(LangConfig.getInstance().lang("options-menu.return"), controller::handleReturnToMainMenu);
+            .createMenuButton(
+                LangConfig.getInstance().lang("options-menu.return"),
+                controller::handleReturnToMainMenu
+            );
 
     btnBox.getChildren().addAll(ambiance, effects, languageBox, fullScreenBtn, doneBtn);
     centerMenu.getChildren().add(btnBox);

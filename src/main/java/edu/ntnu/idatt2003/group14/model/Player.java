@@ -71,7 +71,9 @@ public class Player {
     }
 
     if (this.money.compareTo(amount) < 0) {
-      throw new InsufficientBalanceException(LangConfig.getInstance().lang("purchase-stock-menu.error.insufficient_balance"));
+      throw new InsufficientBalanceException(
+          LangConfig.getInstance().lang("purchase-stock-menu.error.insufficient_balance")
+      );
     }
 
     this.money = this.money.subtract(amount);
