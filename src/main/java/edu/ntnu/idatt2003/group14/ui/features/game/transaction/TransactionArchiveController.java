@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.transaction;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.model.Stock;
@@ -42,7 +43,9 @@ public class TransactionArchiveController {
     Share share = transaction.getShare();
     Stock stock = share.getStock();
 
-    String transactionType = transaction instanceof Purchase ? "PURCHASE" : "SALE";
+    String transactionType = transaction instanceof Purchase
+            ? LangConfig.getInstance().lang("transactions-menu.row.label.purchase")
+            : LangConfig.getInstance().lang("transactions-menu.row.label.sale");
 
     BigDecimal quantity = share.getQuantity();
     BigDecimal price = share.getPurchasePrice();
@@ -54,22 +57,24 @@ public class TransactionArchiveController {
     );
 
     VBox quantityBox = this.createInfoBox(
-        "Quantity",
-        quantity.toPlainString() + " shares"
+            LangConfig.getInstance().lang("transactions-menu.row.label.quantity"),
+        quantity.toPlainString()
+            + " "
+            + LangConfig.getInstance().lang("transactions-menu.row.label.quantity.shares")
     );
 
     VBox priceBox = this.createInfoBox(
-        "Price",
+        LangConfig.getInstance().lang("transactions-menu.row.label.price"),
         "$" + Money.normalize(price).toPlainString()
     );
 
     VBox totalBox = this.createInfoBox(
-        "Total",
+        LangConfig.getInstance().lang("transactions-menu.row.label.total"),
         "$" + Money.normalize(total).toPlainString()
     );
 
     VBox weekBox = this.createInfoBox(
-        "Week",
+        LangConfig.getInstance().lang("transactions-menu.row.label.week"),
         String.valueOf(transaction.getWeek() + 1)
     );
 
@@ -187,11 +192,21 @@ public class TransactionArchiveController {
     boolean matchesText = stock.getSymbol().toLowerCase().contains(query)
         || stock.getCompany().toLowerCase().contains(query);
 
-    boolean matchesType = switch (currentTypeFilter) {
-      case "Purchases" -> transaction instanceof Purchase;
-      case "Sales" -> transaction instanceof Sale;
-      default -> true;
-    };
+    String purchases = LangConfig.getInstance()
+            .lang("transactions-menu.header.button.filter.purchases");
+
+    String sales = LangConfig.getInstance()
+            .lang("transactions-menu.header.button.filter.sales");
+
+    boolean matchesType;
+
+    if (this.currentTypeFilter.equals(purchases)) {
+      matchesType = transaction instanceof Purchase;
+    } else if (this.currentTypeFilter.equals(sales)) {
+      matchesType = transaction instanceof Sale;
+    } else {
+      matchesType = true;
+    }
 
     return matchesText && matchesType;
   }
@@ -206,18 +221,32 @@ public class TransactionArchiveController {
    *         the second transaction
    */
   private int compare(Transaction a, Transaction b) {
-    int result = switch (currentSort) {
-      case "Price" -> a.getShare().getPurchasePrice()
+    String price = LangConfig.getInstance()
+            .lang("transactions-menu.header.button.sort.price");
+
+    String quantity = LangConfig.getInstance()
+            .lang("transactions-menu.header.button.sort.quantity");
+
+    String total = LangConfig.getInstance()
+            .lang("transactions-menu.header.button.sort.total");
+
+    int result;
+
+    if (this.currentSort.equals(price)) {
+      result = a.getShare().getPurchasePrice()
               .compareTo(b.getShare().getPurchasePrice());
 
-      case "Quantity" -> a.getShare().getQuantity()
+    } else if (this.currentSort.equals(quantity)) {
+      result = a.getShare().getQuantity()
               .compareTo(b.getShare().getQuantity());
 
-      case "Total" -> a.getShare().getTotal()
+    } else if (this.currentSort.equals(total)) {
+      result = a.getShare().getTotal()
               .compareTo(b.getShare().getTotal());
 
-      default -> Integer.compare(a.getWeek(), b.getWeek());
-    };
+    } else {
+      result = Integer.compare(a.getWeek(), b.getWeek());
+    }
 
     return ascending ? result : -result;
   }

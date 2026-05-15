@@ -1,6 +1,6 @@
 package edu.ntnu.idatt2003.group14.logging;
 
-import edu.ntnu.idatt2003.group14.GameConfig;
+import edu.ntnu.idatt2003.group14.config.GameConfig;
 import edu.ntnu.idatt2003.group14.utils.AppDataPathUtil;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -87,5 +87,15 @@ public class AppLogger {
    */
   public static void error(String msg, Throwable e) {
     LOGGER.log(Level.SEVERE, msg, e);
+  }
+
+  /**
+   * Silences the file logger.
+   * Useful for tests to avoid cluttering the log file.
+   */
+  public static void silence() {
+    for (var handler : AppLogger.LOGGER.getHandlers()) {
+      handler.close();
+    }
   }
 }

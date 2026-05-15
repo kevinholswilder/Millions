@@ -1,6 +1,8 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.portfolio;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
+import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.PlayerStatus;
 import edu.ntnu.idatt2003.group14.model.Portfolio;
@@ -13,7 +15,6 @@ import edu.ntnu.idatt2003.group14.ui.app.Route;
 import edu.ntnu.idatt2003.group14.ui.features.game.exchange.stock.PurchaseStockController;
 import edu.ntnu.idatt2003.group14.ui.features.game.portfolio.stock.SellShareController;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -75,10 +76,15 @@ public class PortfolioController implements PlottableChangeListener {
       }
 
       if (netWorthLabel != null) {
-        netWorthLabel.setText("Net Worth: $" + netWorth.setScale(2, RoundingMode.HALF_UP));
-        cashLabel.setText("Cash: $" + cash.setScale(2, RoundingMode.HALF_UP));
+        netWorthLabel.setText(
+            LangConfig.getInstance().lang("portfolio-menu.net_worth") + Money.normalize(netWorth)
+        );
+        cashLabel.setText(
+            LangConfig.getInstance().lang("portfolio-menu.cash") + Money.normalize(cash)
+        );
         portfolioValueLabel.setText(
-            "Portfolio: $" + portfolioValue.setScale(2, RoundingMode.HALF_UP));
+            LangConfig.getInstance().lang("portfolio-menu.portfolio") + Money.normalize(cash)
+        );
       }
     });
   }

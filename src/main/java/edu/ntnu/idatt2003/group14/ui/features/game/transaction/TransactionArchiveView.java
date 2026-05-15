@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.transaction;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.model.Player;
 import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
 import edu.ntnu.idatt2003.group14.model.transaction.TransactionArchive;
@@ -102,7 +103,9 @@ public class TransactionArchiveView implements View {
    */
   private Parent createTopBar() {
     TextField searchField = new TextField();
-    searchField.setPromptText("Search transactions...");
+    searchField.setPromptText(
+        LangConfig.getInstance().lang("transactions-menu.header.text_field.search")
+    );
     searchField.getStyleClass().add("transaction-search");
 
     searchField.textProperty().addListener((_, _, query) -> {
@@ -110,7 +113,9 @@ public class TransactionArchiveView implements View {
       this.refreshTransactions();
     });
 
-    Label sortLabel = new Label("Sort by:");
+    Label sortLabel = new Label(
+        LangConfig.getInstance().lang("transactions-menu.header.label.sort_by")
+    );
     sortLabel.getStyleClass().add("sort-label");
 
     Button directionButton = new Button("↑");
@@ -128,14 +133,28 @@ public class TransactionArchiveView implements View {
 
     topBar.getChildren().addAll(
         searchField,
-        this.createFilterButton("All"),
-        this.createFilterButton("Purchases"),
-        this.createFilterButton("Sales"),
+        this.createFilterButton(
+            LangConfig.getInstance().lang("transactions-menu.header.button.filter.all")
+        ),
+        this.createFilterButton(
+            LangConfig.getInstance().lang("transactions-menu.header.button.filter.purchases")
+        ),
+        this.createFilterButton(
+            LangConfig.getInstance().lang("transactions-menu.header.button.filter.sales")
+        ),
         sortLabel,
-        this.createSortButton("Week"),
-        this.createSortButton("Price"),
-        this.createSortButton("Quantity"),
-        this.createSortButton("Total"),
+        this.createSortButton(
+            LangConfig.getInstance().lang("transactions-menu.row.label.week")
+        ),
+        this.createSortButton(
+            LangConfig.getInstance().lang("transactions-menu.row.label.price")
+        ),
+        this.createSortButton(
+            LangConfig.getInstance().lang("transactions-menu.row.label.quantity")
+        ),
+        this.createSortButton(
+            LangConfig.getInstance().lang("transactions-menu.row.label.total")
+        ),
         directionButton
     );
 

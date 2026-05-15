@@ -1,9 +1,12 @@
 package edu.ntnu.idatt2003.group14.io.reader.stock;
 
+import edu.ntnu.idatt2003.group14.exception.csvreading.CSVError;
+import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
+import edu.ntnu.idatt2003.group14.exception.csvreading.ParsingError;
 import edu.ntnu.idatt2003.group14.io.CSVLabels;
 import edu.ntnu.idatt2003.group14.io.reader.CSVReader;
+import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.model.Stock;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +17,8 @@ import java.util.List;
  * <p>The class distinguishes between formatting logic and IO operations
  * to allow for isolated unit testing.</p>
  *
- * @author Kevin Holswilder
+ * @author Kevin Holswilder, Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public final class StockReader extends CSVReader {
@@ -31,9 +35,9 @@ public final class StockReader extends CSVReader {
    *
    * @param filename the name of the CSV file to read from
    * @return a list of {@link Stock}s, or an empty list if the file is empty
-   * @throws IOException if the file cannot be read
+   * @throws CSVReadException if the file cannot be read
    */
-  public List<Stock> read(String filename) throws IOException {
+  public List<Stock> read(String filename) throws CSVReadException {
     List<String> data = readFromFile(filename);
 
     return parse(data);
@@ -44,31 +48,43 @@ public final class StockReader extends CSVReader {
    *
    * @param data the data to parse
    * @return the {@link List} of {@link Stock}s
-   * @throws IOException if the parsing fails
+   * @throws CSVReadException if the parsing fails
    */
-  public List<Stock> parse(List<String> data) throws IOException {
+  public List<Stock> parse(List<String> data) throws CSVReadException {
     ArrayList<Stock> stocks = new ArrayList<>();
-    for (String line : data) {
+    for (int i = 0; i < data.size(); i++) {
+      String line = data.get(i);
+
       if (line.startsWith(CSVLabels.COMMENT_CHAR) || line.isEmpty()) {
         continue;
       }
 
       String[] split = line.split(CSVLabels.SEPARATOR);
-      if (split.length < 2) {
-        throw new IOException("Invalid stock data file format.");
+      if (split.length != 3) {
+        AppLogger.error("Line " + (i + 1) + " is not formatted correctly");
+        throw new CSVReadException("Line " + (i + 1) + " is not formatted correctly",
+            CSVError.PARSING, new ParsingError(i + 1, line));
       }
 
-      List<BigDecimal> prices = new ArrayList<>();
-      for (int i = 2; i < split.length; i++) {
-        prices.add(new BigDecimal(split[i]));
+      try {
+        BigDecimal price = new BigDecimal(split[2].trim());
+        Stock stock = new Stock(
+            split[0].trim(),
+            split[1].trim(),
+            new ArrayList<>(List.of(price))
+        );
+        stocks.add(stock);
+      } catch (NumberFormatException e) {
+        AppLogger.error("Could not parse stock price at line " + (i + 1));
+        throw new CSVReadException("Could not parse stock price at line " + (i + 1),
+            CSVError.PARSING,
+            new ParsingError(i + 1, line));
       }
+    }
 
-      Stock stock = new Stock(
-          split[0],
-          split[1],
-          prices
-      );
-      stocks.add(stock);
+    if (stocks.isEmpty()) {
+      AppLogger.error("CSV file did not contain any valid stocks");
+      throw new CSVReadException("CSV file did not contain any valid stocks", CSVError.EMPTY_FILE);
     }
     return stocks;
   }

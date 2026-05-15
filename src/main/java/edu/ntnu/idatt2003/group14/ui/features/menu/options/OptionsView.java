@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.menu.options;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.View;
 import edu.ntnu.idatt2003.group14.ui.components.MenuButtonFactory;
@@ -8,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.GaussianBlur;
@@ -64,7 +66,6 @@ public class OptionsView implements View {
   }
 
   private VBox centerMenu() {
-
     VBox centerMenu = new VBox(50);
     centerMenu.setAlignment(Pos.CENTER);
     centerMenu.setPadding(new Insets(100, 0, 0, 0));
@@ -77,21 +78,59 @@ public class OptionsView implements View {
     ambianceSlider.valueProperty().addListener(
         (_, _, newVal) -> controller.handleMusicVolume(newVal.doubleValue())
     );
-    StackPane ambiance = createLabeledSlider(ambianceSlider, "Music");
+    StackPane ambiance = createLabeledSlider(
+        ambianceSlider,
+        LangConfig.getInstance().lang("options-menu.music")
+    );
 
     Slider effectsSlider = new Slider(0, 100, audioManager.getSoundEffectVolume() * 100);
     effectsSlider.getStyleClass().add("menu-slider");
     effectsSlider.valueProperty().addListener(
         (_, _, newVal) -> controller.handleSoundEffectVolume(newVal.doubleValue())
     );
-    StackPane effects = createLabeledSlider(effectsSlider, "Sound Effects");
+    StackPane effects = createLabeledSlider(
+        effectsSlider,
+        LangConfig.getInstance().lang("options-menu.sound_effects")
+    );
 
+    // Language option
+    ComboBox<String> languageBox = new ComboBox<>();
+    languageBox.getStyleClass().add("menu-button");
+
+    languageBox.getItems().addAll(
+        "English",
+        "Norwegian",
+        "Dutch"
+    );
+
+    languageBox.setValue(LangConfig.getCurrentLanguage());
+    languageBox.setOnAction(_ -> {
+      String selected = languageBox.getValue();
+
+      switch (selected) {
+        case "English" -> LangConfig.getInstance().load("/lang/en_us.json");
+        case "Dutch" -> LangConfig.getInstance().load("/lang/nl_nl.json");
+        case "Norwegian" -> LangConfig.getInstance().load("/lang/no_no.json");
+        default -> LangConfig.getInstance().load("/lang/en_us.json");
+      }
+
+      LangConfig.setLanguage(selected);
+
+      controller.refresh();
+    });
 
     Button fullScreenBtn = buttonFactory
-        .createMenuButton("Toggle Full Screen", controller::handleFullScreen);
-    Button doneBtn = buttonFactory.createMenuButton("Done", controller::handleReturnToMainMenu);
+        .createMenuButton(
+            LangConfig.getInstance().lang("options-menu.toggle_full_screen"),
+            controller::handleFullScreen
+        );
+    Button doneBtn = buttonFactory
+        .createMenuButton(
+            LangConfig.getInstance().lang("options-menu.return"),
+            controller::handleReturnToMainMenu
+        );
 
-    btnBox.getChildren().addAll(ambiance, effects, fullScreenBtn, doneBtn);
+    btnBox.getChildren().addAll(ambiance, effects, languageBox, fullScreenBtn, doneBtn);
     centerMenu.getChildren().add(btnBox);
 
     return centerMenu;
@@ -106,7 +145,8 @@ public class OptionsView implements View {
         slider.valueProperty().asObject()
             .map(v -> {
               int val = (int) Math.round(v);
-              return label + ": " + (val == 0 ? "OFF" : String.format("%3d", val) + "%");
+              return label + ": " + (val == 0 ? LangConfig.getInstance().lang("options-menu.off") :
+                  String.format("%3d", val) + "%");
             })
     );
 

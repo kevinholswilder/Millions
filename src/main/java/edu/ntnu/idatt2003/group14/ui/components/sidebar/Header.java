@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.components.sidebar;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
@@ -11,26 +12,22 @@ import javafx.scene.layout.VBox;
  */
 public class Header extends VBox {
 
-  private SideBarController controller;
-
   /**
    * Creates a new header with navigation buttons.
    *
    * @param controller controller used to create navigation buttons
    */
   public Header(SideBarController controller) {
-    this.controller = controller;
-
-    Button transactionArchiveButton = controller.createTransactionButton(
-        "Transactions"
+    Button portfolioButton = controller.createPortfolioButton(
+            LangConfig.getInstance().lang("sidebar-header.portfolio")
     );
 
-    Button portfolioButton = controller.createPortfolioButton(
-        "Portfolio"
+    Button transactionArchiveButton = controller.createTransactionButton(
+            LangConfig.getInstance().lang("sidebar-header.transactions")
     );
 
     Button exchangeButton = controller.createExchangeButton(
-        "Exchange"
+        LangConfig.getInstance().lang("sidebar-header.exchange")
     );
 
     this.getChildren().addAll(

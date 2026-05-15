@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.model;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
 import edu.ntnu.idatt2003.group14.model.transaction.TransactionArchive;
 import java.math.BigDecimal;
@@ -70,7 +71,9 @@ public class Player {
     }
 
     if (this.money.compareTo(amount) < 0) {
-      throw new InsufficientBalanceException("You have insufficient balance.");
+      throw new InsufficientBalanceException(
+          LangConfig.getInstance().lang("purchase-stock-menu.error.insufficient_balance")
+      );
     }
 
     this.money = this.money.subtract(amount);

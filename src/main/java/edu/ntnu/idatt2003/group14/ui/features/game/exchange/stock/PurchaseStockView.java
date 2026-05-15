@@ -1,5 +1,6 @@
 package edu.ntnu.idatt2003.group14.ui.features.game.exchange.stock;
 
+import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.exception.InsufficientBalanceException;
 import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Stock;
@@ -74,11 +75,15 @@ public class PurchaseStockView implements View {
     menu.setPadding(new Insets(20));
 
     Label title = new Label(
-        "Purchase Stock: " + stock.getCompany() + " | " + stock.getSymbol()
+        LangConfig.getInstance().lang("purchase-stock-menu.title")
+            + stock.getCompany()
+            + " | " + stock.getSymbol()
     );
     title.getStyleClass().add("purchase-title");
 
-    Label numericalLabel = new Label("Enter quantity:");
+    Label numericalLabel = new Label(
+        LangConfig.getInstance().lang("purchase-stock-menu.text_field.quantity")
+    );
     numericalLabel.getStyleClass().add("purchase-numerical-label");
 
     TextField numericalField = new TextField();
@@ -87,10 +92,12 @@ public class PurchaseStockView implements View {
     Label errorLabel = new Label("");
     errorLabel.getStyleClass().add("purchase-error-label");
 
-    Label comissionLabel = new Label("Commission:");
+    Label comissionLabel = new Label(
+        LangConfig.getInstance().lang("purchase-stock-menu.label.commission")
+    );
     comissionLabel.getStyleClass().add("purchase-comission-label");
 
-    Label totalLabel = new Label("Total:");
+    Label totalLabel = new Label(LangConfig.getInstance().lang("purchase-stock-menu.label.total"));
     totalLabel.getStyleClass().add("purchase-total-label");
 
     AtomicReference<Transaction> transaction = new AtomicReference<>();
@@ -110,8 +117,10 @@ public class PurchaseStockView implements View {
 
       if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
         errorLabel.setText("");
-        comissionLabel.setText("Commission:");
-        totalLabel.setText("Total:");
+        comissionLabel.setText(
+            LangConfig.getInstance().lang("purchase-stock-menu.label.commission")
+        );
+        totalLabel.setText(LangConfig.getInstance().lang("purchase-stock-menu.label.total"));
         return;
       }
 
@@ -134,11 +143,13 @@ public class PurchaseStockView implements View {
             .calculateTotal();
 
         comissionLabel.setText(
-            "Commission: " + Money.normalize(commission).toPlainString()
+            LangConfig.getInstance().lang("purchase-stock-menu.label.commission")
+                + Money.normalize(commission).toPlainString()
         );
 
         totalLabel.setText(
-            "Total: " + Money.normalize(total).toPlainString()
+            LangConfig.getInstance().lang("purchase-stock-menu.label.total")
+                + Money.normalize(total).toPlainString()
         );
 
       } catch (InsufficientBalanceException e) {
@@ -148,7 +159,9 @@ public class PurchaseStockView implements View {
 
     PlottableGraph graph = new PlottableGraph(stock);
 
-    Button purchaseButton = new Button("Purchase");
+    Button purchaseButton = new Button(
+        LangConfig.getInstance().lang("purchase-stock-menu.button.purchase")
+    );
     purchaseButton.getStyleClass().add("purchase-button");
 
     purchaseButton.setOnAction(_ -> {
@@ -158,7 +171,9 @@ public class PurchaseStockView implements View {
             : new BigDecimal(numericalField.getText());
 
         if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
-          errorLabel.setText("You must enter an integer higher than 0.");
+          errorLabel.setText(
+              LangConfig.getInstance().lang("purchase-stock-menu.error.negative_quantity")
+          );
           return;
         }
 

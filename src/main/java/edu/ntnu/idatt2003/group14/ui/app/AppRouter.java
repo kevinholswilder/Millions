@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  * <p>Handles the mapping of routes to view, manages navigation history for back
  * functionality, and tracks the state of active popups.</p>
  *
- * @author Elias Haugsbakk
+ * @author Elias Haugsbak, Kevin Holswilder
  * @version 1.0.0
  * @since 0.0.1
  */
@@ -42,6 +42,7 @@ public class AppRouter {
     routes.put(Route.PORTFOLIO, () -> viewRegistry.getPortfolioView(this));
     routes.put(Route.TRANSACTION_ARCHIVE, viewRegistry::getTransactionArchiveView);
     routes.put(Route.EXCHANGE, () -> viewRegistry.getExchangeView(this));
+
     // Popups
     routes.put(Route.GAME_MENU, () -> viewRegistry.getGameMenuView(this));
     routes.put(Route.PURCHASE_STOCK, () -> viewRegistry.getPurchaseStockView(this));
@@ -62,14 +63,49 @@ public class AppRouter {
       previousRoute = currentRoute;
       currentRoute = route;
     }
-    View view = routes.get(route).get();
+
+    showRoute(route);
+  }
+
+  /**
+   * Displays the view associated with the specified route.
+   *
+   * @param route the route to display
+   */
+  private void showRoute(Route route) {
+    View view = this.routes.get(route).get();
+
     if (route.isPopupRoute()) {
-      activePopup = true;
-      navigator.showPopup(view, this);
+      this.activePopup = true;
+      this.navigator.showPopup(view, this);
     } else if (route.isGameRoute()) {
-      navigator.showGameView(view, this);
+      this.navigator.showGameView(view, this);
     } else {
-      navigator.showView(view);
+      this.navigator.showView(view);
+    }
+  }
+
+  /**
+   * Refreshes the current view and game layout.
+   *
+   * <p>If a popup is currently active, it is temporarily hidden and reopened
+   * after the refresh.</p>
+   *
+   */
+  public void refresh() {
+    boolean shouldReopenPopup = this.activePopup;
+
+    if (shouldReopenPopup) {
+      this.hidePopup();
+    }
+
+    if (this.currentRoute != null) {
+      this.navigator.refreshGameLayout();
+      this.showRoute(this.currentRoute);
+    }
+
+    if (shouldReopenPopup) {
+      this.showRoute(Route.GAME_MENU);
     }
   }
 
@@ -109,6 +145,13 @@ public class AppRouter {
     this.hidePopup();
     this.previousRoute = null;
     this.activePopup = false;
+    this.clearViewCache();
+  }
+
+  /**
+   * Solely clears the {@link ViewRegistry} cache.
+   */
+  public void clearViewCache() {
     this.viewRegistry.clearCache();
   }
 }
