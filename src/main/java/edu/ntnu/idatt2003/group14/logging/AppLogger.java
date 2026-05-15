@@ -1,7 +1,9 @@
 package edu.ntnu.idatt2003.group14.logging;
 
 import edu.ntnu.idatt2003.group14.GameConfig;
+import edu.ntnu.idatt2003.group14.utils.AppDataPathUtil;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -15,6 +17,7 @@ import java.util.logging.SimpleFormatter;
  * logging level deciding if only errors should be logged, or everything.</p>
  *
  * @author Elias Haugsbakk
+ * @version 1.0.0
  * @since 0.0.1
  */
 public class AppLogger {
@@ -35,7 +38,8 @@ public class AppLogger {
       consoleHandler.setLevel(Level.ALL);
 
       // severe errors to disk
-      FileHandler fileHandler = new FileHandler("millions.log", true);
+      Path millionsData = AppDataPathUtil.getLogsFile();
+      FileHandler fileHandler = new FileHandler(millionsData.toFile().getAbsolutePath(), true);
       fileHandler.setFormatter(new SimpleFormatter());
       fileHandler.setLevel(Level.SEVERE);
 
@@ -79,7 +83,7 @@ public class AppLogger {
    * Logging a severe error. Usually an unhandled exception.
    *
    * @param msg the associated message
-   * @param e a throwable
+   * @param e   a throwable
    */
   public static void error(String msg, Throwable e) {
     LOGGER.log(Level.SEVERE, msg, e);

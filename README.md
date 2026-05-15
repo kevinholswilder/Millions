@@ -22,6 +22,14 @@ The purpose of this application is to provide a realistic and interactive enviro
 You can install the application from the [Releases](../../releases) page on our GitHub.  
 Download the version for your respective operating system and follow the included installation instructions, or download the `.jar` file if you prefer to run the application using Java.
 
+## App data
+Save game data and logs are stored at:
+- Windows: `%APPDATA%\Millions\`
+- macOS:   `~/Library/Application Support/Millions/`
+- Linux:   `~/.local/share/Millions/`
+
+**NOTE**: These files will persist after uninstalling the application. Manual removal is required for permanent deletion.
+
 ## Build
 To build the application from the source, clone the repository by executing:
 
