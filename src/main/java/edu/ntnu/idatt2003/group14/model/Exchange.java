@@ -49,6 +49,29 @@ public class Exchange extends Plottable {
         .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 
+  /**
+   * Initiates a new exchange with a given week as the current week.
+   *
+   * <p>Used when reconstructing a saved game.</p>
+   *
+   * @param name   the name of the exchange
+   * @param stocks the list of stocks being traded on the exchange
+   */
+  public Exchange(String name, List<Stock> stocks, int week) {
+    this.name = name;
+    this.week = week;
+    this.random = new Random();
+    this.stockMap = new HashMap<>();
+
+    for (Stock stock : stocks) {
+      this.stockMap.put(stock.getSymbol(), stock);
+    }
+
+    valueFirstWeek = stocks.stream()
+        .map(stock -> stock.getValueForWeek(0))
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+  }
+
   public String getName() {
     return this.name;
   }

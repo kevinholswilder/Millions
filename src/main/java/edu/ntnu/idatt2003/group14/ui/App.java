@@ -2,6 +2,7 @@ package edu.ntnu.idatt2003.group14.ui;
 
 import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
+import edu.ntnu.idatt2003.group14.io.gamesave.GameSaveManager;
 import edu.ntnu.idatt2003.group14.io.reader.stock.StockReader;
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
@@ -61,7 +62,7 @@ public final class App extends Application {
     audioManager.playOfficeNoice();
 
     AppController appController = new AppController(stage);
-    GameService gameService = new GameService(new StockReader());
+    GameService gameService = new GameService(new StockReader(), new GameSaveManager());
     ViewRegistry registry = new ViewRegistry(appController, audioManager, gameService);
     AppNavigator navigator = new AppNavigator(stage, gameService);
     AppRouter router = new AppRouter(registry, navigator);

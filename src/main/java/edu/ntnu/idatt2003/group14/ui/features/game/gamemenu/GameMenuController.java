@@ -3,6 +3,7 @@ package edu.ntnu.idatt2003.group14.ui.features.game.gamemenu;
 import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import edu.ntnu.idatt2003.group14.ui.app.Route;
+import java.io.IOException;
 
 /**
  * Controller class for handling user input from the Game Menu scene.
@@ -36,7 +37,11 @@ public class GameMenuController {
    * User requests to save and quit to main menu.
    */
   public void handleSaveAndQuit() {
-    gameService.quitGame(router);
+    try {
+      gameService.quitGame(router);
+    } catch (IOException e) {
+      // TODO: inform the user that the saving failed
+    }
     router.navigate(Route.MAIN_MENU);
   }
 
