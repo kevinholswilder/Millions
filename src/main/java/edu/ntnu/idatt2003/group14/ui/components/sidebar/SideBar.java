@@ -19,7 +19,7 @@ public class SideBar extends BorderPane {
    */
   public SideBar(SideBarController controller, GameService gameService) {
     Header header = new Header(controller);
-    Footer footer = new Footer(gameService);
+    Footer footer = new Footer(gameService, controller);
 
     this.getStylesheets().add(
         Objects.requireNonNull(getClass().getResource("/css/sidebar/sidebar.css")).toExternalForm()

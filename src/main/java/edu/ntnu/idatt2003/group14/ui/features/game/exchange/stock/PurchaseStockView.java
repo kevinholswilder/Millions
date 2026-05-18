@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -80,6 +81,13 @@ public class PurchaseStockView implements View {
             + " | " + stock.getSymbol()
     );
     title.getStyleClass().add("purchase-title");
+
+    Button exitBtn = new Button(LangConfig.getInstance().lang("stock-menu.exit"));
+    exitBtn.setOnAction(_ -> this.router.handleEscape());
+
+    StackPane topBox = new StackPane(title, exitBtn);
+    StackPane.setAlignment(title, Pos.CENTER);
+    StackPane.setAlignment(exitBtn, Pos.CENTER_RIGHT);
 
     Label numericalLabel = new Label(
         LangConfig.getInstance().lang("purchase-stock-menu.text_field.quantity")
@@ -189,7 +197,7 @@ public class PurchaseStockView implements View {
     });
 
     menu.getChildren().addAll(
-        title,
+        topBox,
         graph,
         numericalLabel,
         numericalField,

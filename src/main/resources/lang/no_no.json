@@ -68,6 +68,8 @@
   "exchange-menu.row.label.week": "Uke",
   "exchange-menu.row.button.purchase": "Kjøp",
 
+  "stock-menu.exit": "Lukk",
+
   "purchase-stock-menu.title": "Kjøp:",
   "purchase-stock-menu.text_field.quantity": "Antall:",
   "purchase-stock-menu.label.commission": "Kommisjon:",
@@ -102,5 +104,6 @@
   "sidebar-header.portfolio": "Portefølje",
   "sidebar-header.transactions": "Transaksjoner",
   "sidebar-header.exchange": "Børs",
-  "sidebar-footer.advance": "Neste"
+  "sidebar-footer.advance": "Neste",
+  "sidebar-footer.menu": "Meny"
 }

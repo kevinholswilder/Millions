@@ -67,6 +67,8 @@
   "exchange-menu.row.label.week": "Week",
   "exchange-menu.row.button.purchase": "Kopen",
 
+  "stock-menu.exit": "Sluiten",
+
   "purchase-stock-menu.title": "Kopen:",
   "purchase-stock-menu.text_field.quantity": "Aantal:",
   "purchase-stock-menu.label.commission": "Commissie:",
@@ -100,5 +102,6 @@
   "sidebar-header.portfolio": "Portfolio",
   "sidebar-header.transactions": "Transacties",
   "sidebar-header.exchange": "Beurs",
-  "sidebar-footer.advance": "Volgende"
+  "sidebar-footer.advance": "Volgende",
+  "sidebar-footer.menu": "Menu"
 }

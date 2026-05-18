@@ -102,4 +102,11 @@ public class SideBarController {
 
     return button;
   }
+
+  /**
+   * Toggle the game menu.
+   */
+  public void gameMenu() {
+    this.router.handleEscape();
+  }
 }

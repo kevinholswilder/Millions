@@ -68,6 +68,8 @@
   "exchange-menu.row.label.week": "Week",
   "exchange-menu.row.button.purchase": "Purchase",
 
+  "stock-menu.exit": "Exit",
+
   "purchase-stock-menu.title": "Purchase:",
   "purchase-stock-menu.text_field.quantity": "Amount:",
   "purchase-stock-menu.label.commission": "Commission:",
@@ -102,5 +104,6 @@
   "sidebar-header.portfolio": "Portfolio",
   "sidebar-header.transactions": "Transactions",
   "sidebar-header.exchange": "Exchange",
-  "sidebar-footer.advance": "Advance"
+  "sidebar-footer.advance": "Advance",
+  "sidebar-footer.menu": "Menu"
 }
