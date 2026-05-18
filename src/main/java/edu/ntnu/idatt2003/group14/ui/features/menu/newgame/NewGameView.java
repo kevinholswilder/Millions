@@ -27,7 +27,7 @@ import javafx.scene.layout.VBox;
  * <p>Prompts the user for a username, starting money
  * and stock file and lets them start the game.</p>
  *
- * @author Elias Haugsbakk
+ * @author Elias Haugsbakk, Kevin Holswilder
  * @version 1.0.0
  * @since 0.0.1
  */
@@ -141,9 +141,10 @@ public class NewGameView implements View {
   }
 
   private void pickFile() {
-    this.stockDataFile = this.appController.openStockFileDialog();
+    File selected = this.appController.openStockFileDialog();
 
-    if (this.stockDataFile != null) {
+    if (selected != null) {
+      this.stockDataFile = selected;
       this.fileChooserBtn.setText(this.stockDataFile.getName());
     }
   }
