@@ -59,32 +59,33 @@ public class MainMenuView implements View {
   }
 
   private VBox centerMenu() {
-
-    VBox centerMenu = new VBox(50);
-    centerMenu.setAlignment(Pos.CENTER);
-    centerMenu.setPadding(new Insets(100, 0, 0, 0));
+    VBox centerMenu = new VBox();
+    centerMenu.setAlignment(Pos.CENTER_LEFT);
+    centerMenu.setPadding(new Insets(50, 0, 0, 100));
 
     Label title = new Label("Millions");
     title.getStyleClass().add("menu-title");
 
     VBox btnBox = new VBox(15);
-    btnBox.setAlignment(Pos.CENTER);
+    btnBox.setAlignment(Pos.CENTER_LEFT);
 
-    Button startBtn = buttonFactory
-            .createMenuButton(
+    Button startBtn = buttonFactory.createMenuButton(
                 LangConfig.getInstance().lang("main-menu.new_game"),
                 controller::handleNewGame
             );
-    Button optionsBtn = buttonFactory
-        .createMenuButton(
+    startBtn.setId("main-menu-button");
+
+    Button optionsBtn = buttonFactory.createMenuButton(
             LangConfig.getInstance().lang("main-menu.options"),
             controller::showOptions
         );
-    Button exitBtn = buttonFactory
-            .createMenuButton(
+    optionsBtn.setId("main-menu-button");
+
+    Button exitBtn = buttonFactory.createMenuButton(
                 LangConfig.getInstance().lang("main-menu.exit"),
                 controller::handleExitGame
             );
+    exitBtn.setId("main-menu-button");
 
     btnBox.getChildren().addAll(startBtn, optionsBtn, exitBtn);
     centerMenu.getChildren().addAll(
@@ -96,7 +97,6 @@ public class MainMenuView implements View {
   }
 
   private HBox bottomBar() {
-
     HBox bottomBar = new HBox();
     bottomBar.setPadding(new Insets(20));
 
