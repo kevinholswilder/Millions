@@ -77,13 +77,22 @@ public class PortfolioController implements PlottableChangeListener {
 
       if (netWorthLabel != null) {
         netWorthLabel.setText(
-            LangConfig.getInstance().lang("portfolio-menu.net_worth") + Money.normalize(netWorth)
+                LangConfig.getInstance().lang("portfolio-menu.net_worth")
+                        + Money.normalize(netWorth)
         );
+      }
+
+      if (cashLabel != null) {
         cashLabel.setText(
-            LangConfig.getInstance().lang("portfolio-menu.cash") + Money.normalize(cash)
+                LangConfig.getInstance().lang("portfolio-menu.cash")
+                        + Money.normalize(cash)
         );
+      }
+
+      if (portfolioValueLabel != null) {
         portfolioValueLabel.setText(
-            LangConfig.getInstance().lang("portfolio-menu.portfolio") + Money.normalize(cash)
+                LangConfig.getInstance().lang("portfolio-menu.portfolio")
+                        + Money.normalize(portfolioValue)
         );
       }
     });
