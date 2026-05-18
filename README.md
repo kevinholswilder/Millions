@@ -1,5 +1,16 @@
 # Millions
 
+## Table of Contents
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [App data](#app-data)
+5. [Build](#build)
+6. [Steps to run](#steps-to-run)
+7. [Testing](#testing)
+8. [Contributing](#contributing)
+9. [License](#license)
+
 ## Overview
 Millions is a stock market simulation game developed as a part of the course assignment given in _Programming 2 IDATT2003_ at the Norwegian University of Science and Technology in Trondheim. The application allows users to manage a virtual portfolio using a configurable starting capital and stock market data loaded from a chosen file. Players can buy and sell shares, track the market's history, manage their transactions and financial progress over time.
 
@@ -21,6 +32,14 @@ The purpose of this application is to provide a realistic and interactive enviro
 ## Installation
 You can install the application from the [Releases](../../releases) page on our GitHub.  
 Download the version for your respective operating system and follow the included installation instructions, or download the `.jar` file if you prefer to run the application using Java.
+
+## App data
+Save game data and logs are stored at:
+- Windows: `%APPDATA%\Millions\`
+- macOS:   `~/Library/Application Support/Millions/`
+- Linux:   `~/.local/share/Millions/`
+
+**NOTE**: These files will persist after uninstalling the application. Manual removal is required for permanent deletion.
 
 ## Build
 To build the application from the source, clone the repository by executing:
