@@ -63,7 +63,7 @@ public class PlottableGraph extends AreaChart<Number, Number> implements Plottab
     series.getData().add(new Data<>(week, value.doubleValue()));
 
     if (series.getData().size() > MAX_WEEKS) {
-      series.getData().remove(0);
+      series.getData().removeFirst();
     }
 
     NumberAxis axis = (NumberAxis) getXAxis();
@@ -74,6 +74,12 @@ public class PlottableGraph extends AreaChart<Number, Number> implements Plottab
   @Override
   public void plottableChanged(BigDecimal value) {
     int week = this.plottable.getWeek() + 1;
+
+    if (!series.getData().isEmpty() && series.getData().getLast().getXValue().intValue() == week) {
+      series.getData().getLast().setYValue(value.doubleValue());
+      return;
+    }
+
     addDataPoint(week, value);
   }
 }
