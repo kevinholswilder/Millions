@@ -1,6 +1,7 @@
 package edu.ntnu.idatt2003.group14.service;
 
 import edu.ntnu.idatt2003.group14.logging.AppLogger;
+import edu.ntnu.idatt2003.group14.model.PlayerStatus;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -17,9 +18,11 @@ public class AudioManager {
   private static final String BUTTON_CLICK = "/audio/sounds/button-click.wav";
   private static final String BUTTON_HOVER = "/audio/sounds/button-hover.wav";
   private static final String ERROR = "/audio/sounds/error.wav";
+  private static final String POP = "/audio/sounds/pop.wav";
 
   private final AudioClip buttonClickClip;
   private final AudioClip buttonHoverClip;
+  private final AudioClip popClip;
   private final AudioClip errorClip;
 
   private MediaPlayer musicPlayer;
@@ -32,6 +35,7 @@ public class AudioManager {
   public AudioManager() {
     buttonClickClip = loadClip(BUTTON_CLICK);
     buttonHoverClip = loadClip(BUTTON_HOVER);
+    popClip = loadClip(POP);
     errorClip = loadClip(ERROR);
   }
 
@@ -70,6 +74,13 @@ public class AudioManager {
    */
   public void playButtonHoverSound() {
     playSoundEffect(buttonHoverClip);
+  }
+
+  /**
+   * Plays the pop sound effect to notify users about their current {@link PlayerStatus}
+   */
+  public void playPopSound() {
+    playSoundEffect(popClip);
   }
 
   /**

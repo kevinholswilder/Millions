@@ -43,8 +43,11 @@ public class ViewRegistry {
    * @param appController to interact with the application
    * @param audioManager  to interact with the application audio
    */
-  public ViewRegistry(AppController appController, AudioManager audioManager,
-                      GameService gameService) {
+  public ViewRegistry(
+      AppController appController,
+      AudioManager audioManager,
+      GameService gameService
+  ) {
     this.appController = appController;
     this.audioManager = audioManager;
     this.gameService = gameService;
@@ -100,7 +103,7 @@ public class ViewRegistry {
    */
   View getPortfolioView(AppRouter router) {
     return viewCache.computeIfAbsent(Route.PORTFOLIO,
-        _ -> new PortfolioView(new PortfolioController(gameService, router)));
+        _ -> new PortfolioView(new PortfolioController(gameService, router, audioManager)));
   }
 
   /**

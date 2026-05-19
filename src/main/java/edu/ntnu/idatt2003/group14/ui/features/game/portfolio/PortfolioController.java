@@ -9,6 +9,7 @@ import edu.ntnu.idatt2003.group14.model.Portfolio;
 import edu.ntnu.idatt2003.group14.model.Share;
 import edu.ntnu.idatt2003.group14.model.Stock;
 import edu.ntnu.idatt2003.group14.model.plottable.PlottableChangeListener;
+import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import edu.ntnu.idatt2003.group14.ui.app.Route;
@@ -36,6 +37,7 @@ import javafx.scene.image.ImageView;
 public class PortfolioController implements PlottableChangeListener {
   private final GameService gameService;
   private final AppRouter appRouter;
+  private final AudioManager audioManager;
   private final ObservableList<Share> shares = FXCollections.observableArrayList();
   private final Portfolio portfolio;
 
@@ -52,8 +54,13 @@ public class PortfolioController implements PlottableChangeListener {
    * @param gameService the game service providing player and portfolio data
    * @param appRouter the application router used for navigation
    */
-  public PortfolioController(GameService gameService, AppRouter appRouter) {
+  public PortfolioController(
+          GameService gameService,
+          AppRouter appRouter,
+          AudioManager audioManager
+  ) {
     this.gameService = gameService;
+    this.audioManager = audioManager;
     this.portfolio = gameService.getPlayer().getPortfolio();
     this.appRouter = appRouter;
     this.portfolio.addListener(this);
@@ -72,7 +79,8 @@ public class PortfolioController implements PlottableChangeListener {
 
       if (gameService.getPlayer().getStatus() != this.previousStatus) {
         this.previousStatus = gameService.getPlayer().getStatus();
-        updateStatusImage();
+        this.updateStatusImage();
+        this.audioManager.playPopSound();
       }
 
       if (netWorthLabel != null) {
