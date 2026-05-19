@@ -2,6 +2,7 @@ package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
 import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
+import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.app.View;
@@ -20,6 +21,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 /**
  * JavaFX scene for the New Game scene of the application.
@@ -53,7 +57,8 @@ public class NewGameView implements View {
   public NewGameView(
       NewGameController controller,
       AppController appController,
-      AudioManager audioManager) {
+      AudioManager audioManager
+  ) {
     this.controller = controller;
     this.appController = appController;
     this.audioManager = audioManager;
@@ -159,34 +164,18 @@ public class NewGameView implements View {
     switch (result) {
       case VALID -> {
         try {
-          controller.handleStartGame(
-              username,
-              new BigDecimal(amount),
-              this.stockDataFile
-          );
+          controller.validateCsvFile(this.stockDataFile);
         } catch (CSVReadException e) {
-          switch (e.getError()) {
-            case READ_FAILED ->
-                showError(LangConfig.getInstance().lang("new-game-menu.error.csv.read_fail"),
-                    fileChooserBtn);
-            case FILE_NOT_FOUND ->
-                showError(LangConfig.getInstance().lang("new-game-menu.error.csv.not_found"),
-                    fileChooserBtn);
-            case EMPTY_FILE ->
-                showError(LangConfig.getInstance().lang("new-game-menu.error.csv.empty_file"),
-                    fileChooserBtn);
-            case PARSING -> showError(
-                LangConfig.getInstance().lang("new-game-menu.error.csv.parsing_fail"
-                ).replace(
-                    "{line_number}", String.valueOf(e.getParsingError().errorLineNumber())
-                ).replace(
-                    "{line_string}", e.getParsingError().errorLineString()
-                ), fileChooserBtn);
-            default -> showError(
-                LangConfig.getInstance().lang("new-game-menu.error.csv.unexpected"),
-                fileChooserBtn);
-          }
+          handleCsvError(e);
+          return;
         }
+        playTransitionVideo(() -> {
+          try {
+            controller.handleStartGame(username, new BigDecimal(amount), this.stockDataFile);
+          } catch (CSVReadException e) {
+            handleCsvError(e);
+          }
+        });
       }
       case NEGATIVE_AMOUNT -> showError(
           LangConfig.getInstance().lang("new-game-menu.error.balance.negative"),
@@ -208,6 +197,66 @@ public class NewGameView implements View {
         this.fileChooserBtn.setText("Pick CSV stock data file");
       }
       default -> throw new IllegalStateException("Unexpected startingMoney: " + result);
+    }
+  }
+
+  private void handleCsvError(CSVReadException e) {
+    switch (e.getError()) {
+      case READ_FAILED -> showError(
+              LangConfig.getInstance().lang("new-game-menu.error.csv.read_fail"),
+              fileChooserBtn
+      );
+      case FILE_NOT_FOUND -> showError(
+              LangConfig.getInstance().lang("new-game-menu.error.csv.not_found"),
+              fileChooserBtn
+      );
+      case EMPTY_FILE -> showError(
+              LangConfig.getInstance().lang("new-game-menu.error.csv.empty_file"),
+              fileChooserBtn
+      );
+      case PARSING -> showError(
+              LangConfig.getInstance().lang("new-game-menu.error.csv.parsing_fail")
+                      .replace(
+                          "{line_number}",
+                          String.valueOf(e.getParsingError().errorLineNumber())
+                      )
+                      .replace("{line_string}", e.getParsingError().errorLineString()),
+              fileChooserBtn
+      );
+      default -> showError(
+              LangConfig.getInstance().lang("new-game-menu.error.csv.unexpected"),
+              fileChooserBtn
+      );
+    }
+  }
+
+  private void playTransitionVideo(Runnable afterVideo) {
+    try {
+      String videoPath = Objects.requireNonNull(
+          getClass().getResource("/videos/transition.mp4")
+      ).toExternalForm();
+
+      Media media = new Media(videoPath);
+      MediaPlayer mediaPlayer = new MediaPlayer(media);
+      MediaView mediaView = new MediaView(mediaPlayer);
+
+      mediaView.setPreserveRatio(true);
+      mediaView.fitWidthProperty().bind(root.widthProperty());
+      mediaView.fitHeightProperty().bind(root.heightProperty());
+
+      root.getChildren().add(mediaView);
+      mediaView.toFront();
+
+      mediaPlayer.setOnEndOfMedia(() -> {
+        root.getChildren().remove(mediaView);
+        mediaPlayer.dispose();
+        afterVideo.run();
+      });
+
+      mediaPlayer.play();
+    } catch (Exception e) {
+      AppLogger.warn("Menu transition video failed: " + e.getMessage());
+      afterVideo.run();
     }
   }
 
