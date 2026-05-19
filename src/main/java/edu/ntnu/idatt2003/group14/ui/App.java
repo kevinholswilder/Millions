@@ -16,7 +16,10 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
+
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -54,8 +57,15 @@ public final class App extends Application {
 
   @Override
   public void start(Stage stage) {
-
     stage.setTitle("Millions");
+
+    Image icon = new Image(
+            Objects.requireNonNull(
+                    getClass().getResourceAsStream("/images/icons/app_icon.png")
+            )
+    );
+
+    stage.getIcons().add(icon);
 
     AudioManager audioManager = new AudioManager();
     audioManager.playOfficeNoice();
