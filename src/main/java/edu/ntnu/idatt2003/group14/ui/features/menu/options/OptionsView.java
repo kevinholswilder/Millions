@@ -43,7 +43,7 @@ public class OptionsView implements View {
     this.audioManager = audioManager;
     this.root = new StackPane();
     this.root.getStylesheets().add(
-        Objects.requireNonNull(getClass().getResource("/css/menu.css")).toExternalForm()
+        Objects.requireNonNull(getClass().getResource("/stylesheets/menu.css")).toExternalForm()
     );
     this.root.getChildren().addAll(backgroundView(), centerMenu());
 

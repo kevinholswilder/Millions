@@ -42,9 +42,9 @@ public class GameLayout implements View {
     this.layout.setLeft(navigation);
 
     String mainStyle =
-        Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm();
+        Objects.requireNonNull(getClass().getResource("/stylesheets/style.css")).toExternalForm();
     String gameStyle =
-        Objects.requireNonNull(getClass().getResource("/css/game.css")).toExternalForm();
+        Objects.requireNonNull(getClass().getResource("/stylesheets/game.css")).toExternalForm();
 
     this.layout.getStylesheets().addAll(mainStyle, gameStyle);
     this.root.getStylesheets().add(gameStyle);

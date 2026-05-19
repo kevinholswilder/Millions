@@ -65,7 +65,7 @@ public class NewGameView implements View {
     this.buttonFactory = new MenuButtonFactory(audioManager);
     this.root = new StackPane();
     this.root.getStylesheets().add(
-        Objects.requireNonNull(getClass().getResource("/css/menu.css")).toExternalForm()
+        Objects.requireNonNull(getClass().getResource("/stylesheets/menu.css")).toExternalForm()
     );
     this.root.getChildren().addAll(backgroundView(), centerMenu());
 
@@ -233,7 +233,7 @@ public class NewGameView implements View {
   private void playTransitionVideo(Runnable afterVideo) {
     try {
       String videoPath = Objects.requireNonNull(
-          getClass().getResource("/videos/transition.mp4")
+          getClass().getResource("/assets/videos/transition.mp4")
       ).toExternalForm();
 
       Media media = new Media(videoPath);

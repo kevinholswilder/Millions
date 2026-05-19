@@ -98,7 +98,7 @@ public class AppNavigator {
     if (stage.getScene() == null) {
       Scene scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);
       String css =
-          Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm();
+          Objects.requireNonNull(getClass().getResource("/stylesheets/style.css")).toExternalForm();
       scene.getStylesheets().add(css);
       stage.setScene(scene);
     }

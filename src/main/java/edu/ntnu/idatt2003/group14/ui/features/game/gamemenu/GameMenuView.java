@@ -38,7 +38,7 @@ public class GameMenuView implements View {
     this.buttonFactory = new MenuButtonFactory(audioManager);
     this.root.setCenter(centerMenu());
     this.root.getStylesheets().add(
-        Objects.requireNonNull(getClass().getResource("/css/menu.css")).toExternalForm()
+        Objects.requireNonNull(getClass().getResource("/stylesheets/menu.css")).toExternalForm()
     );
   }
 

@@ -8,7 +8,7 @@
 }
 
 .main-menu-root-container {
-    -fx-background-image: url("/images/main_menu.png");
+    -fx-background-image: url("/assets/images/main_menu.png");
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-background-size: 100% 100%;

@@ -50,10 +50,10 @@ public class TransactionArchiveView implements View {
 
     this.root.getStylesheets().addAll(
         Objects.requireNonNull(
-            getClass().getResource("/css/transaction_archive/transaction-row.css")
+            getClass().getResource("/stylesheets/transaction_archive/transaction-row.css")
         ).toExternalForm(),
         Objects.requireNonNull(
-            getClass().getResource("/css/transaction_archive/topbar.css")
+            getClass().getResource("/stylesheets/transaction_archive/topbar.css")
         ).toExternalForm()
     );
   }

@@ -43,7 +43,7 @@ public class TransactionReceiptView implements View {
 
     this.root.getStylesheets().add(
         Objects.requireNonNull(
-            getClass().getResource("/css/transaction_archive/transaction_receipt/receipt.css")
+            getClass().getResource("/stylesheets/transaction_archive/transaction_receipt/receipt.css")
         ).toExternalForm()
     );
 

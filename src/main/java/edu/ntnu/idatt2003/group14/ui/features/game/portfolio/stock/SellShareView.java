@@ -58,7 +58,7 @@ public class SellShareView implements View {
 
     this.root.getStylesheets().add(
         Objects.requireNonNull(
-            getClass().getResource("/css/exchange/stock/stock-purchase.css")
+            getClass().getResource("/stylesheets/exchange/stock/stock-purchase.css")
         ).toExternalForm()
     );
   }

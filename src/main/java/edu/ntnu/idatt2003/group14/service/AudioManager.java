@@ -13,12 +13,12 @@ import javafx.scene.media.MediaPlayer;
  * @since 0.0.1
  */
 public class AudioManager {
-  private static final String MENU_MUSIC = "/audio/music/background-music.wav";
-  private static final String OFFICE_NOICE = "/audio/music/office-background.wav";
-  private static final String BUTTON_CLICK = "/audio/sounds/button-click.wav";
-  private static final String BUTTON_HOVER = "/audio/sounds/button-hover.wav";
-  private static final String ERROR = "/audio/sounds/error.wav";
-  private static final String POP = "/audio/sounds/pop.wav";
+  private static final String MENU_MUSIC = "/assets/audio/music/background_music.wav";
+  private static final String OFFICE_NOICE = "/assets/audio/music/office_background.wav";
+  private static final String BUTTON_CLICK = "/assets/audio/sound_effects/button_click.wav";
+  private static final String BUTTON_HOVER = "/assets/audio/sound_effects/button_hover.wav";
+  private static final String ERROR = "/assets/audio/sound_effects/error.wav";
+  private static final String POP = "/assets/audio/sound_effects/pop.wav";
 
   private final AudioClip buttonClickClip;
   private final AudioClip buttonHoverClip;

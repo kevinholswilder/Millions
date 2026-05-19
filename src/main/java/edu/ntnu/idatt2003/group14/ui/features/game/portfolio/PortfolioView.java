@@ -48,10 +48,10 @@ public class PortfolioView implements View {
 
     this.root.getStylesheets().addAll(
         Objects.requireNonNull(
-            getClass().getResource("/css/portfolio/portfolio.css")
+            getClass().getResource("/stylesheets/portfolio/portfolio.css")
         ).toExternalForm(),
         Objects.requireNonNull(
-            getClass().getResource("/css/exchange/stock-row.css")
+            getClass().getResource("/stylesheets/exchange/stock-row.css")
         ).toExternalForm()
     );
 

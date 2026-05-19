@@ -89,7 +89,7 @@ public final class App extends Application {
     // javafx:run -Djavafx.args=--skipMenu
     // java -Djavafx.args="--skipMenu" -jar Millions.jar
     try {
-      gameService.startGame("TestPlayer", new BigDecimal("10000"), new File("sp500.csv"));
+      gameService.startGame("TestPlayer", new BigDecimal("10000"), new File("data/sp500.csv"));
     } catch (CSVReadException e) {
       AppLogger.error("Could not load /resources/sp500.csv", e);
       throw new RuntimeException(e);
