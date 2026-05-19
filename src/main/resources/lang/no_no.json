@@ -52,7 +52,7 @@
   "transactions-menu.row.label.purchase": "KJØP",
   "transactions-menu.row.label.sale": "SALG",
   "transactions-menu.row.label.quantity": "Antall",
-  "transactions-menu.row.label.quantity.shares": "{amount} aksjer",
+  "transactions-menu.row.label.quantity.shares": "{amount} aksje(r)",
   "transactions-menu.row.label.price": "Pris",
   "transactions-menu.row.label.total": "Totalt",
   "transactions-menu.row.label.week": "Uke",

@@ -52,7 +52,7 @@
   "transactions-menu.row.label.purchase": "PURCHASE",
   "transactions-menu.row.label.sale": "SALE",
   "transactions-menu.row.label.quantity": "Quantity",
-  "transactions-menu.row.label.quantity.shares": "{amount} shares",
+  "transactions-menu.row.label.quantity.shares": "{amount} share(s)",
   "transactions-menu.row.label.price": "Price",
   "transactions-menu.row.label.total": "Total",
   "transactions-menu.row.label.week": "Week",
