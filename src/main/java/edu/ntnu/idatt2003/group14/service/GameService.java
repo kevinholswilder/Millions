@@ -53,6 +53,16 @@ public class GameService {
   }
 
   /**
+   * Validates the provided stock data CSV file by attempting to read and parse it.
+   *
+   * @param stockDataFile the CSV file containing stock data
+   * @throws CSVReadException if the CSV file could not be read or parsed
+   */
+  public void validateStockData(File stockDataFile) throws CSVReadException {
+    stockReader.read(stockDataFile.toPath().toString());
+  }
+
+  /**
    * Ends the current game session and clears the state.
    */
   public void quitGame(AppRouter router) {

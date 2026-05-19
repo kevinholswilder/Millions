@@ -51,7 +51,7 @@
   "transactions-menu.row.label.purchase": "AANKOOP",
   "transactions-menu.row.label.sale": "VERKOOP",
   "transactions-menu.row.label.quantity": "Aantal",
-  "transactions-menu.row.label.quantity.shares": "aandelen",
+  "transactions-menu.row.label.quantity.shares": "{amount} aandelen",
   "transactions-menu.row.label.price": "Prijs",
   "transactions-menu.row.label.total": "Totaal",
   "transactions-menu.row.label.week": "Week",
