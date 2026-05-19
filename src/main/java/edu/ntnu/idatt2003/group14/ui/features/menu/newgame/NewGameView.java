@@ -120,6 +120,15 @@ public final class NewGameView implements View {
     this.startingMoneyField.setPromptText(LangConfig.getInstance().lang("new-game-menu.capital"));
     this.startingMoneyField.getStyleClass().add("menu-text-field");
 
+    // Source - https://stackoverflow.com/a/30796829
+    // Posted by Evan Knowles, modified by community. See post 'Timeline' for change history
+    // Retrieved 2026-05-13, License - CC BY-SA 3.0
+    this.startingMoneyField.textProperty().addListener((_, _, newValue) -> {
+      if (!newValue.matches("\\d*")) {
+        this.startingMoneyField.setText(newValue.replaceAll("[^\\d]", ""));
+      }
+    });
+
     this.fileChooserBtn = buttonFactory.createMenuButton(
         LangConfig.getInstance().lang("new-game-menu.csv_data"),
         this::pickFile
