@@ -124,7 +124,13 @@ public class PortfolioView implements View {
 
     VBox profile = new VBox(3);
     profile.setAlignment(Pos.CENTER);
-    Label status = new Label(controller.getPlayerStatus().name());
+    String currentStatus = controller.getPlayerStatus().name();
+    Label status = new Label(currentStatus);
+    this.controller.updateStatusLabel(status);
+
+    this.controller.getGameService().getExchange().addWeekAdvanceListener(_ -> {
+      this.controller.updateStatusLabel(status);
+    });
 
     ImageView imageView = new ImageView();
     imageView.setFitHeight(100);

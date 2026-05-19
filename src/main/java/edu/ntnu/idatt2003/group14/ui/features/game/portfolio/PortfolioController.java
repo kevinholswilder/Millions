@@ -122,6 +122,10 @@ public class PortfolioController implements PlottableChangeListener {
     return this.shares;
   }
 
+  public GameService getGameService() {
+    return gameService;
+  }
+
   /**
    * Sets the labels in the topbar.
    *
@@ -162,6 +166,16 @@ public class PortfolioController implements PlottableChangeListener {
     } else {
       AppLogger.error("Could not find image: " + path);
     }
+  }
+
+  /**
+   * Updates the displayed {@link PlayerStatus} in the top bar.
+   *
+   * @param statusLabel the label used to display the player's status
+   */
+  public void updateStatusLabel(Label statusLabel) {
+    String status = this.gameService.getPlayer().getStatus().toString();
+    statusLabel.setText(status);
   }
 
   /**
