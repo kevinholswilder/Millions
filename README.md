@@ -62,6 +62,18 @@ After following the steps in [Installation](#installation), you can run the appl
 java -jar Millions-{version}.jar
 ```
 
+## Stock Data Format
+
+Millions supports loading stock data from `.csv` files.
+
+Each row represents a stock using the following format:
+
+| Ticker | Name | Price |
+|--------|------|--------|
+| NVDA | Nvidia | 191.27 |
+| AAPL | Apple Inc. | 276.43 |
+| MSFT | Microsoft | 404.68 |
+
 ## Testing
 The application uses JUnit6 for unit testing. These tasks are ran by executing the following:
 ```
