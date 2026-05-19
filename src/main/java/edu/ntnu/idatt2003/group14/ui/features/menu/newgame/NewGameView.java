@@ -2,6 +2,7 @@ package edu.ntnu.idatt2003.group14.ui.features.menu.newgame;
 
 import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.exception.csvreading.CSVReadException;
+import edu.ntnu.idatt2003.group14.logging.AppLogger;
 import edu.ntnu.idatt2003.group14.service.AudioManager;
 import edu.ntnu.idatt2003.group14.ui.app.AppController;
 import edu.ntnu.idatt2003.group14.ui.app.View;
@@ -229,28 +230,33 @@ public class NewGameView implements View {
   }
 
   private void playTransitionVideo(Runnable afterVideo) {
-    String videoPath = Objects.requireNonNull(
-            getClass().getResource("/videos/transition.mp4")
-    ).toExternalForm();
+    try {
+      String videoPath = Objects.requireNonNull(
+          getClass().getResource("/videos/transition.mp4")
+      ).toExternalForm();
 
-    Media media = new Media(videoPath);
-    MediaPlayer mediaPlayer = new MediaPlayer(media);
-    MediaView mediaView = new MediaView(mediaPlayer);
+      Media media = new Media(videoPath);
+      MediaPlayer mediaPlayer = new MediaPlayer(media);
+      MediaView mediaView = new MediaView(mediaPlayer);
 
-    mediaView.setPreserveRatio(true);
-    mediaView.fitWidthProperty().bind(root.widthProperty());
-    mediaView.fitHeightProperty().bind(root.heightProperty());
+      mediaView.setPreserveRatio(true);
+      mediaView.fitWidthProperty().bind(root.widthProperty());
+      mediaView.fitHeightProperty().bind(root.heightProperty());
 
-    root.getChildren().add(mediaView);
-    mediaView.toFront();
+      root.getChildren().add(mediaView);
+      mediaView.toFront();
 
-    mediaPlayer.setOnEndOfMedia(() -> {
-      root.getChildren().remove(mediaView);
-      mediaPlayer.dispose();
+      mediaPlayer.setOnEndOfMedia(() -> {
+        root.getChildren().remove(mediaView);
+        mediaPlayer.dispose();
+        afterVideo.run();
+      });
+
+      mediaPlayer.play();
+    } catch (Exception e) {
+      AppLogger.warn("Menu transition video failed: " + e.getMessage());
       afterVideo.run();
-    });
-
-    mediaPlayer.play();
+    }
   }
 
   private void showError(String errorMessage, Control... controls) {
