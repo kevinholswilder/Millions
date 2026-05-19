@@ -165,6 +165,15 @@ public class PortfolioController implements PlottableChangeListener {
   }
 
   /**
+   * Returns the player's current status
+   *
+   * @return a {@link PlayerStatus} enumeration
+   */
+  public PlayerStatus getPlayerStatus() {
+    return this.gameService.getPlayer().getStatus();
+  }
+
+  /**
    * Opens the purchase stock dialog.
    *
    * @param stock the stock to purchase

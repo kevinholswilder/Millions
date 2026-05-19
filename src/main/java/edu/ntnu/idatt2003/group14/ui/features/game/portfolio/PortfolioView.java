@@ -119,18 +119,26 @@ public class PortfolioView implements View {
     Label cashLabel = new Label();
     Label portfolioLabel = new Label();
 
-
     Region spacer = new Region();
     HBox.setHgrow(spacer, Priority.ALWAYS);
+
+    VBox profile = new VBox(3);
+    profile.setAlignment(Pos.CENTER);
+    Label status = new Label(controller.getPlayerStatus().name());
 
     ImageView imageView = new ImageView();
     imageView.setFitHeight(100);
     imageView.setPreserveRatio(true);
 
+    profile.getChildren().addAll(
+            imageView,
+            status
+    );
+
     controller.setTopBarLabels(netWorthLabel, cashLabel, portfolioLabel);
     controller.setStatusImageView(imageView);
 
-    HBox topBar = new HBox(40, netWorthLabel, cashLabel, portfolioLabel, spacer, imageView);
+    HBox topBar = new HBox(40, netWorthLabel, cashLabel, portfolioLabel, spacer, profile);
     topBar.getStyleClass().add("portfolio-top-bar");
     topBar.setPadding(new Insets(15));
     return topBar;
