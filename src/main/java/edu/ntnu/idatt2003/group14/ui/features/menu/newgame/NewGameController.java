@@ -47,9 +47,9 @@ public class NewGameController {
    *      on if the inputted information is valid
    */
   public NewGameValidationState validateNewGameInput(
-          String username,
-          String amount,
-          File stockDataFile
+      String username,
+      String amount,
+      File stockDataFile
   ) {
     NewGameValidationState usernameValid = validateUsername(username);
     if (usernameValid != NewGameValidationState.VALID) {
@@ -67,7 +67,8 @@ public class NewGameController {
    * Validates the provided stock data file.
    *
    * @param stockDataFile the CSV file containing stock market data
-   * @throws CSVReadException if the CSV file is invalid, unreadable, empty or contains malformed data
+   * @throws CSVReadException if the CSV file is invalid, unreadable,
+   *     empty or contains malformed data
    */
   public void validateCsvFile(File stockDataFile) throws CSVReadException {
     gameService.validateStockData(stockDataFile);

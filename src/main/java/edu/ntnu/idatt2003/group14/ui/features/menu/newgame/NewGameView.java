@@ -214,7 +214,10 @@ public class NewGameView implements View {
       );
       case PARSING -> showError(
               LangConfig.getInstance().lang("new-game-menu.error.csv.parsing_fail")
-                      .replace("{line_number}", String.valueOf(e.getParsingError().errorLineNumber()))
+                      .replace(
+                          "{line_number}",
+                          String.valueOf(e.getParsingError().errorLineNumber())
+                      )
                       .replace("{line_string}", e.getParsingError().errorLineString()),
               fileChooserBtn
       );
