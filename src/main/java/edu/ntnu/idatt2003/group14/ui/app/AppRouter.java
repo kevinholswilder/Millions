@@ -15,7 +15,7 @@ import java.util.function.Supplier;
  * @version 1.0.0
  * @since 0.0.1
  */
-public class AppRouter {
+public final class AppRouter {
   private final Map<Route, Supplier<View>> routes = new HashMap<>();
   private final AppNavigator navigator;
   private final ViewRegistry viewRegistry;

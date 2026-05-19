@@ -12,7 +12,7 @@ import java.math.RoundingMode;
  * @author Elias Haugsbakk
  * @since 0.0.1
  */
-public class Player {
+public final class Player {
   private final String name;
   private final BigDecimal startingMoney;
   private BigDecimal money;

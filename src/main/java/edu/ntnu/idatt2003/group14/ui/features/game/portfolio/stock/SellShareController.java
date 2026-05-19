@@ -10,7 +10,7 @@ import edu.ntnu.idatt2003.group14.model.Share;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class SellShareController {
+public final class SellShareController {
 
   private static final SellShareController instance =
       new SellShareController();

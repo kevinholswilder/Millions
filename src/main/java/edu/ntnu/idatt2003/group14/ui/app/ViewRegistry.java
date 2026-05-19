@@ -31,7 +31,7 @@ import java.util.Map;
  * @version 1.0.0
  * @since 0.0.1
  */
-public class ViewRegistry {
+public final class ViewRegistry {
   private final AppController appController;
   private final AudioManager audioManager;
   private final GameService gameService;

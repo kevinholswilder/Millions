@@ -29,7 +29,7 @@ import javafx.scene.layout.VBox;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class TransactionArchiveView implements View {
+public final class TransactionArchiveView implements View {
   private final GameService gameService;
   private final BorderPane root;
   private final TransactionArchiveController controller;

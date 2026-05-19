@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  * @author Elias Haugsbakk, Kevin Holswilder
  * @since 0.0.1
  */
-public class AppNavigator {
+public final class AppNavigator {
   // 16:9 720p HD: scales nicely to all 16:9 or 16:10 displays
   private static final int DEFAULT_WIDTH = 1280;
   private static final int DEFAULT_HEIGHT = 720;

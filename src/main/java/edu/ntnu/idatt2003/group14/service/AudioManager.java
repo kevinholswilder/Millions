@@ -12,7 +12,7 @@ import javafx.scene.media.MediaPlayer;
  * @author Elias Haugsbakk
  * @since 0.0.1
  */
-public class AudioManager {
+public final class AudioManager {
   private static final String MENU_MUSIC = "/assets/audio/music/background_music.wav";
   private static final String OFFICE_NOICE = "/assets/audio/music/office_background.wav";
   private static final String BUTTON_CLICK = "/assets/audio/sound_effects/button_click.wav";

@@ -10,7 +10,7 @@ import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
  * @author Elias Haugsbakk
  * @since 0.0.1
  */
-public class OptionsController {
+public final class OptionsController {
   private final AppController appController;
   private final AppRouter router;
   private final AudioManager audioManager;

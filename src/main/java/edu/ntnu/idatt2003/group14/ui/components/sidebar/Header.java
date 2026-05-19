@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class Header extends VBox {
+public final class Header extends VBox {
 
   /**
    * Creates a new header with navigation buttons.

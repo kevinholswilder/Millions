@@ -24,7 +24,7 @@ import javafx.scene.layout.VBox;
  * @version 1.0.0
  * @since 0.0.1
  */
-public class TransactionArchiveController {
+public final class TransactionArchiveController {
   private String currentSort = "Week";
   private boolean ascending = true;
   private String currentSearch = "";

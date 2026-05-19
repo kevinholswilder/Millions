@@ -11,7 +11,7 @@ import edu.ntnu.idatt2003.group14.model.transaction.Transaction;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class TransactionReceiptController {
+public final class TransactionReceiptController {
 
   private static TransactionReceiptController instance;
 

@@ -13,7 +13,7 @@ import java.util.List;
  * @author Elias Haugsbakk
  * @since 0.0.1
  */
-public class Stock extends Plottable {
+public final class Stock extends Plottable {
   private final String symbol;
   private final String company;
   private final List<BigDecimal> prices;

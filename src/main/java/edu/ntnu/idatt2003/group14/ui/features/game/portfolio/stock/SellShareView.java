@@ -37,7 +37,7 @@ import javafx.scene.layout.VBox;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class SellShareView implements View {
+public final class SellShareView implements View {
   private final BorderPane root;
   private final AppRouter router;
   private final GameService gameService;

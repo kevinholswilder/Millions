@@ -28,7 +28,7 @@ import javafx.scene.layout.VBox;
  * @version 1.0.0
  * @since 0.0.1
  */
-public class TransactionReceiptView implements View {
+public final class TransactionReceiptView implements View {
   private final BorderPane root;
   private final AppRouter router;
 

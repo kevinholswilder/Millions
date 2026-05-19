@@ -7,7 +7,7 @@ package edu.ntnu.idatt2003.group14.exception.csvreading;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class CSVReadException extends Exception {
+public final class CSVReadException extends Exception {
 
   private final CSVError error;
   private ParsingError parsingError;

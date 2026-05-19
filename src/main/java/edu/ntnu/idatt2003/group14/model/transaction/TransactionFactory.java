@@ -9,7 +9,7 @@ import edu.ntnu.idatt2003.group14.model.Share;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class TransactionFactory {
+public final class TransactionFactory {
 
   /**
    * Returns a new instance of the specified transaction type.

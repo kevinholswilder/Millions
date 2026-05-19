@@ -34,7 +34,7 @@ import javafx.scene.image.ImageView;
  * @version 1.0.0
  * @since 0.0.1
  */
-public class PortfolioController implements PlottableChangeListener {
+public final class PortfolioController implements PlottableChangeListener {
   private final GameService gameService;
   private final AppRouter appRouter;
   private final AudioManager audioManager;

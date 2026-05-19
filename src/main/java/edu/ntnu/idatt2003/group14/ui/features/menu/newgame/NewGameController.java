@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  * @version 1.0.0
  * @since 0.0.1
  */
-public class NewGameController {
+public final class NewGameController {
   private final AppRouter router;
   private final GameService gameService;
 

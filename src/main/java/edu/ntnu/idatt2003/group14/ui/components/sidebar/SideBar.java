@@ -10,7 +10,7 @@ import javafx.scene.layout.BorderPane;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class SideBar extends BorderPane {
+public final class SideBar extends BorderPane {
 
   /**
    * Creates a new sidebar component.

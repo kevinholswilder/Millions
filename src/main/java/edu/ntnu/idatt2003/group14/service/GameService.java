@@ -19,7 +19,7 @@ import java.math.BigDecimal;
  * @version 1.0.0
  * @since 0.0.1
  */
-public class GameService {
+public final class GameService {
   private final StockReader stockReader;
   private GameSession currentSession;
 

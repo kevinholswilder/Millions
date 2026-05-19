@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class Footer extends VBox {
+public final class Footer extends VBox {
 
   /**
    * Creates a new footer button with predefined styling and layout settings.

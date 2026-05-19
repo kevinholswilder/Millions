@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  * @author Elias Haugsbakk
  * @since 0.0.1
  */
-public class AppController {
+public final class AppController {
   private final Stage stage;
 
   /**

@@ -24,7 +24,7 @@ import javafx.scene.layout.VBox;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class StockMoversComponent extends VBox implements PlottableChangeListener {
+public final class StockMoversComponent extends VBox implements PlottableChangeListener {
 
   /**
    * Represents the type of stock movement to display.

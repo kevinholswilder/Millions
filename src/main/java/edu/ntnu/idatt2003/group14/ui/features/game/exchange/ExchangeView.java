@@ -29,7 +29,7 @@ import javafx.scene.layout.Region;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class ExchangeView implements View {
+public final class ExchangeView implements View {
   private final BorderPane root;
   private final ExchangeController controller;
   private final GameService gameService;

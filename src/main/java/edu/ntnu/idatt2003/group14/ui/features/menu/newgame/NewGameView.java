@@ -35,7 +35,7 @@ import javafx.scene.media.MediaView;
  * @version 1.0.0
  * @since 0.0.1
  */
-public class NewGameView implements View {
+public final class NewGameView implements View {
   private final AppController appController;
   private final StackPane root;
   private final NewGameController controller;

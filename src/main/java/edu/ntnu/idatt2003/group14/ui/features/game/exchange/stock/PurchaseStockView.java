@@ -39,7 +39,7 @@ import javafx.scene.layout.VBox;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class PurchaseStockView implements View {
+public final class PurchaseStockView implements View {
   private final BorderPane root;
   private final AppRouter router;
   private final GameService gameService;

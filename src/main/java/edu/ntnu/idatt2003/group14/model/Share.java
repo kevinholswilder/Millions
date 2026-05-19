@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * @author Elias Haugsbakk, Kevin Holswilder
  * @since 0.0.1
  */
-public class Share {
+public final class Share {
   private final Stock stock;
   private final BigDecimal quantity;
   private final BigDecimal purchasePrice;

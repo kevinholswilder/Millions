@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @author Kevin Holswilder, Elias Haugsbakk
  * @since 0.0.1
  */
-public class StockWriter {
+public final class StockWriter {
 
   /**
    * Converts a single {@link Stock} object into a CSV-formatted string line.

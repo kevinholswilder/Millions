@@ -22,7 +22,7 @@ import javafx.scene.layout.StackPane;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class GameLayout implements View {
+public final class GameLayout implements View {
   private final StackPane root;
   private final BorderPane layout;
   private final AppRouter router;

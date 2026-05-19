@@ -29,7 +29,7 @@ import javafx.scene.layout.VBox;
  * @version 1.0.0
  * @since 0.0.1
  */
-public class PortfolioView implements View {
+public final class PortfolioView implements View {
   private final BorderPane root;
   private final PortfolioController controller;
   private StockMoversComponent gainers;

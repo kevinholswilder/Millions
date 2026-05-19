@@ -10,7 +10,7 @@ import edu.ntnu.idatt2003.group14.ui.app.Route;
  * @author Elias Haugsbakk
  * @since 0.0.1
  */
-public class MainMenuController {
+public final class MainMenuController {
   private final AppController appController;
   private final AppRouter router;
 

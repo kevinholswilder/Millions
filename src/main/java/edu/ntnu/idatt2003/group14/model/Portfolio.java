@@ -14,7 +14,7 @@ import java.util.List;
  * @author Kevin Holswilder, Elias Haugsbakk
  * @since 0.0.1
  */
-public class Portfolio extends Plottable implements WeekAdvanceListener {
+public final class Portfolio extends Plottable implements WeekAdvanceListener {
   private final List<Share> shares;
   private int currentWeek;
 

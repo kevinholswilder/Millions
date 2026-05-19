@@ -20,7 +20,7 @@ import java.util.Random;
  * @author Elias Haugsbakk, Kevin Holswilder
  * @since 0.0.1
  */
-public class Exchange extends Plottable {
+public final class Exchange extends Plottable {
   private final String name;
   private int week;
   private final Map<String, Stock> stockMap;

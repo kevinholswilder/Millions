@@ -25,7 +25,7 @@ import javafx.scene.layout.VBox;
  * @version 1.0.0
  * @since 0.0.1
  */
-public class OptionsView implements View {
+public final class OptionsView implements View {
   private final StackPane root;
   private final OptionsController controller;
   private final MenuButtonFactory buttonFactory;

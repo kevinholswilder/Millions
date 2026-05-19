@@ -11,7 +11,7 @@ import edu.ntnu.idatt2003.group14.ui.app.Route;
  * @version 1.0.0
  * @since 0.0.1
  */
-public class GameMenuController {
+public final class GameMenuController {
   private final AppRouter router;
   private final GameService gameService;
 

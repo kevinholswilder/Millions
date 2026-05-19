@@ -7,7 +7,7 @@ package edu.ntnu.idatt2003.group14.io;
  * @since 0.0.1
  */
 @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
-public class CSVLabels {
+public final class CSVLabels {
 
   // Prevent instantiation
   private CSVLabels() {}

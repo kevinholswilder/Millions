@@ -6,7 +6,7 @@ package edu.ntnu.idatt2003.group14.exception.transaction;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class UnknownTransactionException extends Exception {
+public final class UnknownTransactionException extends Exception {
 
   /**
    * Constructor for UnknownTransactionException.

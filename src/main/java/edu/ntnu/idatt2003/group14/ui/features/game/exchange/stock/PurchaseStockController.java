@@ -9,7 +9,7 @@ import edu.ntnu.idatt2003.group14.model.Stock;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class PurchaseStockController {
+public final class PurchaseStockController {
 
   private static final PurchaseStockController instance =
       new PurchaseStockController();

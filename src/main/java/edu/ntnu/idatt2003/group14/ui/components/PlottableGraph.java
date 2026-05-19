@@ -14,7 +14,7 @@ import javafx.scene.chart.NumberAxis;
  * @author Elias Haugsbakk
  * @since 0.0.1
  */
-public class PlottableGraph extends AreaChart<Number, Number> implements PlottableChangeListener {
+public final class PlottableGraph extends AreaChart<Number, Number> implements PlottableChangeListener {
   private static final int MAX_WEEKS = 20;
   private final Series<Number, Number> series;
   private final Plottable plottable;

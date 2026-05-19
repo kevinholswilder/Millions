@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
  * @author Elias Haugsbakk
  * @since 0.0.1
  */
-public class GameMenuView implements View {
+public final class GameMenuView implements View {
   private final BorderPane root;
   private final MenuButtonFactory buttonFactory;
   private final GameMenuController controller;

@@ -20,7 +20,7 @@ import java.util.logging.SimpleFormatter;
  * @version 1.0.0
  * @since 0.0.1
  */
-public class AppLogger {
+public final class AppLogger {
   private static final Logger LOGGER = Logger.getLogger("Millions");
 
   // no initialization

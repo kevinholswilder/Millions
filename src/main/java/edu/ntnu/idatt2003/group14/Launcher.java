@@ -9,7 +9,7 @@ import javafx.application.Application;
  * @author Elias Haugsbakk, Kevin Holswilder
  * @since 0.0.1
  */
-public class Launcher {
+public final class Launcher {
 
   /**
    * Entrypoint for the application.

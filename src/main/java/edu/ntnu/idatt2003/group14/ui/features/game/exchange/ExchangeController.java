@@ -23,7 +23,7 @@ import javafx.scene.layout.VBox;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class ExchangeController {
+public final class ExchangeController {
   private String currentSort = "Price";
   private boolean ascending = true;
   private String currentSearch = "";

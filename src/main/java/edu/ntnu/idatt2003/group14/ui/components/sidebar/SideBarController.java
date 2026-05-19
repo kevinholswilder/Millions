@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class SideBarController {
+public final class SideBarController {
   /**
    * Maximum width applied to all sidebar buttons.
    */

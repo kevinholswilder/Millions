@@ -9,7 +9,7 @@ import java.math.RoundingMode;
  * @author Kevin Holswilder
  * @since 0.0.1
  */
-public class Money {
+public final class Money {
 
   private Money() {}
 

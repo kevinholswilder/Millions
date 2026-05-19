@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
  *
  * <p>Menu buttons get consistent styling and functionality</p>
  */
-public class MenuButtonFactory {
+public final class MenuButtonFactory {
   private final AudioManager audioManager;
 
   /**
