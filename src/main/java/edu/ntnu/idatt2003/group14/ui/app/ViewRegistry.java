@@ -112,7 +112,7 @@ public class ViewRegistry {
    */
   View getExchangeView(AppRouter router) {
     return viewCache.computeIfAbsent(Route.EXCHANGE,
-        _ -> new ExchangeView(gameService, new ExchangeController(router)));
+        _ -> new ExchangeView(gameService, new ExchangeController(gameService, router)));
   }
 
   /**

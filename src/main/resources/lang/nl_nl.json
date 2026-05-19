@@ -59,6 +59,7 @@
   "exchange-menu.header.text_field.search": "Aandelen zoeken...",
   "exchange-menu.header.label.sort_by": "Sorteren op:",
   "exchange-menu.header.label.price": "Prijs",
+  "exchange-menu.header.label.week": "Week: {week}",
   "exchange-menu.header.label.a_z": "A-Z",
   "exchange-menu.row.label.price": "Prijs",
   "exchange-menu.row.label.change": "Verandering",

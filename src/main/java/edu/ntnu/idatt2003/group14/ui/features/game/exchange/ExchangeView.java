@@ -17,6 +17,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 
 /**
  * View responsible for displaying the exchange.
@@ -30,6 +32,7 @@ import javafx.scene.layout.HBox;
 public class ExchangeView implements View {
   private final BorderPane root;
   private final ExchangeController controller;
+  private final GameService gameService;
   private final ListView<Stock> stockListView;
 
   /**
@@ -39,7 +42,7 @@ public class ExchangeView implements View {
    */
   public ExchangeView(GameService gameService, ExchangeController controller) {
     this.root = new BorderPane();
-
+    this.gameService = gameService;
     this.controller = controller;
 
     this.stockListView = new ListView<>();
@@ -141,6 +144,16 @@ public class ExchangeView implements View {
     topBar.setAlignment(Pos.CENTER_LEFT);
     topBar.getStyleClass().add("exchange-top-bar");
 
+    Label weekLabel = new Label();
+    this.controller.updateWeekLabel(weekLabel);
+
+    this.gameService.getExchange().addWeekAdvanceListener(_ -> {
+      this.controller.updateWeekLabel(weekLabel);
+    });
+
+    Region spacer = new Region();
+    HBox.setHgrow(spacer, Priority.ALWAYS);
+
     topBar.getChildren().addAll(
             searchField,
             sortLabel,
@@ -148,7 +161,9 @@ public class ExchangeView implements View {
                 LangConfig.getInstance().lang("exchange-menu.header.label.price")
             ),
             this.createSortButton(LangConfig.getInstance().lang("exchange-menu.header.label.a_z")),
-            directionButton
+            directionButton,
+            spacer,
+            weekLabel
     );
 
     return topBar;

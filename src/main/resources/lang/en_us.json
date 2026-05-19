@@ -60,6 +60,7 @@
   "exchange-menu.header.text_field.search": "Search stocks...",
   "exchange-menu.header.label.sort_by": "Sort by:",
   "exchange-menu.header.label.price": "Price",
+  "exchange-menu.header.label.week": "Week: {week}",
   "exchange-menu.header.label.a_z": "A-Z",
   "exchange-menu.row.label.price": "Price",
   "exchange-menu.row.label.change": "Change",

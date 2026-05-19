@@ -60,6 +60,7 @@
   "exchange-menu.header.text_field.search": "Søk etter aksjer...",
   "exchange-menu.header.label.sort_by": "Sorter etter:",
   "exchange-menu.header.label.price": "Pris",
+  "exchange-menu.header.label.week": "Uke: {week}",
   "exchange-menu.header.label.a_z": "A-Å",
   "exchange-menu.row.label.price": "Pris",
   "exchange-menu.row.label.change": "Endring",

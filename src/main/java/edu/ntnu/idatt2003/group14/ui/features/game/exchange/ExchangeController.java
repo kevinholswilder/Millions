@@ -3,6 +3,7 @@ package edu.ntnu.idatt2003.group14.ui.features.game.exchange;
 import edu.ntnu.idatt2003.group14.config.lang.LangConfig;
 import edu.ntnu.idatt2003.group14.model.Money;
 import edu.ntnu.idatt2003.group14.model.Stock;
+import edu.ntnu.idatt2003.group14.service.GameService;
 import edu.ntnu.idatt2003.group14.ui.app.AppRouter;
 import edu.ntnu.idatt2003.group14.ui.app.Route;
 import edu.ntnu.idatt2003.group14.ui.features.game.exchange.stock.PurchaseStockController;
@@ -27,14 +28,17 @@ public class ExchangeController {
   private boolean ascending = true;
   private String currentSearch = "";
   private List<Stock> stocks = List.of();
+
   private final AppRouter router;
+  private final GameService gameService;
 
   /**
    * Creates a new exchange controller.
    *
    * @param router the application router used for navigation
    */
-  public ExchangeController(AppRouter router) {
+  public ExchangeController(GameService gameService, AppRouter router) {
+    this.gameService = gameService;
     this.router = router;
   }
 
@@ -82,17 +86,12 @@ public class ExchangeController {
             "$" + Money.normalize(lowestPrice).toPlainString()
     );
 
-    VBox weeksBox = this.createInfoBox(
-            LangConfig.getInstance().lang("exchange-menu.row.label.week"),
-            String.valueOf(stock.getWeek() + 1)
-    );
 
     stockBox.getStyleClass().add("stock-company-column");
     priceBox.getStyleClass().add("stock-column");
     changeBox.getStyleClass().add("stock-column");
     highestBox.getStyleClass().add("stock-column");
     lowestBox.getStyleClass().add("stock-column");
-    weeksBox.getStyleClass().add("stock-column");
 
     Button purchaseButton = this.createPurchaseButton(stock, router);
 
@@ -107,7 +106,6 @@ public class ExchangeController {
             changeBox,
             highestBox,
             lowestBox,
-            weeksBox,
             purchaseButton
     );
 
@@ -243,6 +241,23 @@ public class ExchangeController {
             .filter(this::matches)
             .sorted(this::compare)
             .toList();
+  }
+
+  /**
+   * Updates the displayed week number in the top bar.
+   *
+   * <p>The label text is refreshed using the current week value
+   * from the game's exchange.</p>
+   *
+   * @param weekLabel the label used to display the current week
+   */
+  public void updateWeekLabel(Label weekLabel) {
+    int currentWeek = this.gameService.getExchange().getWeek() + 1;
+
+    weekLabel.setText(
+            LangConfig.getInstance().lang("exchange-menu.header.label.week")
+                    .replace("{week}", String.valueOf(currentWeek))
+    );
   }
 
 }
